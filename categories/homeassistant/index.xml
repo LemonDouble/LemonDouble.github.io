@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HomeAssistant on Lemon Blog</title><link>https://lemondouble.github.io/categories/homeassistant/</link><description>Recent content in HomeAssistant on Lemon Blog</description><generator>Hugo -- gohugo.io</generator><language>ko</language><lastBuildDate>Sun, 21 May 2023 09:40:47 +0900</lastBuildDate><atom:link href="https://lemondouble.github.io/categories/homeassistant/index.xml" rel="self" type="application/rss+xml"/><item><title>HomeAssistant로 IoT 한번 해 보지 않을래요?</title><link>https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/</link><pubDate>Sun, 21 May 2023 09:40:47 +0900</pubDate><guid>https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/</guid><description>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/cover.png" alt="Featured image of post HomeAssistant로 IoT 한번 해 보지 않을래요?" />&lt;p>IoT는 꽤 재밌는 주제인데도,&lt;/p>
+&lt;p>입문 난이도가 높음 + 잘 알려지지 않은 주제라 이걸로 뭘 할 수 있는지도 잘 알려지지 않은 것 같습니다.&lt;/p>
+&lt;p>저는 여러 플랫폼 중 HomeAssistant(이하 HASS)라는 플랫폼을 직접 설치해서 사용 중인데요, 왜 이런 플랫폼이 필요하고, 우리의 삶에서 뭘 개선시킬 수 있는지 이야기를 하려고 합니다!&lt;/p>
+&lt;h3 id="1-homeassitant가-뭔가요-이하-ha-hass">1. HomeAssitant가 뭔가요? (이하 HA, Hass)
+&lt;/h3>&lt;p>여러 회사의 IoT 디바이스를 한 곳에서 통합 관리하게 해 주는 통합 플랫폼입니다.&lt;/p>
+&lt;p>&lt;a class="link" href="https://demo.home-assistant.io/#/lovelace/0" target="_blank" rel="noopener"
+>Demo&lt;/a> 를 확인해 보세요!&lt;/p>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-10-34.png"
+width="1817"
+height="899"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="202"
+data-flex-basis="485px"
+>&lt;/p>
+&lt;h3 id="2-이걸로-뭘-할-수-있나요">2. 이걸로 뭘 할 수 있나요?
+&lt;/h3>&lt;ul>
+&lt;li>프로그래밍을 할 수 있다면, 문자 그대로 모든 걸 할 수 있습니다!&lt;/li>
+&lt;/ul>
+&lt;p>여러분의 관심에 따라? 할 수 있는 예시를 몇 개 들어볼겠습니다.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>자동화에 관심이 있다면?&lt;/strong>
+&lt;ul>
+&lt;li>&lt;strong>예시 시나리오 : 화장실 불 끄기가 너무 귀찮아요&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-11-46.png"
+width="1741"
+height="2365"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="73"
+data-flex-basis="176px"
+>&lt;/p>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-11-56.png"
+width="491"
+height="307"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+>&lt;/p>
+&lt;p>위와 같이, 스마트 전등과 모션 감지 센서를 설치해서&lt;/p>
+&lt;p>아래와 같이 자동화 할 수 있습니다!&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 실제 코드는 아니고, 의사 코드입니다.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 자동화 1. 화장실 등 자동 키기
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">화장실_모션_센서&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Occupancy&lt;/span> &lt;span class="n">transfer&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">True&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">turn_on&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">화장실_등&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 자동화 2. 화장실 등 자동 끄기
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">화장실_모션_센서&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Occupancy&lt;/span> &lt;span class="n">transfer&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">False&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">바뀐지_10분_지남&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">turn_off&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">화장실_등&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>실제로 hass 화면에선 다음과 같이 자동화를 하게 됩니다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-12-18.png"
+width="955"
+height="765"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="124"
+data-flex-basis="299px"
+>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>AI에 관심이 있다면?&lt;/strong>
+&lt;ul>
+&lt;li>예시 시나리오: 음성 비서 만들기&lt;/li>
+&lt;li>그런데 정말 뭐든 할 수 있는..&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-16-59.png"
+width="3890"
+height="2322"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="167"
+data-flex-basis="402px"
+>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>회로 DIY에 관심이 있다면?&lt;/strong>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://esphome.io/" target="_blank" rel="noopener"
+>ESPHome&lt;/a> 같은 프로젝트를 이용해 보세요!&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-12-28.png"
+width="921"
+height="512"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="179"
+data-flex-basis="431px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>ESPxx 과 같은, 와이파이와 CPU가 달린 개발 보드를 몇 천원이면 구매할 수 있습니다!&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>아래와 같은 환기 등 만들기 시나리오는 어떠세요?&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-12-59.png"
+width="3069"
+height="2785"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="110"
+data-flex-basis="264px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>매번 버스 시간 확인하기 귀찮다면?&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>공공 API를 이용해서 버스 알림이를 만들어보는건 어떨까요?&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/2023-05-21-11-17-32.png"
+width="3549"
+height="2629"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="134"
+data-flex-basis="323px"
+>&lt;/p>
+&lt;p>이외에도, HomeAssistant라는 플랫폼을 거쳐 더 많은 일들을 할 수 있습니다!&lt;/p>
+&lt;p>완전히 오픈 소스라, 필요하다면 고칠 수 있단것도 덤이구요!&lt;/p>
+&lt;p>한번 즐거운 IoT, 같이 해 보시지 않을래요?&lt;/p></description></item></channel></rss>

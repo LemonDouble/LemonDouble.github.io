@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>전기전자 on Lemon Blog</title><link>https://blog.lemondouble.com/categories/%EC%A0%84%EA%B8%B0%EC%A0%84%EC%9E%90/</link><description>Recent content in 전기전자 on Lemon Blog</description><generator>Hugo -- gohugo.io</generator><language>ko</language><lastBuildDate>Tue, 17 Jan 2023 13:45:21 +0000</lastBuildDate><atom:link href="https://blog.lemondouble.com/categories/%EC%A0%84%EA%B8%B0%EC%A0%84%EC%9E%90/index.xml" rel="self" type="application/rss+xml"/><item><title>3색 LED는 내부가 어떤 식으로 구성되어 있을까?</title><link>https://blog.lemondouble.com/p/141eb2dfe7f486bf/</link><pubDate>Tue, 17 Jan 2023 13:45:21 +0000</pubDate><guid>https://blog.lemondouble.com/p/141eb2dfe7f486bf/</guid><description>&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/cover.png" alt="Featured image of post 3색 LED는 내부가 어떤 식으로 구성되어 있을까?" />&lt;p>Arduino를 만지다 보면, 단순히 LED를 껐다 키는&lt;/p>
+&lt;p>행위가 생각보다 큰 원초적 희열을 가져다 준 다는 점을 알게 됩니다.&lt;/p>
+&lt;p>하지만.. 곧 위와 같은 단색 LED로는 한 가지 색깔밖에 낼 수 없단걸 깨닫고, 몬가몬가 &amp;ldquo;어떤 색깔이든 낼 수 있는 LED&amp;quot;를 찾게 되는데요..&lt;/p>
+&lt;p>모험을 떠나다 보면 아래와 같은 Cathode (-), Anode (+) LED를 만나게 됩니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-2.png"
+width="463"
+height="341"
+srcset="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-2_hu_c88c052978422b91.png 480w, https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-2_hu_25250069bbc3f861.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="135"
+data-flex-basis="325px"
+>&lt;/p>
+&lt;p>그리고 이제 결선도를 찾아보면 대충 이런게 나오고&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-3.png"
+width="600"
+height="446"
+srcset="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-3_hu_8c4fe37dbbef2d8.png 480w, https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-3_hu_7f1db7730d8aee8.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="134"
+data-flex-basis="322px"
+>&lt;/p>
+&lt;p>대충 따라 만들다 보면 음&amp;hellip; 아두이노 Digital Output 따라서 껐다 켰다가 잘 됩니다.&lt;/p>
+&lt;p>근데? 이제? 뭔가 진짜 쓸만한 걸 만들어 보고 싶어서? 여러 개의 LED를 병렬로 잇는다던가 할 때가 되면? 어떻게 해야 할 지? 고민이 됩니다. 뭔가 단색 LED보다 회로도 많이 복잡해 진 것 같고&amp;hellip;&lt;/p>
+&lt;p>근데 사실 별거 없습니다!
+사진은 3색 Anode LED인데, Cathode도 딱히 다르지 않습니다(..)&lt;/p>
+&lt;p>원리를 파악해봅시다.&lt;/p>
+&lt;ol>
+&lt;li>LED를 다음과 같이 RGB 핀과 + 핀 (Cathode LED는 - 핀)을 분리해 줍니다.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-4.png"
+width="435"
+height="537"
+srcset="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-4_hu_75b9bb8e318e6c9.png 480w, https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-4_hu_25f978b9c92acf62.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="194px"
+>&lt;/p>
+&lt;ol start="2">
+&lt;li>그리고 굴러다니는 3V짜리 단추 건전지에 +극에 +핀을, RGB 핀을 반대쪽에 대 봅니다.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-5.png"
+width="553"
+height="651"
+srcset="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-5_hu_944f894699683236.png 480w, https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-5_hu_40225510ee208e3a.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="84"
+data-flex-basis="203px"
+>&lt;/p>
+&lt;p>?? 그렇습니다. 사실 3색 LED는 그냥 단색 LED 세개가 병렬로 묶여 있었던 것입니다..&lt;/p>
+&lt;ol start="3">
+&lt;li>그래서 한 핀씩 빼 보면, 사실 나머지 핀과 관계 없이 단색 LED처럼 잘 동작하는걸 알 수 있습니다(&amp;hellip;)&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-6.png"
+width="512"
+height="467"
+srcset="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-6_hu_8cdb695920e22f2.png 480w, https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-6_hu_c7827e94ad019f2c.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="109"
+data-flex-basis="263px"
+>
+&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-7.png"
+width="572"
+height="356"
+srcset="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-7_hu_b8f723192dd94446.png 480w, https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-7_hu_83ecb6f80f888e96.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="385px"
+>
+&lt;img src="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-8.png"
+width="528"
+height="524"
+srcset="https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-8_hu_2910abc52616d9f9.png 480w, https://blog.lemondouble.com/p/141eb2dfe7f486bf/image-8_hu_5f954f4eb564061a.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="100"
+data-flex-basis="241px"
+>&lt;/p>
+&lt;p>아.. 그래서 대충 3색 LED가 단색 LED 세개를 병렬로 묶어놓은 거란걸 알면,&lt;/p>
+&lt;p>대충 단색 LED 연결할 때 저항 어쩌고 했던 기억이 납니다. 저항을 세개 쓰는게 대충 적정 전압 인가해 준 것 같습니다.&lt;/p>
+&lt;p>위 아두이노 회로도 사실 이해가 갑니다. 사실 단색 LED 세개 병렬로 이은 것과 같은 회로였던 것입니다..&lt;/p>
+&lt;p>아.. 이걸 몰라서 3색 LED가 몇달동안 창고에 쳐박혀 있었습니다.&lt;/p>
+&lt;p>다음엔 하나 해먹을 각오 하고서라도 막 굴려 봐야겠다 하는 생각이 듭니다..&lt;/p></description></item></channel></rss>

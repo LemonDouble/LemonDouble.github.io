@@ -1,0 +1,1338 @@
+<!doctype html><html lang=ko dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content=' TIP : 숫자 작성할 때 var number = 1_000L 과 같이 작성 가능 1. 변수 val collections에도 element는 추가할 수 있음 primitive, reference type 구분 없지만, 실제 연산할떈 primitive type으로 변환되어 연산됨 2. Null 처리 Safe Call ( ?. ) : null이 아니면 실행, null이면 실행하지 않음 1 2 3 val str: String? = "ABC" str.length // ERROR str?.length // OK Elvis 연산자 ( ?: ) : 앞의 연산 결과가 null이면 뒤의 값을 사용 1 2 3 4 val str: String? = "ABC" str?.length ?: 0 // str.length 혹은 0 str?.length ?: throw IllegalArgumentException("null이 들어왔습니다.") // 혹은 예외 발생 str?.length ?: return 0 // Early return에도 사용 가능 플랫폼 타입 : Kotlin에서 Java 코드를 가져왔을 때 null, nonnull 타입 둘 다 사용 가능 가능하면 Java 코드 직접 확인하거나, Kotlin으로 wrapping하여 사용하자. 1 2 3 4 5 6 // @Nullable, @NonNull 있으면 변환됨, 하지만 없으면 플랫폼 타입 // java 에서 private final String name; << Annotation 없을 때 val name : String? = javaPerson.name // OK val name : String = javaPerson.name // OK 3. Type 기본 Type 변환 : 기본 타입끼리는 toXX 같은 함수를 사용 1 2 3 4 5 val number1 : Int = 4 val number2 : Long = number1.toLong() val number1 : Int? = 3 val number2 : Long = number1?.toLong() ?: 0L // nullable 변수면 재주껏 처리 사용자 정의 Type : 스마트 캐스트 (Smart Cast) 활용 1 2 3 4 5 6 7 8 9 10 11 12 13 14 fun printAgeIfPerson(obj: Any){ // is = Java의 instanceof if(obj is Person){ // 스마트 캐스트 되어서 obj 의 type은 Person println(obj.age) } } // OR // java의 (Person) obj와 같음 val person = obj as Person // !is, as? 등도 사용 가능 // as? : 전체가 null Any : Java의 Object 역할 + Primitive Type의 최상위도 포함 null은 포함 X, null도 포함하고 싶다면 Any?로 사용 equals, hashCode, toString 존재 Unit : void 비슷, 하지만 Unit은 그 자체로 제네릭에서 타입 인자로 사용 가능 Nothing : 함수가 정상적으로 끝나지 않았음을 표시 1 2 3 fun fail(message : String): Nothing{ throw IllegalArgumentException(message) } String interpolation 1 2 val person = Person(name = "lemon", age = 20) val log = "이름 : ${person.name}, 나이 : ${person.age}" String indexing 1 2 3 val str = "ABC" // Java에서의 str.get(0) 대신 str[1] //ok 4. 연산자 Kotlin에선 >, < , ≥, ≤ 사용하면 자동으로 compateTo 호출해줌\n'><title>내가 볼려고 올리는 Kotlin Cheat Sheet</title>
+<link rel=canonical href=https://blog.lemondouble.com/p/f8a9d54607e901b4/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="내가 볼려고 올리는 Kotlin Cheat Sheet"><meta property='og:description' content=' TIP : 숫자 작성할 때 var number = 1_000L 과 같이 작성 가능 1. 변수 val collections에도 element는 추가할 수 있음 primitive, reference type 구분 없지만, 실제 연산할떈 primitive type으로 변환되어 연산됨 2. Null 처리 Safe Call ( ?. ) : null이 아니면 실행, null이면 실행하지 않음 1 2 3 val str: String? = "ABC" str.length // ERROR str?.length // OK Elvis 연산자 ( ?: ) : 앞의 연산 결과가 null이면 뒤의 값을 사용 1 2 3 4 val str: String? = "ABC" str?.length ?: 0 // str.length 혹은 0 str?.length ?: throw IllegalArgumentException("null이 들어왔습니다.") // 혹은 예외 발생 str?.length ?: return 0 // Early return에도 사용 가능 플랫폼 타입 : Kotlin에서 Java 코드를 가져왔을 때 null, nonnull 타입 둘 다 사용 가능 가능하면 Java 코드 직접 확인하거나, Kotlin으로 wrapping하여 사용하자. 1 2 3 4 5 6 // @Nullable, @NonNull 있으면 변환됨, 하지만 없으면 플랫폼 타입 // java 에서 private final String name; << Annotation 없을 때 val name : String? = javaPerson.name // OK val name : String = javaPerson.name // OK 3. Type 기본 Type 변환 : 기본 타입끼리는 toXX 같은 함수를 사용 1 2 3 4 5 val number1 : Int = 4 val number2 : Long = number1.toLong() val number1 : Int? = 3 val number2 : Long = number1?.toLong() ?: 0L // nullable 변수면 재주껏 처리 사용자 정의 Type : 스마트 캐스트 (Smart Cast) 활용 1 2 3 4 5 6 7 8 9 10 11 12 13 14 fun printAgeIfPerson(obj: Any){ // is = Java의 instanceof if(obj is Person){ // 스마트 캐스트 되어서 obj 의 type은 Person println(obj.age) } } // OR // java의 (Person) obj와 같음 val person = obj as Person // !is, as? 등도 사용 가능 // as? : 전체가 null Any : Java의 Object 역할 + Primitive Type의 최상위도 포함 null은 포함 X, null도 포함하고 싶다면 Any?로 사용 equals, hashCode, toString 존재 Unit : void 비슷, 하지만 Unit은 그 자체로 제네릭에서 타입 인자로 사용 가능 Nothing : 함수가 정상적으로 끝나지 않았음을 표시 1 2 3 fun fail(message : String): Nothing{ throw IllegalArgumentException(message) } String interpolation 1 2 val person = Person(name = "lemon", age = 20) val log = "이름 : ${person.name}, 나이 : ${person.age}" String indexing 1 2 3 val str = "ABC" // Java에서의 str.get(0) 대신 str[1] //ok 4. 연산자 Kotlin에선 >, < , ≥, ≤ 사용하면 자동으로 compateTo 호출해줌\n'><meta property='og:url' content='https://blog.lemondouble.com/p/f8a9d54607e901b4/'><meta property='og:site_name' content='Lemon Blog'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='코틀린'><meta property='article:published_time' content='2023-01-17T14:24:20+00:00'><meta property='article:modified_time' content='2023-01-17T14:24:20+00:00'><meta property='og:image' content='https://blog.lemondouble.com/p/f8a9d54607e901b4/cover.png'><meta name=twitter:site content="@https://blog.lemondouble.com"><meta name=twitter:creator content="@https://blog.lemondouble.com"><meta name=twitter:title content="내가 볼려고 올리는 Kotlin Cheat Sheet"><meta name=twitter:description content=' TIP : 숫자 작성할 때 var number = 1_000L 과 같이 작성 가능 1. 변수 val collections에도 element는 추가할 수 있음 primitive, reference type 구분 없지만, 실제 연산할떈 primitive type으로 변환되어 연산됨 2. Null 처리 Safe Call ( ?. ) : null이 아니면 실행, null이면 실행하지 않음 1 2 3 val str: String? = "ABC" str.length // ERROR str?.length // OK Elvis 연산자 ( ?: ) : 앞의 연산 결과가 null이면 뒤의 값을 사용 1 2 3 4 val str: String? = "ABC" str?.length ?: 0 // str.length 혹은 0 str?.length ?: throw IllegalArgumentException("null이 들어왔습니다.") // 혹은 예외 발생 str?.length ?: return 0 // Early return에도 사용 가능 플랫폼 타입 : Kotlin에서 Java 코드를 가져왔을 때 null, nonnull 타입 둘 다 사용 가능 가능하면 Java 코드 직접 확인하거나, Kotlin으로 wrapping하여 사용하자. 1 2 3 4 5 6 // @Nullable, @NonNull 있으면 변환됨, 하지만 없으면 플랫폼 타입 // java 에서 private final String name; << Annotation 없을 때 val name : String? = javaPerson.name // OK val name : String = javaPerson.name // OK 3. Type 기본 Type 변환 : 기본 타입끼리는 toXX 같은 함수를 사용 1 2 3 4 5 val number1 : Int = 4 val number2 : Long = number1.toLong() val number1 : Int? = 3 val number2 : Long = number1?.toLong() ?: 0L // nullable 변수면 재주껏 처리 사용자 정의 Type : 스마트 캐스트 (Smart Cast) 활용 1 2 3 4 5 6 7 8 9 10 11 12 13 14 fun printAgeIfPerson(obj: Any){ // is = Java의 instanceof if(obj is Person){ // 스마트 캐스트 되어서 obj 의 type은 Person println(obj.age) } } // OR // java의 (Person) obj와 같음 val person = obj as Person // !is, as? 등도 사용 가능 // as? : 전체가 null Any : Java의 Object 역할 + Primitive Type의 최상위도 포함 null은 포함 X, null도 포함하고 싶다면 Any?로 사용 equals, hashCode, toString 존재 Unit : void 비슷, 하지만 Unit은 그 자체로 제네릭에서 타입 인자로 사용 가능 Nothing : 함수가 정상적으로 끝나지 않았음을 표시 1 2 3 fun fail(message : String): Nothing{ throw IllegalArgumentException(message) } String interpolation 1 2 val person = Person(name = "lemon", age = 20) val log = "이름 : ${person.name}, 나이 : ${person.age}" String indexing 1 2 3 val str = "ABC" // Java에서의 str.get(0) 대신 str[1] //ok 4. 연산자 Kotlin에선 >, < , ≥, ≤ 사용하면 자동으로 compateTo 호출해줌\n'><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://blog.lemondouble.com/p/f8a9d54607e901b4/cover.png'><link rel="shortcut icon" href=https://cdn.lemondouble.com/homepage/favicon.ico><script async src="https://www.googletagmanager.com/gtag/js?id=G-9C6YX68EBM"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-9C6YX68EBM")</script><style>@import "https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/static/pretendard.min.css";@import 'https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,500;1,500&display=swap';*{font-family:-apple-system,BlinkMacSystemFont,apple sd gothic neo,pretendard variable,Pretendard,Roboto,noto sans kr,segoe ui,malgun gothic,apple color emoji,segoe ui emoji,segoe ui symbol,sans-serif}</style></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="메뉴 여닫기">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_3c50f63a05989f65.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>⛱️</span></figure><div class=site-meta><h1 class=site-name><a href=/>Lemon Blog</a></h1><h2 class=site-description>이런저런 걸 합니다. 블로그 기고는 보통 제가 했던 일을 까먹지 않기 위해 합니다(..)</h2></div></header><ol class=menu-social><li><a href=https://github.com/LemonDouble target=_blank title=GitHub rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" class="icon icon-tabler icons-tabler-filled icon-tabler-brand-github"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5.315 2.1c.791-.113 1.9.145 3.333.966l.272.161.16.1.397-.083a13.3 13.3.0 014.59-.08l.456.08.396.083.161-.1c1.385-.84 2.487-1.17 3.322-1.148l.164.008.147.017.076.014.05.011.144.047a1 1 0 01.53.514 5.2 5.2.0 01.397 2.91l-.047.267-.046.196.123.163c.574.795.93 1.728 1.03 2.707l.023.295L21 9.5c0 3.855-1.659 5.883-4.644 6.68l-.245.061-.132.029.014.161.008.157.004.365-.002.213L16 21a1 1 0 01-.883.993L15 22H9a1 1 0 01-.993-.883L8 21v-.734c-1.818.26-3.03-.424-4.11-1.878l-.535-.766c-.28-.396-.455-.579-.589-.644l-.048-.019a1 1 0 01.564-1.918c.642.188 1.074.568 1.57 1.239l.538.769c.76 1.079 1.36 1.459 2.609 1.191L8 17.562l-.018-.168a5.03 5.03.0 01-.021-.824l.017-.185.019-.12-.108-.024c-2.976-.71-4.703-2.573-4.875-6.139l-.01-.31-.004-.292a5.6 5.6.0 01.908-3.051l.152-.222.122-.163-.045-.196a5.2 5.2.0 01.145-2.642l.1-.282.106-.253a1 1 0 01.529-.514l.144-.047.154-.03z"/></svg></a></li><li><a href=mailto:contact@lemondouble.com target=_blank title=mail rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" class="icon icon-tabler icons-tabler-filled icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 7.535V17a3 3 0 01-2.824 2.995L19 20H5a3 3 0 01-2.995-2.824L2 17V7.535l9.445 6.297.116.066a1 1 0 00.878.0l.116-.066 9.445-6.297z"/><path d="M19 4c1.08.0 2.027.57 2.555 1.427L12 11.797l-9.555-6.37a2.999 2.999.0 012.354-1.42L5 4h14z"/></svg></a></li><li><a href=https://sns.lemondouble.com/@lemondouble target=_blank title=misskey rel=me><svg class="bi" fill="currentcolor" viewBox="0 0 135.47 135.47"><g transform="translate(-38.1 -100.7)"><path d="m54.63 120.96c-1.9779.0-3.8618.32979-5.6513.98909-3.2023 1.1302-5.8396 3.1553-7.9117 6.0751-1.9779 2.8256-2.9667 5.9807-2.9667 9.4656v61.88c0 4.5209 1.601 8.4294 4.8033 11.726 3.2965 3.2023 7.2055 4.8038 11.726 4.8038 4.6151.0 8.5236-1.6015 11.726-4.8038 3.2965-3.2965 4.9449-7.205 4.9449-11.726v-11.253c.03556-2.4371 2.546-1.7977 3.8148.0 2.3763 4.1153 7.4142 7.6497 13.28 7.6295 5.8656-.0202 10.737-2.9202 13.28-7.6295.96304-1.1358 3.6774-3.071 3.9558.0v11.253c0 4.5209 1.601 8.4294 4.8033 11.726 3.2965 3.2023 7.2055 4.8038 11.726 4.8038 4.6151.0 8.5236-1.6015 11.726-4.8038 3.2965-3.2965 4.9449-7.205 4.9449-11.726v-61.88c0-3.4849-1.0357-6.64-3.1078-9.4656-1.9779-2.9198-4.5683-4.9448-7.7706-6.0751-1.8837-.6593-3.7676-.98909-5.6513-.98909-5.086.0-9.3712 1.9782-12.856 5.934l-16.775 19.632c-.37674.28256-1.6248 2.4428-4.2757 2.4428s-3.7574-2.1602-4.1341-2.4428l-16.916-19.632c-3.3907-3.9558-7.6289-5.934-12.715-5.934zm104.53.0c-3.9558.0-7.3464 1.4129-10.172 4.2385-2.7314 2.7314-4.0969 6.0751-4.0969 10.031.0 3.9558 1.3655 7.3464 4.0969 10.172 2.8256 2.7314 6.2162 4.0974 10.172 4.0974s7.3464-1.366 10.172-4.0974c2.8256-2.8256 4.2385-6.2162 4.2385-10.172s-1.4129-7.2995-4.2385-10.031c-2.8256-2.8256-6.2162-4.2385-10.172-4.2385zm.14107 31.364c-3.9558.0-7.3464 1.4129-10.172 4.2385s-4.238 6.2162-4.238 10.172v34.896c0 3.9558 1.4124 7.3464 4.238 10.172 2.8256 2.7314 6.2162 4.0974 10.172 4.0974s7.2995-1.366 10.031-4.0974c2.8256-2.8256 4.2385-6.2162 4.2385-10.172v-34.896c0-3.9558-1.4129-7.3464-4.2385-10.172-2.7314-2.8256-6.0751-4.2385-10.031-4.2385z"/></g></svg></a></li><li><a href=https://twitter.com/_lemon_berry_ target=_blank title=Twitter rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" class="icon icon-tabler icons-tabler-filled icon-tabler-brand-twitter"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.058 3.41c-1.807.767-2.995 2.453-3.056 4.38L11 7.972l-.243-.023C8.365 7.68 6.259 6.437 4.813 4.418a1 1 0 00-1.685.092l-.097.186-.049.099c-.719 1.485-1.19 3.29-1.017 5.203l.03.273c.283 2.263 1.5 4.215 3.779 5.679l.173.107-.081.043c-1.315.663-2.518.952-3.827.9-1.056-.04-1.446 1.372-.518 1.878 3.598 1.961 7.461 2.566 10.792 1.6 4.06-1.18 7.152-4.223 8.335-8.433l.127-.495c.238-.993.372-2.006.401-3.024l.003-.332.393-.779.44-.862.214-.434.118-.247c.265-.565.456-1.033.574-1.43l.014-.056.008-.018c.22-.593-.166-1.358-.941-1.358l-.122.007a.997.997.0 00-.231.057l-.086.038a7.46 7.46.0 01-.88.36l-.356.115-.271.08-.772.214c-1.336-1.118-3.144-1.254-5.012-.554l-.211.084z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>홈</span></a></li><li><a href=/about/ target=_blank><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>프로필 (🔗)</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>보관함</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>검색</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>다크 모드</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">목차</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#1-변수>1. 변수</a></li><li><a href=#2-null-처리>2. Null 처리</a></li><li><a href=#3-type>3. Type</a></li><li><a href=#4-연산자>4. 연산자</a></li><li><a href=#5-조건문>5. 조건문</a></li><li><a href=#6-반복문>6. 반복문</a></li><li><a href=#7-예외>7. 예외</a></li><li><a href=#8-함수>8. 함수</a></li><li><a href=#9-클래스>9. 클래스</a></li><li><a href=#10-상속>10. 상속</a></li><li><a href=#11-접근-제어>11. 접근 제어</a></li><li><a href=#12-object>12. object</a></li><li><a href=#13-중첩-클래스-nested-class>13. 중첩 클래스 (nested class)</a></li><li><a href=#14-data-class--enum-class-sealed-classinterface>14. Data class, Enum class, Sealed Class/Interface</a></li><li><a href=#15-collections-컬렉션>15. Collections (컬렉션)</a></li><li><a href=#16-extension확장-infix중위--inline-local지역-함수>16. Extension(확장), Infix(중위) , inline, Local(지역) 함수</a></li><li><a href=#17-lambda>17. lambda</a></li><li><a href=#18-collection-내장-함수-fp>18. Collection 내장 함수+ FP</a></li><li><a href=#19-takeif-scope-function>19. TakeIf, scope Function</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/f8a9d54607e901b4/><img src=/p/f8a9d54607e901b4/cover_hu_71ad992a58bacc29.png srcset="/p/f8a9d54607e901b4/cover_hu_71ad992a58bacc29.png 800w, /p/f8a9d54607e901b4/cover_hu_96ff5fb56e0025b7.png 1600w" width=800 height=249 loading=lazy alt="Featured image of post 내가 볼려고 올리는 Kotlin Cheat Sheet"></a></div><div class=article-details><header class=article-category><a href=/categories/%EC%BD%94%ED%8B%80%EB%A6%B0/>코틀린</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/f8a9d54607e901b4/>내가 볼려고 올리는 Kotlin Cheat Sheet</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2023년 1월 17일</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>16 분 정도</time></div></footer></div></header><section class=article-content><ul><li>TIP : 숫자 작성할 때 var number = 1_000L 과 같이 작성 가능</li></ul><h3 id=1-변수>1. 변수</h3><ul><li>val collections에도 element는 추가할 수 있음</li><li>primitive, reference type 구분 없지만, 실제 연산할떈 primitive type으로 변환되어 연산됨</li></ul><h3 id=2-null-처리>2. Null 처리</h3><ul><li>Safe Call ( ?. ) : null이 아니면 실행, null이면 실행하지 않음</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>str</span><span class=p>:</span> <span class=n>String</span><span class=p>?</span> <span class=p>=</span> <span class=s2>&#34;ABC&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>str</span><span class=p>.</span><span class=n>length</span> <span class=c1>// ERROR
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>str</span><span class=o>?.</span><span class=n>length</span> <span class=c1>// OK
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Elvis 연산자 ( ?: ) : 앞의 연산 결과가 null이면 뒤의 값을 사용</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>str</span><span class=p>:</span> <span class=n>String</span><span class=p>?</span> <span class=p>=</span> <span class=s2>&#34;ABC&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>str</span><span class=o>?.</span><span class=n>length</span> <span class=o>?:</span> <span class=m>0</span> <span class=c1>// str.length 혹은 0 
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>str</span><span class=o>?.</span><span class=n>length</span> <span class=o>?:</span> <span class=k>throw</span> <span class=n>IllegalArgumentException</span><span class=p>(</span><span class=s2>&#34;null이 들어왔습니다.&#34;</span><span class=p>)</span> <span class=c1>// 혹은 예외 발생
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>str</span><span class=o>?.</span><span class=n>length</span> <span class=o>?:</span> <span class=k>return</span> <span class=m>0</span> <span class=c1>// Early return에도 사용 가능
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>플랫폼 타입 : Kotlin에서 Java 코드를 가져왔을 때<ul><li>null, nonnull 타입 둘 다 사용 가능</li><li>가능하면 Java 코드 직접 확인하거나, Kotlin으로 wrapping하여 사용하자.</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// @Nullable, @NonNull 있으면 변환됨, 하지만 없으면 플랫폼 타입
+</span></span></span><span class=line><span class=cl><span class=c1>// java 에서 
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>private</span> <span class=k>final</span> <span class=n>String</span> <span class=n>name</span><span class=p>;</span> <span class=p>&lt;&lt;</span> <span class=n>Annotation</span> <span class=n>없을</span> <span class=n>때</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>name</span> <span class=p>:</span> <span class=n>String</span><span class=p>?</span> <span class=p>=</span> <span class=n>javaPerson</span><span class=p>.</span><span class=n>name</span> <span class=c1>// OK
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>name</span> <span class=p>:</span> <span class=n>String</span> <span class=p>=</span> <span class=n>javaPerson</span><span class=p>.</span><span class=n>name</span>  <span class=c1>// OK
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=3-type>3. Type</h3><ul><li>기본 Type 변환 : 기본 타입끼리는 toXX 같은 함수를 사용</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>number1</span> <span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=m>4</span>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>number2</span> <span class=p>:</span> <span class=n>Long</span> <span class=p>=</span> <span class=n>number1</span><span class=p>.</span><span class=n>toLong</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>number1</span> <span class=p>:</span> <span class=n>Int</span><span class=p>?</span> <span class=p>=</span> <span class=m>3</span> 
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>number2</span> <span class=p>:</span> <span class=n>Long</span> <span class=p>=</span> <span class=n>number1</span><span class=o>?.</span><span class=n>toLong</span><span class=p>()</span> <span class=o>?:</span> <span class=m>0L</span> <span class=c1>// nullable 변수면 재주껏 처리
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>사용자 정의 Type : 스마트 캐스트 (Smart Cast) 활용</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>fun</span> <span class=nf>printAgeIfPerson</span><span class=p>(</span><span class=n>obj</span><span class=p>:</span> <span class=n>Any</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// is = Java의 instanceof
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>if</span><span class=p>(</span><span class=n>obj</span> <span class=k>is</span> <span class=n>Person</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>			<span class=c1>// 스마트 캐스트 되어서 obj 의 type은 Person
+</span></span></span><span class=line><span class=cl><span class=c1></span>			<span class=n>println</span><span class=p>(</span><span class=n>obj</span><span class=p>.</span><span class=n>age</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// OR
+</span></span></span><span class=line><span class=cl><span class=c1>// java의 (Person) obj와 같음
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>person</span> <span class=p>=</span> <span class=n>obj</span> <span class=k>as</span> <span class=n>Person</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// !is, as? 등도 사용 가능
+</span></span></span><span class=line><span class=cl><span class=c1>// as? : 전체가 null
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Any : Java의 Object 역할 + Primitive Type의 최상위도 포함<ul><li>null은 포함 X, null도 포함하고 싶다면 Any?로 사용</li><li>equals, hashCode, toString 존재</li></ul></li><li>Unit : void 비슷, 하지만 Unit은 그 자체로 제네릭에서 타입 인자로 사용 가능</li><li>Nothing : 함수가 정상적으로 끝나지 않았음을 표시</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>fun</span> <span class=nf>fail</span><span class=p>(</span><span class=n>message</span> <span class=p>:</span> <span class=n>String</span><span class=p>):</span> <span class=n>Nothing</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>throw</span> <span class=n>IllegalArgumentException</span><span class=p>(</span><span class=n>message</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>String interpolation</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>person</span> <span class=p>=</span> <span class=n>Person</span><span class=p>(</span><span class=n>name</span> <span class=p>=</span> <span class=s2>&#34;lemon&#34;</span><span class=p>,</span> <span class=n>age</span> <span class=p>=</span> <span class=m>20</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>log</span> <span class=p>=</span> <span class=s2>&#34;이름 : </span><span class=si>${person.name}</span><span class=s2>, 나이 : </span><span class=si>${person.age}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>String indexing</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>str</span> <span class=p>=</span> <span class=s2>&#34;ABC&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1>// Java에서의 str.get(0) 대신
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>str</span><span class=p>[</span><span class=m>1</span><span class=p>]</span> <span class=c1>//ok
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=4-연산자>4. 연산자</h3><ul><li><p>Kotlin에선 >, &lt; , ≥, ≤ 사용하면 자동으로 compateTo 호출해줌</p></li><li><p>== (값 비교,동등성 : equals 자동 호출 ) , === (주소 비교, 동일성 : 같은 0x101 주소)</p></li><li><p>in, !in : 컬렉션 / 범위에 포함되어 있는지?</p></li><li><p>a..b : a부터 b까지의 범위 객체를 생성</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>numbers</span> <span class=p>=</span> <span class=m>1.</span><span class=p>.</span><span class=m>100</span> <span class=c1>// 1~100까지의 IntRange 객체 생성
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>println</span><span class=p>(</span><span class=m>1</span> <span class=k>in</span> <span class=n>numbers</span><span class=p>)</span> <span class=c1>// true
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>println</span><span class=p>(</span><span class=m>0</span> <span class=k>in</span> <span class=n>numbers</span><span class=p>)</span> <span class=c1>// false
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>// 두 식은 같음
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>if</span><span class=p>(</span><span class=m>0</span> <span class=o>&lt;=</span> <span class=n>score</span> <span class=o>&amp;&amp;</span> <span class=n>score</span> <span class=o>&lt;=</span> <span class=m>100</span><span class=p>)</span> <span class=p>{</span><span class=o>..</span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>if</span><span class=p>(</span><span class=n>score</span> <span class=k>in</span> <span class=m>0.</span><span class=p>.</span><span class=m>100</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>연산자 오버로딩</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>data</span> <span class=k>class</span> <span class=nc>Money</span><span class=p>(</span><span class=k>val</span> <span class=py>amount</span> <span class=p>:</span> <span class=n>Long</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=k>operator</span> <span class=k>fun</span> <span class=nf>plus</span><span class=p>(</span><span class=n>other</span> <span class=p>:</span> <span class=n>Money</span><span class=p>):</span> <span class=n>Money</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>Money</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=n>amount</span> <span class=p>+</span> <span class=n>other</span><span class=p>.</span><span class=n>amount</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//아래와 같이 사용 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>sumMoney</span> <span class=p>=</span> <span class=n>money1</span> <span class=p>+</span> <span class=n>money2</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=5-조건문>5. 조건문</h3><ul><li>if문은 Kotlin에선 expression (Java에선 statement)<ul><li>expression : 하나의 값으로 평가될 수 있는 문장</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Java에선 불가능하지만 Kotlin에선 if문도 expression이라 OK 
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>getPassOrFail</span><span class=p>(</span><span class=n>score</span> <span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>String</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=k>if</span> <span class=p>(</span><span class=n>score</span> <span class=o>&gt;=</span> <span class=m>50</span><span class=p>){</span> <span class=s2>&#34;P&#34;</span> <span class=p>}</span> <span class=k>else</span> <span class=p>{</span> <span class=s2>&#34;F&#34;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>Java에선 삼항연산자가 expression이지만, Kotlin은 if문이 expression이므로 삼항 연산자가 필요x</p><ul><li>따라서 삼항 연산자가 없음</li></ul></li><li><p>When문</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 기본 사용, Switch 대신
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>getGradeWithSwitch</span><span class=p>(</span><span class=n>score</span><span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>String</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=k>when</span><span class=p>(</span><span class=n>score</span> <span class=p>/</span> <span class=m>10</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=m>9</span> <span class=o>-&gt;</span> <span class=s2>&#34;A&#34;</span>
+</span></span><span class=line><span class=cl>		<span class=m>8</span> <span class=o>-&gt;</span> <span class=s2>&#34;B&#34;</span>
+</span></span><span class=line><span class=cl>		<span class=m>7</span> <span class=o>-&gt;</span> <span class=s2>&#34;C&#34;</span>
+</span></span><span class=line><span class=cl>		<span class=k>else</span> <span class=o>-&gt;</span> <span class=s2>&#34;D&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 좌변에 expression 사용도 가능, is Type 등도 사용 OK
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>when</span><span class=p>(</span><span class=n>score</span><span class=p>){</span>
+</span></span><span class=line><span class=cl><span class=k>in</span> <span class=m>90.</span><span class=p>.</span><span class=m>99</span> <span class=o>-&gt;</span> <span class=s2>&#34;A&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>in</span> <span class=m>80.</span><span class=p>.</span><span class=m>89</span> <span class=o>-&gt;</span> <span class=s2>&#34;B&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>..</span><span class=p>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 여러 조건 동시 검사
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>when</span> <span class=p>(</span><span class=n>number</span><span class=p>){</span>
+</span></span><span class=line><span class=cl><span class=m>1</span><span class=p>,</span><span class=m>0</span><span class=p>,-</span><span class=m>1</span> <span class=o>-&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;1,0,-1입니다&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>else</span> <span class=o>-&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;아닙니다&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 조건문처럼 사용
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>printOdd</span><span class=p>(</span><span class=n>score</span><span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>Int</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>when</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>score</span> <span class=p>%</span> <span class=m>2</span> <span class=o>==</span> <span class=m>1</span> <span class=o>-&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;홀수&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>score</span> <span class=p>%</span> <span class=m>2</span> <span class=o>==</span> <span class=m>0</span> <span class=o>-&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;짝수&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>else</span> <span class=o>-&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;넌머임&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=6-반복문>6. 반복문</h3><ul><li>forEach</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>numbers</span> <span class=p>=</span> <span class=n>listOf</span><span class=p>(</span><span class=m>1L</span><span class=p>,</span> <span class=m>2L</span><span class=p>,</span> <span class=m>3L</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=p>(</span><span class=n>number</span> <span class=k>in</span> <span class=n>numbers</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=n>println</span><span class=p>(</span><span class=n>number</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Progression : 등차수열, Range (Range는 Progression을 상속받음)</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>intRange</span> <span class=p>=</span> <span class=m>1.</span><span class=p>.</span><span class=m>100</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=7-예외>7. 예외</h3><ul><li>try-catch-finally : 그대로 (단, kotlin에선 expression, return 등 사용 가능)</li><li>Kotlin에서는 모든 에러가 Unchecked Exception<ul><li>Checked : 무조건 처리해줘야 하는 Exception</li><li>Unchecked Exception : 꼭 처리하지 않아도 되는..</li></ul></li><li>try with resources</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// JAVA의 try with resources
+</span></span></span><span class=line><span class=cl><span class=c1>// Try가 끝나면 자동으로 닫아줌. 단 AutoCloseable 인터페이스의 구현체여야 함. 
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=n>void</span> <span class=n>readFile</span><span class=p>(</span><span class=n>String</span> <span class=n>path</span><span class=p>)</span> <span class=n>throws</span> <span class=n>IOException</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>try</span><span class=p>(</span><span class=n>BufferedReader</span> <span class=n>reader</span> <span class=p>=</span> <span class=n>new</span> <span class=n>BufferedReader</span><span class=p>(</span><span class=n>new</span> <span class=n>FileReader</span><span class=p>(</span><span class=n>path</span><span class=p>))){</span>
+</span></span><span class=line><span class=cl>		<span class=nc>System</span><span class=p>.</span><span class=k>out</span><span class=p>.</span><span class=n>println</span><span class=p>(</span><span class=n>reader</span><span class=p>.</span><span class=n>readLine</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//Kotlin에서 사용, use가 try with resources 비슷하게 작동
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>readFile</span><span class=p>(</span><span class=n>path</span><span class=p>:</span> <span class=n>String</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=n>BufferedReader</span><span class=p>(</span><span class=n>FileReader</span><span class=p>(</span><span class=n>path</span><span class=p>)).</span><span class=n>use</span> <span class=p>{</span> <span class=n>reader</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=n>reader</span><span class=p>.</span><span class=n>readLine</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=8-함수>8. 함수</h3><ul><li>기본</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//함수 본문이 식(Expression)으로만 이뤄져 있으면 = 사용 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>max</span><span class=p>(</span><span class=n>a</span><span class=p>:</span> <span class=n>Int</span><span class=p>,</span> <span class=n>b</span><span class=p>:</span> <span class=n>Int</span><span class=p>)</span> <span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=k>if</span><span class=p>(</span><span class=n>a</span> <span class=p>&gt;</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span><span class=n>a</span><span class=p>}</span> <span class=k>else</span> <span class=p>{</span><span class=n>b</span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Default paramters</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>fun</span> <span class=nf>repeat</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=n>str</span> <span class=p>:</span> <span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=n>num</span> <span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=m>3</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=n>useNewLine</span> <span class=p>:</span> <span class=n>Boolean</span> <span class=p>=</span> <span class=k>true</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span><span class=p>(</span><span class=n>i</span> <span class=k>in</span> <span class=m>1.</span><span class=p>.</span><span class=n>num</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span><span class=p>(</span><span class=n>useNewLine</span><span class=p>)</span> <span class=p>{</span> <span class=n>println</span><span class=p>(</span><span class=n>str</span><span class=p>)}</span> <span class=k>else</span><span class=p>{</span> <span class=n>print</span><span class=p>(</span><span class=n>str</span><span class=p>)</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>named argument ( 파라미터 이름을 명시 가능, builder 비슷하게 사용 가능)</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=n>repeat</span><span class=p>(</span><span class=n>str</span> <span class=p>=</span> <span class=s2>&#34;Hello, World&#34;</span><span class=p>,</span> <span class=n>useNewLine</span> <span class=p>=</span> <span class=k>true</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>// 이 경우, num은 지정되지 않았으므로 기본값 (3) 사용됨
+</span></span></span><span class=line><span class=cl><span class=c1>// builder 만들지 않고 builder처럼 사용 가능
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>가변인자 (vararg)</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=n>void</span> <span class=n>printAll</span><span class=p>(</span><span class=nc>String</span><span class=o>..</span><span class=p>.</span> <span class=n>strings</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span><span class=p>(</span><span class=n>String</span> <span class=n>str</span> <span class=p>:</span> <span class=n>strings</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=nc>System</span><span class=p>.</span><span class=k>out</span><span class=p>.</span><span class=n>println</span><span class=p>(</span><span class=n>str</span><span class=p>);</span>	
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>String</span><span class=p>[]</span> <span class=n>array</span> <span class=p>=</span> <span class=n>new</span> <span class=n>String</span><span class=p>[]{</span><span class=s2>&#34;Hello&#34;</span><span class=p>,</span> <span class=s2>&#34;World&#34;</span><span class=p>,</span> <span class=s2>&#34;!!&#34;</span><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=n>printAll</span><span class=p>(</span><span class=n>array</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>printAll</span><span class=p>(</span><span class=s2>&#34;Hello&#34;</span><span class=p>,</span> <span class=s2>&#34;World&#34;</span><span class=p>,</span> <span class=s2>&#34;!!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>printAll</span><span class=p>(</span><span class=k>vararg</span> <span class=n>strings</span> <span class=p>:</span> <span class=n>String</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=n>str</span> <span class=k>in</span> <span class=n>strings</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=n>str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>array</span> <span class=p>=</span> <span class=n>arrayOf</span><span class=p>(</span><span class=s2>&#34;Hello&#34;</span><span class=p>,</span> <span class=s2>&#34;World&#34;</span><span class=p>,</span> <span class=s2>&#34;!!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>printAll</span><span class=p>(*</span><span class=n>array</span><span class=p>)</span> <span class=c1>// spread 연산자
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>printAll</span><span class=p>(</span><span class=s2>&#34;Hello&#34;</span><span class=p>,</span> <span class=s2>&#34;World&#34;</span><span class=p>,</span> <span class=s2>&#34;!!&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=9-클래스>9. 클래스</h3><ul><li>클래스와 프로퍼티</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>class</span> <span class=nc>Person</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>val</span> <span class=py>name</span><span class=p>:</span><span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=k>var</span> <span class=py>age</span><span class=p>:</span><span class=n>Int</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 프로퍼티 접근처럼 getter,setter 접근
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>person</span><span class=p>.</span><span class=n>age</span> <span class=p>=</span> <span class=m>10</span>
+</span></span><span class=line><span class=cl><span class=n>println</span><span class=p>(</span><span class=n>person</span><span class=p>.</span><span class=n>age</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>생성자 검증, init</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>class</span> <span class=nc>Person</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>val</span> <span class=py>name</span><span class=p>:</span><span class=n>String</span> <span class=p>=</span> <span class=s2>&#34;Patrick&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=k>var</span> <span class=py>age</span><span class=p>:</span><span class=n>Int</span> <span class=p>=</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>init</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span><span class=p>(</span><span class=n>age</span> <span class=o>&lt;=</span> <span class=m>0</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>			<span class=k>throw</span> <span class=n>IllegalArgumentException</span><span class=p>(</span><span class=s2>&#34;나이는 </span><span class=si>${age}</span><span class=s2>일 수 없습니다.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Custom getter, Setter</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>class</span> <span class=nc>Person</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>val</span> <span class=py>name</span><span class=p>:</span><span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=k>var</span> <span class=py>age</span><span class=p>:</span><span class=n>Int</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=c1>// Property처럼 사용, 하나의 Expresson으로 표시되는 것을 =으로 표시
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>val</span> <span class=py>isAdult</span><span class=p>:</span> <span class=n>Boolean</span>
+</span></span><span class=line><span class=cl>		<span class=k>get</span><span class=p>()</span> <span class=p>=</span> <span class=k>this</span><span class=p>.</span><span class=n>age</span> <span class=o>&gt;=</span> <span class=m>20</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=c1>//위와 같은 표현식
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>fun</span> <span class=nf>isAdult</span><span class=p>():</span> <span class=n>Boolean</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=k>this</span><span class=p>.</span><span class=n>age</span> <span class=o>&gt;=</span> <span class=m>20</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=10-상속>10. 상속</h3><ul><li>추상 클래스</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 기본적으로 public class 
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>abstract</span> <span class=k>class</span> <span class=nc>Animal</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>protected</span> <span class=k>val</span> <span class=py>species</span><span class=p>:</span><span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=k>protected</span> <span class=k>val</span> <span class=py>legCount</span><span class=p>:</span><span class=n>Int</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>abstract</span> <span class=k>fun</span> <span class=nf>move</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>상속 받는 클래스</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=k>class</span> <span class=nc>JavaPenguin</span> <span class=n>extends</span> <span class=n>JavaAnimal</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=c1>// 하위 객체에서 추가된 필드
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>private</span> <span class=k>final</span> <span class=n>int</span> <span class=n>wingCount</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>JavaPenguin</span><span class=p>(</span><span class=n>String</span> <span class=n>species</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=k>super</span><span class=p>(</span><span class=n>species</span><span class=p>,</span> <span class=m>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>this</span><span class=p>.</span><span class=n>wingCount</span> <span class=p>=</span> <span class=m>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>void</span> <span class=n>move</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=nc>System</span><span class=p>.</span><span class=k>out</span><span class=p>.</span><span class=n>println</span><span class=p>(</span><span class=s2>&#34;penguin is moving&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 상위 메소드의 getter를 오버라이드
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>int</span> <span class=n>getLegCount</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=k>super</span><span class=p>.</span><span class=n>legCount</span> <span class=p>+</span> <span class=k>this</span><span class=p>.</span><span class=n>wingCount</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>class</span> <span class=nc>penguin</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=n>species</span> <span class=p>:</span> <span class=n>String</span> <span class=c1>// 주 생성자
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>)</span> <span class=p>:</span> <span class=n>Animal</span><span class=p>(</span><span class=n>species</span><span class=p>,</span> <span class=m>2</span><span class=p>)</span> <span class=c1>//Animal을 상속받아 Animal의 생성자를 바로 호출 {
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>	<span class=k>private</span> <span class=k>val</span> <span class=py>wingCount</span><span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=c1>// Annotation 대신 예약어 사용
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>override</span> <span class=k>fun</span> <span class=nf>move</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=s2>&#34;cat is moving&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>override</span> <span class=k>val</span> <span class=py>legCount</span><span class=p>:</span> <span class=n>Int</span>
+</span></span><span class=line><span class=cl>		<span class=k>get</span><span class=p>()</span> <span class=p>=</span> <span class=k>super</span><span class=p>.</span><span class=n>legCount</span> <span class=p>+</span> <span class=k>this</span><span class=p>.</span><span class=n>wingCount</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 단, 코틀린은 기본적으로 모두 final 키워드가 붙여져 있기 때문에, override 하려면 open 필요
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>abstract</span> <span class=k>class</span> <span class=nc>Animal</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>protected</span> <span class=k>val</span> <span class=py>species</span><span class=p>:</span><span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=k>protected</span> <span class=k>open</span> <span class=k>val</span> <span class=py>legCount</span><span class=p>:</span> <span class=n>Int</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>abstract</span> <span class=k>fun</span> <span class=nf>move</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Interface</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=k>interface</span> <span class=nc>JavaSwimable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>default</span> <span class=n>void</span> <span class=n>act</span><span class=p>(){</span><span class=nc>System</span><span class=p>.</span><span class=k>out</span><span class=p>.</span><span class=n>println</span><span class=p>(</span><span class=s2>&#34;swim!&#34;</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>interface</span> <span class=nc>JavaFlyable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>default</span> <span class=n>void</span> <span class=n>act</span><span class=p>(){</span><span class=nc>System</span><span class=p>.</span><span class=k>out</span><span class=p>.</span><span class=n>println</span><span class=p>(</span><span class=s2>&#34;swim!&#34;</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>interface</span> <span class=nc>Swimable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>//Default 키워드 없이 구현 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>fun</span> <span class=nf>act</span><span class=p>(){</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;swim!&#34;</span><span class=p>)</span> <span class=p>}</span> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>interface</span> <span class=nc>Flyable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>fun</span> <span class=nf>act</span><span class=p>(){</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;fly!&#34;</span><span class=p>)</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Interface 구현 클래스</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=k>final</span> <span class=k>class</span> <span class=nc>JavaPenguin</span> <span class=n>extends</span> <span class=n>JavaAnimal</span> <span class=n>implements</span> <span class=n>JavaFlyable</span><span class=p>,</span> <span class=n>JavaSwimable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=c1>// 생성자 구현.. (생략됨)
+</span></span></span><span class=line><span class=cl><span class=c1></span>	
+</span></span><span class=line><span class=cl>	<span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>void</span> <span class=n>act</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=nc>JavaSwimable</span><span class=p>.</span><span class=k>super</span><span class=p>.</span><span class=n>act</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>		<span class=nc>JavaFlyable</span><span class=p>.</span><span class=k>super</span><span class=p>.</span><span class=n>act</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>class</span> <span class=nc>Penguin</span><span class=p>():</span> <span class=n>Animal</span><span class=p>(</span><span class=n>species</span><span class=p>,</span> <span class=m>2</span><span class=p>),</span> <span class=n>Swimable</span><span class=p>,</span> <span class=n>Flyable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>override</span> <span class=k>fun</span> <span class=nf>act</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>		<span class=k>super</span><span class=p>&lt;</span><span class=n>Swimable</span><span class=p>&gt;.</span><span class=n>act</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>		<span class=k>super</span><span class=p>&lt;</span><span class=n>Flyable</span><span class=p>&gt;.</span><span class=n>act</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Backing Field (getter, setter가 제공되는 property) 를 Interface에 선언 가능</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>interface</span> <span class=nc>Swimable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// 하위 클래스에서 구현을 기대하는 property
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>val</span> <span class=py>swimAbility</span><span class=p>:</span> <span class=n>Int</span> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Penguin</span><span class=p>():</span> <span class=n>Swimable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// 다음과 같이 구현
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>override</span> <span class=k>val</span> <span class=py>swimAbility</span><span class=p>:</span> <span class=n>Int</span>
+</span></span><span class=line><span class=cl>		<span class=k>get</span><span class=p>()</span> <span class=p>=</span> <span class=m>3</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>클래스 상속시 주의할 점 (초기화 실행 순서)<ul><li>상위 Class의 Constructor, Init 블락에선 하위 클래스의 Field에 접근하지 말 것!</li><li>상위 Class의 Constructor, Init 블럭에 사용되는 Property는 open 사용하지 말자!</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>open</span> <span class=k>class</span> <span class=nc>Base</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>open</span> <span class=k>val</span> <span class=py>number</span> <span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=m>100</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>init</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=s2>&#34;Base Class&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=n>number</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Derived</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>override</span> <span class=k>val</span> <span class=py>number</span><span class=p>:</span> <span class=n>Int</span>
+</span></span><span class=line><span class=cl><span class=p>):</span> <span class=n>Base</span><span class=p>(</span><span class=n>number</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>init</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=s2>&#34;Derived class&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Derived 클래스 인스턴스화시 출력
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>	Output : 
+</span></span></span><span class=line><span class=cl><span class=cm>	Base Class
+</span></span></span><span class=line><span class=cl><span class=cm>	0
+</span></span></span><span class=line><span class=cl><span class=cm>	Derived Class 
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 이유 : 상위 Class(Base)에서 number 호출 시, 하위 Class의 Number 가져옴.
+</span></span></span><span class=line><span class=cl><span class=c1>// 하지만 상위 Class(Base) contstructor 실행 단계라 하위 Class(Dervied) 초기화 안 된 상태
+</span></span></span><span class=line><span class=cl><span class=c1>// 따라서 0 출력
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>키워드 정리<ul><li>final (기본, 생략가능) : override 할 수 없게 막는다.</li><li>open : override를 열어 준다.</li><li>abstract : 반드시 override 해야 한다.</li><li>override: 상위 타입을 오버라이드 한다. (Java에선 Annotation이지만 Kotlin에선 키워드)</li></ul></li></ul><h3 id=11-접근-제어>11. 접근 제어</h3><ul><li><p>Java, Kotlin의 접근 제어</p><ul><li>Public<ul><li>Java/Kotlin : 모든 곳에서 접근 가능</li></ul></li><li>Protected<ul><li>Java : 같은 패키지, 또는 하위 클래스에서 접근 가능</li><li>Kotlin : <strong>선언된 클래스</strong>, 또는 하위 클래스에서만 접근 가능</li></ul></li><li>default(Java) / internal(Kotlin)<ul><li>Java : 같은 패키지에서만 접근 가능</li><li>Kotlin : 같은 Module에서만 접근 가능<ul><li>Module : 한 번에 컴파일되는 Kotlin 코드 (같은 Gradle 프로젝트 등..)</li></ul></li></ul></li><li>private<ul><li>Java/Kotlin : 선언된 클래스 내에서만 접근 가능</li></ul></li></ul></li><li><p>Property 접근 지시어</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>class</span> <span class=nc>Car</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// name에 대한 getter를 internal로
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>internal</span> <span class=k>val</span> <span class=py>name</span> <span class=p>:</span> <span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=k>var</span> <span class=py>owner</span> <span class=p>:</span> <span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=n>_price</span> <span class=p>:</span> <span class=n>Int</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// Setter만 private로
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>var</span> <span class=py>price</span> <span class=p>=</span> <span class=n>_price</span>
+</span></span><span class=line><span class=cl>		<span class=k>private</span> <span class=k>set</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Java/Kotlin 혼합 사용시 주의점<ul><li>Internal 키워드는 Bytecode 변환 (Java 변환시) public으로 변환됨</li><li>따라서 Java 코드에서는, Kotlin에서의 Internal 키워드를 가져올 수 있음</li><li>Kotlin의 Prtotected 또한 마찬가지 (Java에서는 같은 패키지에서도 접근 가능)</li></ul></li></ul><h3 id=12-object>12. object</h3><ul><li>static 함수와 변수<ul><li>static : 정적으로 인스턴스끼리의 값을 공유</li><li>companion object : 클래스와 동행하는 유일한 object</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=k>class</span> <span class=nc>JavaPerson</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=n>static</span> <span class=k>final</span> <span class=n>int</span> <span class=n>MIN_AGE</span> <span class=p>=</span> <span class=m>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 정적 팩토리 메소드
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>public</span> <span class=n>static</span> <span class=n>JavaPerson</span> <span class=n>newBaby</span><span class=p>(</span><span class=n>String</span> <span class=n>name</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>new</span> <span class=n>JavaPerson</span><span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=n>MIN_AGE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=n>String</span> <span class=n>name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=n>int</span> <span class=n>age</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=n>JavaPerson</span><span class=p>(</span><span class=n>String</span> <span class=n>name</span><span class=p>,</span> <span class=n>int</span> <span class=n>age</span><span class=p>){</span> <span class=k>this</span><span class=p>.</span><span class=n>name</span> <span class=p>=</span> <span class=n>name</span><span class=p>;</span> <span class=k>this</span><span class=p>.</span><span class=n>age</span> <span class=p>=</span> <span class=n>age</span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>class</span> <span class=nc>Person</span> <span class=k>private</span> <span class=k>constructor</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=py>name</span> <span class=p>:</span> <span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=py>age</span> <span class=p>:</span> <span class=n>Int</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=c1>//Static 대신 companion Object 사용
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>companion</span> <span class=k>object</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>				<span class=c1>// const가 있으면 컴파일시 할당, 없으면 런타임에 할당
+</span></span></span><span class=line><span class=cl><span class=c1></span>				<span class=c1>// 기본 타입 + String에만 할당 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>const</span> <span class=k>val</span> <span class=py>MIN</span><span class=n>_AGE</span> <span class=p>=</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>        <span class=k>fun</span> <span class=nf>newBaby</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=n>String</span><span class=p>):</span> <span class=n>Person</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=n>Person</span><span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=n>MIN_AGE</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Person.Companion.newBaby(&#34;ABC&#34;) 로 호출 가,
+</span></span></span><span class=line><span class=cl><span class=c1>// 혹은 다음과 같이 @JvmStatic 어노테이션 통해 Java Static처럼 바로 접근 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>	@JvmStatic
+</span></span></span><span class=line><span class=cl><span class=cm>	fun newBaby(name: String) : Person{...}
+</span></span></span><span class=line><span class=cl><span class=cm>
+</span></span></span><span class=line><span class=cl><span class=cm>	이후
+</span></span></span><span class=line><span class=cl><span class=cm>	Person.newBaby(&#34;ABC&#34;) 사용 가능
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Companion Object 활용 (Java와의 차이점)<ul><li>하나의 객체로 간주됨</li><li>따라서 이름을 붙이거나 Interface 만들 수 있음</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>interface</span> <span class=nc>Log</span><span class=p>{</span> <span class=k>fun</span> <span class=nf>log</span><span class=p>()</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Person</span> <span class=k>private</span> <span class=k>constructor</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=py>name</span> <span class=p>:</span> <span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=k>var</span> <span class=py>age</span> <span class=p>:</span> <span class=n>Int</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=c1>// 이름 설정 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>companion</span> <span class=k>object</span> <span class=n>Factory</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>const</span> <span class=k>val</span> <span class=py>MIN</span><span class=n>_AGE</span> <span class=p>=</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>        <span class=k>fun</span> <span class=nf>newBaby</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=n>String</span><span class=p>):</span> <span class=n>Person</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=n>Person</span><span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=n>MIN_AGE</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>				<span class=k>override</span> <span class=k>fun</span> <span class=nf>log</span><span class=p>(){</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;I am companion object!&#34;</span><span class=p>)</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 이름이 있다면 이름을 바탕으로 접근 가능
+</span></span></span><span class=line><span class=cl><span class=c1>// Person.Factory.newBaby(&#34;ABC&#34;);
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Singleton<ul><li>object 키워드 사용</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=k>class</span> <span class=nc>JavaSingleton</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>private</span> <span class=n>static</span> <span class=k>final</span> <span class=n>JavaSingleton</span> <span class=n>INSTANCE</span> <span class=p>=</span> <span class=n>new</span> <span class=n>JavaSingleton</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>	<span class=k>private</span> <span class=n>JavaSingleton</span><span class=p>(){}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>static</span> <span class=n>Javasingleton</span> <span class=n>getInstance</span><span class=p>(){</span> <span class=k>return</span> <span class=n>INSTANCE</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>object</span> <span class=nc>Singleton</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>var</span> <span class=py>a</span><span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 이후 Singleton.a 와 같이 사용 가능
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>익명 클래스 (Anonymous class)<ul><li>특정 Interface, Class 상속받은 구현체를 일회성으로 사용할 때</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>private</span> <span class=n>static</span> <span class=n>void</span> <span class=n>moveSomething</span><span class=p>(</span><span class=n>Movable</span> <span class=n>movable</span><span class=p>){</span> <span class=n>movable</span><span class=p>.</span><span class=n>move</span><span class=p>();</span> <span class=n>movable</span><span class=p>.</span><span class=n>fly</span><span class=p>();</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//익명 클래스 구현
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>moveSomething</span><span class=p>(</span><span class=n>new</span> <span class=n>Movable</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>	<span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>void</span> <span class=n>move</span><span class=p>(){</span><span class=nc>System</span><span class=p>.</span><span class=k>out</span><span class=p>.</span><span class=n>println</span><span class=p>(</span><span class=s2>&#34;move~&#34;</span><span class=p>);}</span>
+</span></span><span class=line><span class=cl>	<span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>void</span> <span class=n>fly</span><span class=p>(){</span><span class=nc>System</span><span class=p>.</span><span class=k>out</span><span class=p>.</span><span class=n>println</span><span class=p>(</span><span class=s2>&#34;fly~&#34;</span><span class=p>);}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>private</span> <span class=k>fun</span> <span class=nf>moveSomething</span><span class=p>(</span><span class=n>movable</span><span class=p>:</span><span class=n>Movable</span><span class=p>){</span> <span class=n>movable</span><span class=p>.</span><span class=n>move</span><span class=p>();</span> <span class=n>movable</span><span class=p>.</span><span class=n>fly</span><span class=p>();}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Object 키워드 사용해서 익명 클래스 구현
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>moveSomething</span><span class=p>(</span><span class=k>object</span> <span class=err>: </span><span class=nc>Movable</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>override</span> <span class=k>fun</span> <span class=nf>move</span><span class=p>(){</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;move~&#34;</span><span class=p>)</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>override</span> <span class=k>fun</span> <span class=nf>fly</span><span class=p>(){</span><span class=n>println</span><span class=p>(</span><span class=s2>&#34;fly~&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=13-중첩-클래스-nested-class>13. 중첩 클래스 (nested class)</h3><ul><li>자주 안 쓸 것 같아서 생략..</li></ul><h3 id=14-data-class--enum-class-sealed-classinterface>14. Data class, Enum class, Sealed Class/Interface</h3><ul><li>Data class<ul><li>DTO를 편하게 사용 가능</li><li>field, constructor, getter, equals, hashCode, toString 를 기본적으로 제공</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>data</span> <span class=k>class</span> <span class=nc>PersonDto</span><span class=p>(</span><span class=k>val</span> <span class=py>name</span><span class=p>:</span> <span class=n>String</span><span class=p>,</span> <span class=k>val</span> <span class=py>age</span><span class=p>:</span> <span class=n>Int</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// named Arguments를 활용하면 Builder 패턴도 사용하는 것과 같은 효과
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>PersonDto</span><span class=p>(</span><span class=n>name</span><span class=p>=</span><span class=s2>&#34;Patrick&#34;</span><span class=p>,</span> <span class=n>age</span><span class=p>=</span><span class=m>20</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Enum class</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>public</span> <span class=k>enum</span> <span class=n>JavaCountry</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>KOREA</span><span class=p>(</span><span class=s2>&#34;KO&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>	<span class=n>AMERICA</span><span class=p>(</span><span class=s2>&#34;US&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>private</span> <span class=k>final</span> <span class=n>String</span> <span class=n>code</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=n>JavaCountry</span><span class=p>(</span><span class=n>String</span> <span class=n>code</span><span class=p>)</span> <span class=p>{</span> <span class=k>this</span><span class=p>.</span><span class=n>code</span><span class=p>=</span><span class=n>code</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=n>String</span> <span class=n>getCode</span><span class=p>()</span> <span class=p>{</span> <span class=k>return</span> <span class=k>this</span><span class=p>.</span><span class=n>code</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Kotlin (동일 코드)
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>enum</span> <span class=k>class</span> <span class=nc>Country</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>private</span> <span class=k>val</span> <span class=py>code</span><span class=p>:</span> <span class=n>String</span>
+</span></span><span class=line><span class=cl><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=n>KOREA</span><span class=p>(</span><span class=s2>&#34;KO&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>	<span class=n>AMERICA</span><span class=p>(</span><span class=s2>&#34;US&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// When절을 활용해 간편하게 처리
+</span></span></span><span class=line><span class=cl><span class=c1>// 또한, 이렇게 사용하는 경우 ENUM CLASS에 값이 생기면 컴파일러가 알려줌
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>handleCountry</span><span class=p>(</span><span class=n>country</span><span class=p>:</span> <span class=n>Country</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=k>when</span><span class=p>(</span><span class=n>country</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=nc>Country</span><span class=p>.</span><span class=n>KOREA</span> <span class=o>-&gt;</span> <span class=n>LOGIC</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>		<span class=nc>Country</span><span class=p>.</span><span class=n>AMERICA</span> <span class=o>-&gt;</span> <span class=n>LOGIC</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>		<span class=c1>// ELSE 없이도 사용 가능!
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Sealed Class/Interface<ul><li>상속이 가능한 추상 클래스를 만들고 싶은데, 외부에서는 상속하지 못 했으면 좋겠다</li><li>컴파일 타임에 하위 클래스 타입을 모두 기억해, 런타임때 다른 클래스 타입 추가 불가</li><li>하위 클래스는 같은 패키지에 있어야 함</li><li>Enum과의 차이점<ul><li>Class 상속 가능</li><li>Enum은 인스턴스가 싱글톤이지만, Sealed Class는 멀티 인스턴스 가능</li></ul></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>sealed</span> <span class=k>class</span> <span class=nc>Car</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=k>val</span> <span class=py>name</span><span class=p>:</span><span class=n>String</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=k>val</span> <span class=py>price</span><span class=p>:</span><span class=n>Long</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Avante</span><span class=p>:</span> <span class=n>Car</span><span class=p>(</span><span class=s2>&#34;Avante&#34;</span><span class=p>,</span><span class=m>1</span><span class=n>_000L</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Sonata</span><span class=p>:</span> <span class=n>Car</span><span class=p>(</span><span class=s2>&#34;Sonata&#34;</span><span class=p>,</span><span class=m>2</span><span class=n>_000L</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Grandeur</span><span class=p>:</span> <span class=n>Car</span><span class=p>(</span><span class=s2>&#34;Grandeur&#34;</span><span class=p>,</span><span class=m>3</span><span class=n>_000L</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>// 위 Enum class처럼 when절 사용 가능
+</span></span></span></code></pre></td></tr></table></div></div><hr><h3 id=15-collections-컬렉션>15. Collections (컬렉션)</h3><ul><li><p>Collections</p><ul><li>컬렉션이 불변인지, 가변인지 설정 필요</li><li>Mutable(가변) 컬렉션 : element 추가,삭제 가능</li><li>Immutable(불변) 컬렉션 : element 추가,삭제 불가<ul><li>단, 불변 컬렉션이라도 Reference Type의 엘리먼트 필드는 바꿀 수 있다.</li><li>예를 들어서, Index 1번 데이터에 접근해서 Price 필드를 1000 → 2000원으로 바꾸는건 가능</li></ul></li></ul></li><li><p>List</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=cm>/* 기본 구현체 : ArrayList */</span>
+</span></span><span class=line><span class=cl><span class=c1>// 불변 리스트 생성
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>numbers</span> <span class=p>=</span> <span class=n>listOf</span><span class=p>(</span><span class=m>100</span><span class=p>,</span><span class=m>200</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>// 가변 리스트 생성
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>mutableNumbers</span> <span class=p>=</span> <span class=n>mutableListOf</span><span class=p>(</span><span class=m>100</span><span class=p>,</span><span class=m>200</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>// 빈 리스트 생성
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>emptyList</span> <span class=p>=</span> <span class=n>emptyList</span><span class=p>&lt;</span><span class=n>Int</span><span class=p>&gt;()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//numbers.get(0)과 동일
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>numbers</span><span class=p>[</span><span class=m>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span><span class=p>(</span><span class=n>number</span> <span class=k>in</span> <span class=n>numbers</span><span class=p>){</span><span class=n>println</span><span class=p>(</span><span class=n>number</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl><span class=c1>//Index를 같이 가져와야 할 때
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>for</span><span class=p>((</span><span class=n>idx</span><span class=p>,</span> <span class=n>number</span><span class=p>)</span> <span class=k>in</span> <span class=n>numbers</span><span class=p>.</span><span class=n>withIndex</span><span class=p>()){</span><span class=n>println</span><span class=p>(</span><span class=s2>&#34;</span><span class=si>${idx}</span><span class=s2>, </span><span class=si>${number}</span><span class=s2>&#34;</span><span class=p>)}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Set</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=cm>/* 기본 구현체 : LinkedHashSet */</span>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>numbers</span> <span class=p>=</span> <span class=n>setOf</span><span class=p>(</span><span class=m>100</span><span class=p>,</span><span class=m>200</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Map</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>weekMap</span><span class=p>=</span> <span class=n>mutableMapOf</span><span class=p>&lt;</span><span class=n>Int</span><span class=p>,</span> <span class=n>String</span><span class=p>&gt;()</span>
+</span></span><span class=line><span class=cl><span class=c1>// 배열처럼 접근 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>weekMap</span><span class=p>[</span><span class=m>1</span><span class=p>]</span> <span class=p>=</span> <span class=s2>&#34;MONDAY&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>weekMap</span><span class=p>[</span><span class=m>2</span><span class=p>]</span> <span class=p>=</span> <span class=s2>&#34;TUESDAY&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// to를 사용해 초기화도 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>mapOf</span><span class=p>(</span><span class=m>1</span> <span class=n>to</span> <span class=s2>&#34;MONDAY&#34;</span><span class=p>,</span> <span class=m>2</span> <span class=n>to</span> <span class=s2>&#34;TUESDAY&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span><span class=p>(</span><span class=n>key</span> <span class=k>in</span> <span class=n>weekMap</span><span class=p>.</span><span class=n>keys</span><span class=p>){</span><span class=n>println</span><span class=p>(</span><span class=n>key</span><span class=p>)</span> <span class=n>println</span><span class=p>(</span><span class=n>weekMap</span><span class=p>[</span><span class=n>key</span><span class=p>])</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>for</span><span class=p>((</span><span class=n>key</span><span class=p>,</span> <span class=k>value</span><span class=p>)</span> <span class=k>in</span> <span class=n>weekMap</span><span class=p>.</span><span class=n>entries</span><span class=p>){</span><span class=n>println</span><span class=p>(</span><span class=n>key</span><span class=p>)</span> <span class=n>println</span><span class=p>(</span><span class=k>value</span><span class=p>)}</span> 
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>컬렉션의 null 가능성</p><ul><li><code>List&lt;Int?></code> : List 자체는 null X, 리스트 안에는 nullable</li><li><code>List&lt;Int>?</code> : List 자체는 nullable, 리스트 안에는 null X</li><li><code>List&lt;Int?>?</code> : List 자체도 nullable, 리스트 안에도 nullable</li></ul></li><li><p>Java와 혼용시 주의할 점</p><ul><li>Java는 불변/가변 리스트를 구분하지 않음<ul><li>Kotlin의 불변 리스트를, Java에서 가변 리스트처럼 사용할 수 있음</li><li>Kotlin의 Non-null 리스트를, Java에서 null을 추가할 수 있음</li><li>Kotlin에서 Collections.unmodifiable을 사용하거나, 방어 로직 사용</li></ul></li><li>Platform Type으로 타입 문제 생길 수 있음</li></ul></li></ul><h3 id=16-extension확장-infix중위--inline-local지역-함수>16. Extension(확장), Infix(중위) , inline, Local(지역) 함수</h3><ul><li>확장 함수<ul><li>Kotlin : Java와의 100% 호환성을 목표로함<ul><li>그래서 Java로 만들어진 라이브러리에 Kotlin 코드가 추가 가능하면 좋겠다</li><li>클래스 내부 메소드처럼 사용하지만, 코드는 외부에 작성할 수 있게 하자!</li></ul></li><li>제한 :<ul><li>확장함수가 public인데, private, protected 멤버를 가져오면 캡슐화가 깨지므로..<ul><li>캡슐화 유지 위해, private, proteced 멤버 가져올 수 없음</li></ul></li><li>멤버함수/ 확장함수의 시그니쳐(이름) 같은 경우<ul><li>멤버 함수가 우선적으로 호출</li><li>따라서, 멤버함수가 이후 추가된다면 오류 생길 수도 있다.</li></ul></li></ul></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>// String 클래스를 확장
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>String</span><span class=p>.</span><span class=n>lastChar</span><span class=p>(){</span> <span class=k>return</span> <span class=k>this</span><span class=p>[</span><span class=k>this</span><span class=p>.</span><span class=n>length</span> <span class=p>-</span> <span class=m>1</span><span class=p>]</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 이후 Kotlin에선 다음과 같이 사용 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>str</span> <span class=p>=</span> <span class=s2>&#34;ABC&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>println</span><span class=p>(</span><span class=n>str</span><span class=p>.</span><span class=n>lastChar</span><span class=p>());</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>중위 함수<ul><li>변수, argument가 각각 하나씩만 있는 경우</li><li>var.functionName(argument) 대신</li><li>var functionName argument로 호출 가능</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>infix</span> <span class=k>fun</span> <span class=nf>Int</span><span class=p>.</span><span class=n>add</span><span class=p>(</span><span class=n>other</span><span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>Int</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=k>this</span> <span class=p>+</span> <span class=n>other</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 다음과 같이 호출 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=m>3</span> <span class=n>add</span> <span class=m>4</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>인라인 함수<ul><li>우리가 아는 그 인라인 함수..</li><li>함수를 파라미터로 전달하는 오버헤드 줄일 수 있음</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>inline</span> <span class=k>fun</span> <span class=nf>Int</span><span class=p>.</span><span class=n>add</span><span class=p>(</span><span class=n>other</span><span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>Int</span><span class=p>{</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>지역 함수<ul><li>함수 안의 함수</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>createPerson</span><span class=p>(</span><span class=n>firstName</span><span class=p>:</span> <span class=n>String</span><span class=p>,</span> <span class=n>lastName</span><span class=p>:</span><span class=n>String</span><span class=p>):</span> <span class=n>Person</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span><span class=p>(</span><span class=n>firstName</span><span class=p>.</span><span class=n>isEmpty</span><span class=p>()){</span> <span class=k>throw</span> <span class=n>IllegalArgumentException</span><span class=p>(</span><span class=s2>&#34;에러!!&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span><span class=p>(</span><span class=n>lastName</span><span class=p>:</span><span class=nc>String</span><span class=p>.</span><span class=n>isEmpty</span><span class=p>()){</span> <span class=k>throw</span> <span class=n>IllegalArgumentException</span><span class=p>(</span><span class=s2>&#34;에러!!&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>Person</span><span class=p>(</span><span class=n>firstName</span><span class=p>,</span> <span class=n>lastName</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Local 함수 사용
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>createPerson</span><span class=p>(</span><span class=n>firstName</span><span class=p>:</span> <span class=n>String</span><span class=p>,</span> <span class=n>lastName</span><span class=p>:</span><span class=n>String</span><span class=p>):</span> <span class=n>Person</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// 함수 속 함수
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>fun</span> <span class=nf>validateName</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=n>String</span><span class=p>){</span><span class=k>if</span><span class=p>(</span><span class=n>name</span><span class=p>.</span><span class=n>isEmpty</span><span class=p>()){</span><span class=k>throw</span> <span class=n>IllegalArgumentException</span><span class=p>(</span><span class=s2>&#34;에러!!&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=n>validateName</span><span class=p>(</span><span class=n>firstName</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>validateName</span><span class=p>(</span><span class=n>lastName</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>Person</span><span class=p>(</span><span class=n>firstName</span><span class=p>,</span> <span class=n>lastName</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=17-lambda>17. lambda</h3><ul><li><p>Java에서는 함수를 변수 할당, 파라미터로 전달 불가 (1급 객체 X)</p><ul><li>Fruit::isApple 처럼 가능한 것 처럼 보이지만, 실제로는 Predicate라는 Interface를 넘김</li></ul></li><li><p>Kotlin에서는 함수를 변수 할당,파라미터로 전달 가능 (1급 객체 O)</p></li><li><p>lambda 생성, 호출</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>// 함수의 Type도 다음과 같이 설정 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>isApple</span> <span class=p>:</span> <span class=p>(</span><span class=n>Fruit</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Boolean</span> 
+</span></span><span class=line><span class=cl><span class=p>=</span> <span class=k>fun</span><span class=p>(</span><span class=n>fruit</span><span class=p>:</span> <span class=n>Fruit</span><span class=p>):</span> <span class=n>Boolean</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 바로 위와 동일한 코드
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>isApple2</span> <span class=p>=</span> <span class=p>{</span><span class=n>fruit</span><span class=p>:</span> <span class=n>Fruit</span> <span class=o>-&gt;</span> <span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>isApple3</span> <span class=p>=</span> <span class=p>{</span> <span class=n>fruit</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl><span class=n>println</span><span class=p>(</span><span class=s2>&#34;사과만 받는 함수입니다.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span> <span class=c1>// 여러 줄 lambda에서 return 생략 시, 마지막 줄이 자동으로 return됨
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// labmda 호출, 동일한 코드
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>isApple</span><span class=p>(</span><span class=n>Fruit</span><span class=p>(</span><span class=s2>&#34;사과&#34;</span><span class=p>,</span> <span class=m>1000</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1>// 명시적으로 호출
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>isApple</span><span class=p>.</span><span class=n>invoke</span><span class=p>(</span><span class=n>Fruit</span><span class=p>(</span><span class=s2>&#34;사과&#34;</span><span class=p>,</span> <span class=m>1000</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Parameter로 함수 받기</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 함수 Type을 적어서, 함수를 받을 수 잇다.
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>filterFruits</span><span class=p>(</span><span class=n>fruits</span><span class=p>:</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;,</span> <span class=n>filterFunc</span> <span class=p>:</span> <span class=p>(</span><span class=n>Fruit</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Boolean</span><span class=p>)</span> <span class=p>:</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;{</span>
+</span></span><span class=line><span class=cl>	<span class=k>val</span> <span class=py>results</span> <span class=p>=</span> <span class=n>mutableListOf</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;()</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span><span class=p>(</span><span class=n>fruit</span> <span class=k>in</span> <span class=n>fruits</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span><span class=p>(</span><span class=n>filterFunc</span><span class=p>(</span><span class=n>fruit</span><span class=p>)){</span> <span class=n>results</span><span class=p>.</span><span class=n>add</span><span class=p>(</span><span class=n>fruit</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>results</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//호출시 다음과 같이 lambda 전달해서 사용 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>filterFruits</span><span class=p>(</span><span class=n>fruit</span><span class=p>,</span> <span class=p>{</span><span class=n>fruit</span> <span class=o>-&gt;</span> <span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span><span class=s2>&#34;사과&#34;</span><span class=p>}</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 이 때, lambda가 마지막 파라미터면 다음과 같이 사용 가능  (위 코드와 기능은 동일)
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>filterFruits</span><span class=p>(</span><span class=n>fruit</span><span class=p>)</span> <span class=p>{</span><span class=n>fruit</span> <span class=o>-&gt;</span> <span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span><span class=s2>&#34;사과&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 파라미터가 하나인 경우는, it으로 화살표 앞 부분 대체 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>filterFruits</span><span class=p>(</span><span class=n>fruit</span><span class=p>)</span> <span class=p>{</span><span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span><span class=s2>&#34;사과&#34;</span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Closure<ul><li>Kotlin은 lambda가 실행되는 시점에, 참조하고 있는 변수들을 모두 포획해서 값을 가진다.</li><li>아래 코드에선 targetFruitName =”수박” 시점을 포획해서 가지고 있는다.</li><li>이러한 데이터 구조를 Closure라고 부르고, 이런 구조여야 lambda가 1급 객체일 수 있다.</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>//Java
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>String</span> <span class=n>targetFruitName</span> <span class=p>=</span> <span class=s2>&#34;바나나&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>targetFruitName</span> <span class=p>=</span> <span class=s2>&#34;수박&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//Java에서는 Lambda에서 사용되는 변수는, final 변수거나, 
+</span></span></span><span class=line><span class=cl><span class=c1>//final 키워드가 붙지 않았어도 값이 실제로 변경되지 않는 (Effectively final) 변수만 사용 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>filterFruits</span><span class=p>(</span><span class=n>fruits</span><span class=p>,</span> <span class=p>(</span><span class=n>fruit</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>targetFruitName</span><span class=p>.</span><span class=n>equals</span><span class=p>(</span><span class=n>fruit</span><span class=p>.</span><span class=n>getName</span><span class=p>()));</span> <span class=c1>// ERROR!
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>//Kotlin
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>var</span> <span class=py>targetFruitName</span> <span class=p>=</span> <span class=s2>&#34;바나나&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>targetFruitName</span> <span class=p>=</span> <span class=s2>&#34;수박&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>filterFruits</span><span class=p>(</span><span class=n>fruits</span><span class=p>)</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=n>targetFruitName</span> <span class=p>}</span> <span class=c1>// It Works!
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=18-collection-내장-함수-fp>18. Collection 내장 함수+ FP</h3><ul><li><strong>filter</strong></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 사과만 받기
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>apples</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>filter</span> <span class=p>{</span> <span class=n>fruit</span> <span class=o>-&gt;</span> <span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span> <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>filterIndexed</strong> : filter에서 index가 필요한 경우</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>apples</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>filterIndexed</span> <span class=p>{</span> <span class=n>idx</span><span class=p>,</span> <span class=n>fruit</span> <span class=o>-&gt;</span> 
+</span></span><span class=line><span class=cl><span class=n>println</span><span class=p>(</span><span class=n>idx</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> 
+</span></span></code></pre></td></tr></table></div></div><ul><li><p><strong>map, mapIndex :</strong> 각각의 원소에 대해 lambda 함수 실행</p></li><li><p><strong>mapNotNull</strong> : mapping의 결과가 null이 아닌 것만 추출</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>values</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>filter</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>.</span><span class=n>mapNotNull</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>nullOrValue</span><span class=p>()</span> <span class=p>}</span> <span class=c1>// null 아닌 값만 추출
+</span></span></span></code></pre></td></tr></table></div></div><ul><li><strong>all</strong> : 조건을 모두 만족하면 true, 아니면 false</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 전부 사과인지 확인
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>isAllApple</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>all</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span> <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>none</strong> : 조건을 모두 불만족하면 true, 아니면 false</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 사과가 하나도 없는지 확인
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>isNoApple</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>none</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span><span class=s2>&#34;사과&#34;</span> <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>any</strong> : 하나라도 만족하면 true, 아니면 false</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 하나라도 만원 넘는 과일 있는지 확인
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>hasExpensiveFruit</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>any</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>price</span> <span class=p>&gt;</span> <span class=m>10</span><span class=n>_000</span> <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>count</strong> : 개수</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// Java의 list.size()와 동일
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>fruitCount</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>count</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>sortedBy, sortedByDescending</strong> : 오름차순, 내림차순 정렬</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>sortedFruit</span> <span class=p>=</span> <span class=n>fruit</span><span class=p>.</span><span class=n>sortedBy</span><span class=p>{</span><span class=k>it</span><span class=p>.</span><span class=n>price</span><span class=p>}</span> <span class=c1>//오름차순
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>desendSortedFruit</span> <span class=p>=</span> <span class=n>fruit</span><span class=p>.</span><span class=n>sortedByDescending</span><span class=p>{</span><span class=k>it</span><span class=p>.</span><span class=n>price</span><span class=p>}</span> <span class=c1>// 내림차순
+</span></span></span></code></pre></td></tr></table></div></div><ul><li><strong>distinctBy</strong> : 변경된 값을 기준으로 중복 제거</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 과일이 각각 어떤 종류 있는지 확인
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>distinctFruitNames</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>distinctBy</span><span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=p>}</span> <span class=c1>// 이름을 기준으로 중복 제거
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=p>.</span><span class=n>map</span><span class=p>{</span><span class=k>it</span><span class=p>.</span><span class=n>name</span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>first, firstOrNull, last, lastOrNull</strong> : 첫번째, 마지막 값<ul><li>빈 리스트라서 first, last가 가져올 값이 없으면 Exception 발생</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=n>fruits</span><span class=p>.</span><span class=n>first</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>fruits</span><span class=p>.</span><span class=n>lastOrNull</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>groupBy</strong> : 어떤 Key를 기준으로 Grouping (List → Map)</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 과일 이름을 key로 리스트의 내용물을 Grouping
+</span></span></span><span class=line><span class=cl><span class=c1>// key : 사과, value : {사과1, 사과2, 사과3...}
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>map</span><span class=p>:</span> <span class=n>Map</span><span class=p>&lt;</span><span class=n>String</span><span class=p>,</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;&gt;</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>groupBy</span><span class=p>{</span><span class=n>fruit</span> <span class=o>-&gt;</span> <span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=p>}</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 다음과 같이 key, value 동시 처리도 가능
+</span></span></span><span class=line><span class=cl><span class=c1>// 이름을 Key로, 가격 List를 만드는 예시
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>map2</span> <span class=p>:</span> <span class=n>Map</span><span class=p>&lt;</span><span class=n>String</span><span class=p>,</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Long</span><span class=p>&gt;&gt;</span> <span class=p>=</span> <span class=n>fruits</span>
+</span></span><span class=line><span class=cl>	<span class=p>.</span><span class=n>groupBy</span><span class=p>({</span><span class=k>it</span><span class=p>.</span><span class=n>name</span><span class=p>},</span> <span class=p>{</span><span class=k>it</span><span class=p>.</span><span class=n>price</span><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>associateBy</strong> : 어떤 중복되지 않는 Key를 기준으로 Map 변환(List→ Map)<ul><li><strong>단, id가 중복값 있을 시 값이 유실될 수 있다.</strong></li><li><strong>id가 중복값인 경우, 가장 마지막 값이 value가 된다.</strong></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>map</span><span class=p>:</span> <span class=n>Map</span><span class=p>&lt;</span><span class=n>Long</span><span class=p>,</span> <span class=n>Fruit</span><span class=p>&gt;</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>associateBy</span> <span class=p>{</span> <span class=n>fruit</span> <span class=o>-&gt;</span> <span class=n>fruit</span><span class=p>.</span><span class=n>id</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>fruitList</span> <span class=p>=</span> <span class=n>listOf</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;(</span>
+</span></span><span class=line><span class=cl>			<span class=c1>// id가 동일
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=n>Fruit</span><span class=p>(</span><span class=m>1</span><span class=p>,</span><span class=s2>&#34;1&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>      <span class=n>Fruit</span><span class=p>(</span><span class=m>1</span><span class=p>,</span><span class=s2>&#34;2&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>      <span class=n>Fruit</span><span class=p>(</span><span class=m>1</span><span class=p>,</span><span class=s2>&#34;3&#34;</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>val</span> <span class=py>associateBy</span> <span class=p>=</span> <span class=n>fruitList</span><span class=p>.</span><span class=n>associateBy</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>id</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>println</span><span class=p>(</span><span class=n>associateBy</span><span class=p>.</span><span class=n>count</span><span class=p>())</span> <span class=c1>// 1
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=k>for</span> <span class=p>(</span><span class=n>entry</span> <span class=k>in</span> <span class=n>associateBy</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>println</span><span class=p>(</span><span class=n>entry</span><span class=p>)</span> <span class=c1>// 1=Fruit(id=1, name=3)
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 마찬가지로 key, value 동시 처리 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>map</span><span class=p>:</span> <span class=n>Map</span><span class=p>&lt;</span><span class=n>Long</span><span class=p>,</span> <span class=n>Long</span><span class=p>&gt;</span> <span class=p>=</span> <span class=n>fruits</span>
+</span></span><span class=line><span class=cl>	<span class=p>.</span><span class=n>associateBy</span><span class=p>({</span><span class=k>it</span><span class=p>.</span><span class=n>id</span><span class=p>},</span> <span class=p>{</span><span class=k>it</span><span class=p>.</span><span class=n>price</span><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Map에서도 위의 함수들 대부분 사용 가능</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>map</span><span class=p>:</span> <span class=n>Map</span><span class=p>&lt;</span><span class=n>String</span><span class=p>,</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;&gt;</span> <span class=p>=</span> <span class=n>fruits</span><span class=p>.</span><span class=n>groupBy</span><span class=p>{</span><span class=n>fruit</span> <span class=o>-&gt;</span> <span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=p>}</span> 
+</span></span><span class=line><span class=cl>	<span class=p>.</span><span class=n>filter</span> <span class=p>{</span> <span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=k>value</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>key</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span> <span class=p>}</span> 
+</span></span></code></pre></td></tr></table></div></div><ul><li>중첩된 Collections 처리<ul><li>flatMap, flatten</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>var</span> <span class=py>fruitsInList</span><span class=p>:</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>List</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;&gt;</span> <span class=p>=</span> <span class=n>listOf</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=n>listOf</span><span class=p>(</span><span class=n>Fruit</span><span class=p>(</span><span class=m>1</span><span class=p>,</span><span class=s2>&#34;사과&#34;</span><span class=p>),</span> <span class=n>Fruit</span><span class=p>(</span><span class=m>2</span><span class=p>,</span><span class=s2>&#34;수박&#34;</span><span class=p>),</span> <span class=n>Fruit</span><span class=p>(</span><span class=m>3</span><span class=p>,</span><span class=s2>&#34;사과&#34;</span><span class=p>)),</span>
+</span></span><span class=line><span class=cl>	<span class=n>listOf</span><span class=p>(</span><span class=n>Fruit</span><span class=p>(</span><span class=m>4</span><span class=p>,</span><span class=s2>&#34;바나나&#34;</span><span class=p>),</span> <span class=n>Fruit</span><span class=p>(</span><span class=m>5</span><span class=p>,</span><span class=s2>&#34;사과&#34;</span><span class=p>),</span> <span class=n>Fruit</span><span class=p>(</span><span class=m>6</span><span class=p>,</span><span class=s2>&#34;바나나&#34;</span><span class=p>)),</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 리스트 구조 관계없이, 사과인 과일을 모두 뽑아주세요
+</span></span></span><span class=line><span class=cl><span class=c1>// output : listOf(Fruit(1,&#34;사과&#34;), Fruit(3,&#34;사과&#34;), Fruit(5,&#34;사과&#34;))
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>appleList</span> <span class=p>:</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>	<span class=p>=</span> <span class=n>fruitsInList</span><span class=p>.</span><span class=n>flatMap</span> <span class=p>{</span> <span class=n>list</span> <span class=o>-&gt;</span> <span class=n>list</span><span class=p>.</span><span class=n>filter</span><span class=p>{</span><span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 2차원 리스트를 1차원으로
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>flattenList</span> <span class=p>:</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Fruit</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>	<span class=p>=</span> <span class=n>fruitsInList</span><span class=p>.</span><span class=n>flatten</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=19-takeif-scope-function>19. TakeIf, scope Function</h3><ul><li><strong>TakeIf</strong> : 주어진 조건을 만족하면 그 값이, 그렇지 않으면 null 반환</li><li><strong>TakeUnless</strong> : 주어진 조건 만족하지 않으면 그 값이, 그렇지 않으면 null 반환</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 이 함수를
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>getFruitOrNull</span><span class=p>(</span><span class=n>fruit</span><span class=p>:</span> <span class=n>Fruit</span><span class=p>):</span> <span class=n>Fruit</span><span class=p>?{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=k>if</span><span class=p>(</span><span class=n>fruit</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span><span class=p>){</span><span class=n>fruit</span><span class=p>}</span> <span class=k>else</span> <span class=p>{</span><span class=k>null</span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>//다음과 같이 사용 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>getfruit</span> <span class=p>=</span> <span class=n>fruit</span><span class=p>.</span><span class=n>takeIf</span> <span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>name</span> <span class=o>==</span> <span class=s2>&#34;사과&#34;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>Fruit</span><span class=p>(</span><span class=m>1L</span><span class=p>,</span> <span class=s2>&#34;사과&#34;</span><span class=p>)</span> <span class=c1>// 이 경우 fruit
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>Fruit</span><span class=p>(</span><span class=m>1L</span><span class=p>,</span> <span class=s2>&#34;바나나&#34;</span><span class=p>)</span> <span class=c1>// 이 경우 null 반환
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Scope function : 일시적인 영역을 형성하는 함수<ul><li>즉, lamba를 활용해 일시적 영역을 만들고<ul><li>코드를 더 간결하게 하거나</li><li>method chaining에 활용하는 함수</li></ul></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=c1>// 두 함수는 같음
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>fun</span> <span class=nf>printPerson</span><span class=p>(</span><span class=n>person</span><span class=p>:</span> <span class=n>Person</span><span class=p>?){</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span><span class=p>(</span><span class=n>person</span> <span class=o>!=</span> <span class=k>null</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=n>person</span><span class=p>.</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=n>person</span><span class=p>.</span><span class=n>age</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>fun</span> <span class=nf>printPerson</span><span class=p>(</span><span class=n>person</span><span class=p>:</span> <span class=n>Person</span><span class=p>?){</span>
+</span></span><span class=line><span class=cl>	<span class=n>person</span><span class=o>?.</span><span class=n>let</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=n>person</span><span class=p>.</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>println</span><span class=p>(</span><span class=n>person</span><span class=p>.</span><span class=n>age</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>Scope function의 종류<ul><li><strong>let, run</strong> : lambda의 결과를 반환<ul><li>let : it 사용 (생략 불가능한 대신, 다른 이름 붙일 수 있음)</li><li>run : this 사용 (생략 가능한 대신, 다른 이름 붙일 수 없음.)</li></ul></li><li><strong>also, apply</strong> : 객체 자체를 반환<ul><li>also : it 사용</li><li>apply : this 사용</li></ul></li><li><strong>with</strong> : 유일하게 확장함수 아님. this 사용, lambda의 결과를 반환</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>val</span> <span class=py>value1</span> <span class=p>=</span> <span class=n>person</span><span class=p>.</span><span class=n>let</span><span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>age</span> <span class=p>}</span>  <span class=c1>// value1 값 : person.age
+</span></span></span><span class=line><span class=cl><span class=c1>// person.let{ person -&gt; person.age } 처럼, 다른 이름 붙일 수 있음
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>value2</span> <span class=p>=</span> <span class=n>person</span><span class=p>.</span><span class=n>run</span><span class=p>{</span> <span class=k>this</span><span class=p>.</span><span class=n>age</span> <span class=p>}</span> <span class=c1>// value2 값 : person.age
+</span></span></span><span class=line><span class=cl><span class=c1>// person.run{ age } 처럼, this 생략 가능
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=k>val</span> <span class=py>value3</span> <span class=p>=</span> <span class=n>person</span><span class=p>.</span><span class=n>also</span><span class=p>{</span> <span class=k>it</span><span class=p>.</span><span class=n>age</span> <span class=p>}</span> <span class=c1>// value3 값 : person
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>val</span> <span class=py>value4</span> <span class=p>=</span> <span class=n>person</span><span class=p>.</span><span class=n>apply</span><span class=p>{</span> <span class=k>this</span><span class=p>.</span><span class=n>age</span> <span class=p>}</span> <span class=c1>// value4 값 : person 
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=n>with</span><span class=p>(</span><span class=n>person</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>	<span class=n>println</span><span class=p>(</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>println</span><span class=p>(</span><span class=n>age</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cm>/* 
+</span></span></span><span class=line><span class=cl><span class=cm>it 쓰는 경우 : 일반 함수를 파라미터로 받음 block : (T) -&gt; R : R
+</span></span></span><span class=line><span class=cl><span class=cm>this 쓰는 경우 : 확장 함수를 파라미터로 받음 block: T.() -&gt; R : R
+</span></span></span><span class=line><span class=cl><span class=cm>궁금하면 직접 구현체를 확인해 보자....
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>
+</span></span></code></pre></td></tr></table></div></div><hr></section><footer class=article-footer><section class=article-tags><a href=/tags/%EC%BD%94%ED%8B%80%EB%A6%B0/>코틀린</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><script src=https://giscus.app/client.js data-repo=LemonDouble/LemonDouble.github.io-comments data-repo-id=R_kgDOI0UkDA data-category=Comments data-category-id=DIC_kwDOI0UkDM4CcIeY data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark_dimmed")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2022 -
+2025 Lemon Blog</section><section class=powerby>LemonDouble<br><a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>로 만듦<br><a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>의 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> 테마 사용 중</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,371 @@
+<!doctype html><html lang=ko dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="서론 데이터베이스는 관리하기 까다롭습니다.\n다른 Pod과 다르게 데이터 보관, 백업, 관리에도 신경써야 하고, Failover 및 성능에도 관심을 가져야 합니다.\n그래서 다른 워크로드는 쿠버네티스 클러스터에서 돌리더라도, DB만큼은 AWS RDS등의 관리형 시스템이나 별도 인스턴스를 사용하는 경우도 흔한 것으로 알고 있습니다.\n"><title>집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 9. CloudNativePG로 쿠버네티스에서 데이터베이스 운용하기</title>
+<link rel=canonical href=https://blog.lemondouble.com/p/a4ded8cced5f045c/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 9. CloudNativePG로 쿠버네티스에서 데이터베이스 운용하기"><meta property='og:description' content="서론 데이터베이스는 관리하기 까다롭습니다.\n다른 Pod과 다르게 데이터 보관, 백업, 관리에도 신경써야 하고, Failover 및 성능에도 관심을 가져야 합니다.\n그래서 다른 워크로드는 쿠버네티스 클러스터에서 돌리더라도, DB만큼은 AWS RDS등의 관리형 시스템이나 별도 인스턴스를 사용하는 경우도 흔한 것으로 알고 있습니다.\n"><meta property='og:url' content='https://blog.lemondouble.com/p/a4ded8cced5f045c/'><meta property='og:site_name' content='Lemon Blog'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='K8S'><meta property='article:tag' content='K3S'><meta property='article:tag' content='라즈베리 파이'><meta property='article:published_time' content='2023-12-12T22:09:10+09:00'><meta property='article:modified_time' content='2023-12-12T22:09:10+09:00'><meta property='og:image' content='https://blog.lemondouble.com/p/a4ded8cced5f045c/cover.png'><meta name=twitter:site content="@https://blog.lemondouble.com"><meta name=twitter:creator content="@https://blog.lemondouble.com"><meta name=twitter:title content="집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 9. CloudNativePG로 쿠버네티스에서 데이터베이스 운용하기"><meta name=twitter:description content="서론 데이터베이스는 관리하기 까다롭습니다.\n다른 Pod과 다르게 데이터 보관, 백업, 관리에도 신경써야 하고, Failover 및 성능에도 관심을 가져야 합니다.\n그래서 다른 워크로드는 쿠버네티스 클러스터에서 돌리더라도, DB만큼은 AWS RDS등의 관리형 시스템이나 별도 인스턴스를 사용하는 경우도 흔한 것으로 알고 있습니다.\n"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://blog.lemondouble.com/p/a4ded8cced5f045c/cover.png'><link rel="shortcut icon" href=https://cdn.lemondouble.com/homepage/favicon.ico><script async src="https://www.googletagmanager.com/gtag/js?id=G-9C6YX68EBM"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-9C6YX68EBM")</script><style>@import "https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/static/pretendard.min.css";@import 'https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,500;1,500&display=swap';*{font-family:-apple-system,BlinkMacSystemFont,apple sd gothic neo,pretendard variable,Pretendard,Roboto,noto sans kr,segoe ui,malgun gothic,apple color emoji,segoe ui emoji,segoe ui symbol,sans-serif}</style></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="메뉴 여닫기">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_3c50f63a05989f65.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>⛱️</span></figure><div class=site-meta><h1 class=site-name><a href=/>Lemon Blog</a></h1><h2 class=site-description>이런저런 걸 합니다. 블로그 기고는 보통 제가 했던 일을 까먹지 않기 위해 합니다(..)</h2></div></header><ol class=menu-social><li><a href=https://github.com/LemonDouble target=_blank title=GitHub rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" class="icon icon-tabler icons-tabler-filled icon-tabler-brand-github"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5.315 2.1c.791-.113 1.9.145 3.333.966l.272.161.16.1.397-.083a13.3 13.3.0 014.59-.08l.456.08.396.083.161-.1c1.385-.84 2.487-1.17 3.322-1.148l.164.008.147.017.076.014.05.011.144.047a1 1 0 01.53.514 5.2 5.2.0 01.397 2.91l-.047.267-.046.196.123.163c.574.795.93 1.728 1.03 2.707l.023.295L21 9.5c0 3.855-1.659 5.883-4.644 6.68l-.245.061-.132.029.014.161.008.157.004.365-.002.213L16 21a1 1 0 01-.883.993L15 22H9a1 1 0 01-.993-.883L8 21v-.734c-1.818.26-3.03-.424-4.11-1.878l-.535-.766c-.28-.396-.455-.579-.589-.644l-.048-.019a1 1 0 01.564-1.918c.642.188 1.074.568 1.57 1.239l.538.769c.76 1.079 1.36 1.459 2.609 1.191L8 17.562l-.018-.168a5.03 5.03.0 01-.021-.824l.017-.185.019-.12-.108-.024c-2.976-.71-4.703-2.573-4.875-6.139l-.01-.31-.004-.292a5.6 5.6.0 01.908-3.051l.152-.222.122-.163-.045-.196a5.2 5.2.0 01.145-2.642l.1-.282.106-.253a1 1 0 01.529-.514l.144-.047.154-.03z"/></svg></a></li><li><a href=mailto:contact@lemondouble.com target=_blank title=mail rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" class="icon icon-tabler icons-tabler-filled icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 7.535V17a3 3 0 01-2.824 2.995L19 20H5a3 3 0 01-2.995-2.824L2 17V7.535l9.445 6.297.116.066a1 1 0 00.878.0l.116-.066 9.445-6.297z"/><path d="M19 4c1.08.0 2.027.57 2.555 1.427L12 11.797l-9.555-6.37a2.999 2.999.0 012.354-1.42L5 4h14z"/></svg></a></li><li><a href=https://sns.lemondouble.com/@lemondouble target=_blank title=misskey rel=me><svg class="bi" fill="currentcolor" viewBox="0 0 135.47 135.47"><g transform="translate(-38.1 -100.7)"><path d="m54.63 120.96c-1.9779.0-3.8618.32979-5.6513.98909-3.2023 1.1302-5.8396 3.1553-7.9117 6.0751-1.9779 2.8256-2.9667 5.9807-2.9667 9.4656v61.88c0 4.5209 1.601 8.4294 4.8033 11.726 3.2965 3.2023 7.2055 4.8038 11.726 4.8038 4.6151.0 8.5236-1.6015 11.726-4.8038 3.2965-3.2965 4.9449-7.205 4.9449-11.726v-11.253c.03556-2.4371 2.546-1.7977 3.8148.0 2.3763 4.1153 7.4142 7.6497 13.28 7.6295 5.8656-.0202 10.737-2.9202 13.28-7.6295.96304-1.1358 3.6774-3.071 3.9558.0v11.253c0 4.5209 1.601 8.4294 4.8033 11.726 3.2965 3.2023 7.2055 4.8038 11.726 4.8038 4.6151.0 8.5236-1.6015 11.726-4.8038 3.2965-3.2965 4.9449-7.205 4.9449-11.726v-61.88c0-3.4849-1.0357-6.64-3.1078-9.4656-1.9779-2.9198-4.5683-4.9448-7.7706-6.0751-1.8837-.6593-3.7676-.98909-5.6513-.98909-5.086.0-9.3712 1.9782-12.856 5.934l-16.775 19.632c-.37674.28256-1.6248 2.4428-4.2757 2.4428s-3.7574-2.1602-4.1341-2.4428l-16.916-19.632c-3.3907-3.9558-7.6289-5.934-12.715-5.934zm104.53.0c-3.9558.0-7.3464 1.4129-10.172 4.2385-2.7314 2.7314-4.0969 6.0751-4.0969 10.031.0 3.9558 1.3655 7.3464 4.0969 10.172 2.8256 2.7314 6.2162 4.0974 10.172 4.0974s7.3464-1.366 10.172-4.0974c2.8256-2.8256 4.2385-6.2162 4.2385-10.172s-1.4129-7.2995-4.2385-10.031c-2.8256-2.8256-6.2162-4.2385-10.172-4.2385zm.14107 31.364c-3.9558.0-7.3464 1.4129-10.172 4.2385s-4.238 6.2162-4.238 10.172v34.896c0 3.9558 1.4124 7.3464 4.238 10.172 2.8256 2.7314 6.2162 4.0974 10.172 4.0974s7.2995-1.366 10.031-4.0974c2.8256-2.8256 4.2385-6.2162 4.2385-10.172v-34.896c0-3.9558-1.4129-7.3464-4.2385-10.172-2.7314-2.8256-6.0751-4.2385-10.031-4.2385z"/></g></svg></a></li><li><a href=https://twitter.com/_lemon_berry_ target=_blank title=Twitter rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" class="icon icon-tabler icons-tabler-filled icon-tabler-brand-twitter"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.058 3.41c-1.807.767-2.995 2.453-3.056 4.38L11 7.972l-.243-.023C8.365 7.68 6.259 6.437 4.813 4.418a1 1 0 00-1.685.092l-.097.186-.049.099c-.719 1.485-1.19 3.29-1.017 5.203l.03.273c.283 2.263 1.5 4.215 3.779 5.679l.173.107-.081.043c-1.315.663-2.518.952-3.827.9-1.056-.04-1.446 1.372-.518 1.878 3.598 1.961 7.461 2.566 10.792 1.6 4.06-1.18 7.152-4.223 8.335-8.433l.127-.495c.238-.993.372-2.006.401-3.024l.003-.332.393-.779.44-.862.214-.434.118-.247c.265-.565.456-1.033.574-1.43l.014-.056.008-.018c.22-.593-.166-1.358-.941-1.358l-.122.007a.997.997.0 00-.231.057l-.086.038a7.46 7.46.0 01-.88.36l-.356.115-.271.08-.772.214c-1.336-1.118-3.144-1.254-5.012-.554l-.211.084z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>홈</span></a></li><li><a href=/about/ target=_blank><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>프로필 (🔗)</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>보관함</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>검색</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>다크 모드</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">목차</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#서론>서론</a></li><li><a href=#2-설치>2. 설치</a></li><li><a href=#3복구>3.복구</a></li><li><a href=#4-클러스터-업데이트>4. 클러스터 업데이트</a></li><li><a href=#5-미치며>5. 미치며</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/a4ded8cced5f045c/><img src=/p/a4ded8cced5f045c/cover_hu_4513b2e392f3bf9c.png srcset="/p/a4ded8cced5f045c/cover_hu_4513b2e392f3bf9c.png 800w, /p/a4ded8cced5f045c/cover_hu_972a1bb5ad43b570.png 1600w" width=800 height=249 loading=lazy alt="Featured image of post 집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 9. CloudNativePG로 쿠버네티스에서 데이터베이스 운용하기"></a></div><div class=article-details><header class=article-category><a href=/categories/k8s/>K8S
+</a><a href=/categories/k3s/>K3S
+</a><a href=/categories/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC-%ED%8C%8C%EC%9D%B4/>라즈베리 파이</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/a4ded8cced5f045c/>집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 9. CloudNativePG로 쿠버네티스에서 데이터베이스 운용하기</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2023년 12월 12일</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>6 분 정도</time></div></footer></div></header><section class=article-content><h3 id=서론>서론</h3><p>데이터베이스는 관리하기 까다롭습니다.</p><p>다른 Pod과 다르게 데이터 보관, 백업, 관리에도 신경써야 하고, Failover 및 성능에도 관심을 가져야 합니다.</p><p>그래서 다른 워크로드는 쿠버네티스 클러스터에서 돌리더라도, DB만큼은 AWS RDS등의 관리형 시스템이나 별도 인스턴스를 사용하는 경우도 흔한 것으로 알고 있습니다.</p><p>하지만 그게 중요할까요? 집에서 데이터센터를 차리는데 관리형 DBMS도 하나쯤 있어야 하지 않을까요?</p><p>그러니까 한번 만들어 봅시다. 쿠버네티스의 Operation Pattern을 사용한 <a class=link href=https://cloudnative-pg.io/ target=_blank rel=noopener>CloudNativePG</a> 를 이용해 Primary 하나, Replica 2개짜리 클러스터를 배포해 보고 내부망에서 접속 가능하도록 설정까지 진행해 봅니다.</p><p>Postgres Operator는 아니지만 <a class=link href=https://nangman14.tistory.com/79#5.%20Mysql%20Operator%20Failover%20%ED%85%8C%EC%8A%A4%ED%8A%B8-1 target=_blank rel=noopener>Mysql Operator로 Kubernetes 환경에서 Mysql DB 운영하기</a> 글을 읽어보시면 따라오는데 좀 더 도움이 될?수도 있습니다.</p><h3 id=2-설치>2. 설치</h3><p>설치는 두 단계로 나눠서 진행하겠습니다.</p><ol><li>CNPG Operator 설치</li><li>CNPG Cluster 설치</li></ol><p>Operator는 Cluster가 정상 상태를 유지하는지 감시하는 역할을 합니다.
+실제로 사용하는 데이터베이스 클러스터는 2.를 통해 설치합니다.</p><p>차근차근 시작해 봅시다! 이번에도 ArgoCD를 이용해 빠르게 배포합니다.</p><p><strong>1. CNPG Operator 설치</strong></p><p><code>apps/enabled/cnpg-system.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>argoproj.io/v1alpha1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Application</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-system</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>argocd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>destination</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-system</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>server</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;https://kubernetes.default.svc&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>source</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>modules/cnpg-system</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>repoURL</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;git@github.com:&lt;YourOrganizationName&gt;/&lt;YourRepositoryName&gt;.git&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>targetRevision</span><span class=p>:</span><span class=w> </span><span class=l>HEAD</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>project</span><span class=p>:</span><span class=w> </span><span class=l>default</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><code>modules/cnpg-system/cnpg.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># https://github.com/cloudnative-pg/cloudnative-pg</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>argoproj.io/v1alpha1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Application</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>cnpg</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>argocd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>destination</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-system</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>server</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;https://kubernetes.default.svc&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>source</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>repoURL</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;https://cloudnative-pg.github.io/charts&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>targetRevision</span><span class=p>:</span><span class=w> </span><span class=m>0.19.1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>chart</span><span class=p>:</span><span class=w> </span><span class=l>cloudnative-pg</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>project</span><span class=p>:</span><span class=w> </span><span class=l>default</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>간단하죠? 설치 이후 배포를 진행해 CNPG Operator를 설치해 줍시다.</p><p><strong>2. CNPG Cluster 설치</strong></p><p>저희가 만들 클러스터의 모습은 다음과 같습니다.</p><ol><li>매일 UTC 0시 (KST 기준 아침 9시)에 S3에 Daily Backup을 진행합니다.</li><li>총 3개의 Pod으로 구성됩니다. 각 Pod은 여러 노드에 분산되어 혹시 모를 불행을(?) 예방합니다.</li><li>192.168.0.x IP로 내부망에서 DB 접근이 가능합니다.</li></ol><p>하나하나 시작해 봅시다!</p><p><code>apps/enabled/cnpg-cluster.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>argoproj.io/v1alpha1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Application</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>argocd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>destination</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>server</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;https://kubernetes.default.svc&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>source</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>modules/cnpg-cluster-16</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>repoURL</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;git@github.com:&lt;YourOrganizationName&gt;/&lt;YourRepositoryName&gt;.git&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>targetRevision</span><span class=p>:</span><span class=w> </span><span class=l>HEAD</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>project</span><span class=p>:</span><span class=w> </span><span class=l>default</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><code>modules/cnpg-cluster/cluster.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># https://cloudnative-pg.io/documentation/1.21/quickstart/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>postgresql.cnpg.io/v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>instances</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>superuserSecret</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>superuser-secrets</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>enableSuperuserAccess</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>primaryUpdateStrategy</span><span class=p>:</span><span class=w> </span><span class=l>unsupervised</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># Persistent storage configuration</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>storage</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>size</span><span class=p>:</span><span class=w> </span><span class=l>10Gi</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>pvcTemplate</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>accessModes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=l>ReadWriteOnce</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>resources</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>requests</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>storage</span><span class=p>:</span><span class=w> </span><span class=l>1Gi</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>storageClassName</span><span class=p>:</span><span class=w> </span><span class=l>longhorn-ssd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>volumeMode</span><span class=p>:</span><span class=w> </span><span class=l>Filesystem</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># Backup properties</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>backup</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>retentionPolicy</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;90d&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>barmanObjectStore</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>destinationPath</span><span class=p>:</span><span class=w> </span><span class=l>s3://lemon-backup/cnpg-backup</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>s3Credentials</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>accessKeyId</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>aws-backup-secret</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>key</span><span class=p>:</span><span class=w> </span><span class=l>ACCESS_KEY_ID</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>secretAccessKey</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>aws-backup-secret</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>key</span><span class=p>:</span><span class=w> </span><span class=l>ACCESS_SECRET_KEY</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>wal</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>compression</span><span class=p>:</span><span class=w> </span><span class=l>gzip</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>관리 편의를 위해 Superuser 접근을 허용해 주고,
+DB 용량은 10GB로 주었습니다. (이후 확장 가능합니다.)</p><p>이외에 만약 불의의 사고가 닥쳤을 때(&mldr;) 쉽게 백업할 수 있도록 백업 스토리지를 AWS S3에 백업 파일을 저장하게 설정하고, 최대 90일까지 보관하도록 하였습니다.</p><p><code>modules/cnpg-cluster/daily-backup.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>postgresql.cnpg.io/v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>ScheduledBackup</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>daily-backup</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>schedule</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;0 0 0 * * *&#34;</span><span class=w> </span><span class=c># Daily</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>backupOwnerReference</span><span class=p>:</span><span class=w> </span><span class=l>self</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>cluster</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>간단한 Daily Backup 리소스입니다.</p><p><code>modules/cnpg-cluster/lb.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Service</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-lb-rw</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postgres</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=m>5432</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class=l>TCP</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>targetPort</span><span class=p>:</span><span class=w> </span><span class=m>5432</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>cnpg.io/cluster</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>role</span><span class=p>:</span><span class=w> </span><span class=l>primary</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>LoadBalancer</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>loadBalancerIP</span><span class=p>:</span><span class=w> </span><span class=m>192.168.0.206</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>저의 경우 192.168.0.206 주소로 접근을 허용해 주었습니다.
+이후 데이터베이스 조회나 관리 시에 내부 망에서 <code>192.168.0.206</code> 로 접근하여 관리가 가능해집니다.</p><p><code>modules/cnpg-cluster/sealed-aws-secrets.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>bitnami.com/v1alpha1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>SealedSecret</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>aws-secrets</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>encryptedData</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ACCESS_KEY_ID</span><span class=p>:</span><span class=w> </span><span class=l>adffd...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ACCESS_SECRET_KEY</span><span class=p>:</span><span class=w> </span><span class=l>Aadfads...</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>AWS에서 S3FullAccess, 또는 특정 버킷의 액세스 권한을 준 후 ACCESS KEY, Secret을 발급받은 후, 이전에 설정했던 Sealed Secret을 이용해 등록해 줍니다.</p><p><code>modules/cnpg-cluster/sealed-superuser-secrets.yaml</code></p><p>생성 과정이 조금 복잡합니다!</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Secret</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>superuser-secrets</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>kubernetes.io/basic-auth</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>stringData</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>username</span><span class=p>:</span><span class=w> </span><span class=l>&lt;내가 쓸 ID, b64인코딩 없이 원본 그대로&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>password</span><span class=p>:</span><span class=w> </span><span class=l>&lt;내가 쓸 패스워드, b64인코딩 없이 원본 그대로&gt;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>위와 같은 Secret을 먼저 secret.yaml이란 이름으로 생성 후,</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>cat secret.yaml <span class=p>|</span> kubeseal --controller-namespace<span class=o>=</span>sealed-secrets-system --controller-name<span class=o>=</span>sealed-secrets -oyaml &gt; sealed-superuser-secrets.yaml
+</span></span></code></pre></td></tr></table></div></div><p>로 Sealed Secret으로 변경 후, Sealed Secret을 사용합니다!</p><p>이후 프로비저닝을 기다리고, (시간이 좀 걸립니다.) 192.168.0.206으로 방금 설정한 ID/Password를 통해 로그인하여 DB를 사용할 수 있습니다!</p><p><strong>정상적으로 설치되었다면, 다음날 알림을 걸어 꼭!! S3 해당 폴더에 정상으로 백업되는지 확인해 주세요!!!</strong></p><h3 id=3복구>3.복구</h3><p>하루가 지나 정상 백업이 되었다면, <strong>꼭! 복원이 되는지 확인</strong> 하시길 바랍니다.
+날아가고 확인하면 너무 늦어요&mldr;</p><p>제 복원 설정 파일을 공유 드립니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># https://cloudnative-pg.io/documentation/1.17/quickstart/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>postgresql.cnpg.io/v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>instances</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>superuserSecret</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>superuser-secrets</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>primaryUpdateStrategy</span><span class=p>:</span><span class=w> </span><span class=l>unsupervised</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>bootstrap</span><span class=p>:</span><span class=w> </span><span class=c>#추가</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>recovery</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>source</span><span class=p>:</span><span class=w> </span><span class=l>clusterBackup</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>storage</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>size</span><span class=p>:</span><span class=w> </span><span class=l>10Gi</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>pvcTemplate</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>accessModes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=l>ReadWriteOnce</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>resources</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>requests</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>storage</span><span class=p>:</span><span class=w> </span><span class=l>1Gi</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>storageClassName</span><span class=p>:</span><span class=w> </span><span class=l>longhorn-ssd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>volumeMode</span><span class=p>:</span><span class=w> </span><span class=l>Filesystem</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>externalClusters</span><span class=p>:</span><span class=w> </span><span class=c>#추가</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>clusterBackup</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>barmanObjectStore</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>serverName</span><span class=p>:</span><span class=w> </span><span class=l>cnpg-cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>destinationPath</span><span class=p>:</span><span class=w> </span><span class=l>s3://lemon-backup/postgres-backup</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>s3Credentials</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>accessKeyId</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>aws-secrets</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>key</span><span class=p>:</span><span class=w> </span><span class=l>ACCESS_KEY_ID</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>secretAccessKey</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>aws-secrets</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>key</span><span class=p>:</span><span class=w> </span><span class=l>ACCESS_SECRET_KEY</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>wal</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>compression</span><span class=p>:</span><span class=w> </span><span class=l>gzip</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>신규 클러스터를 위와 같이 bootstrap, externalClusters 옵션을 추가하면 클러스터가 처음 시작될 때, 기존 S3 파일을 이용해 자동으로 데이터를 복구합니다.</p><p>접속/ 확인 후 복구가 끝났으면 bootstrap, externalClusters 옵션을 지운 후 기존의 백업 옵션을 다시 추가해 주시면 됩니다.</p><p>이때 주의할 점으로,
+Postgres의 메이저 버전이 다른 경우 복구가 정상적으로 되지 않을 수 있습니다.</p><p>예를 들어 제가 1.16버전 Operator를 사용하다 (Postgres 15), Operator를 1.21(기본값으로 Postgres 16 Operator)까지 업데이트를 했다 하더라도 기생성된 클러스터는 수동 업그레이드를 해 주지 않는 이상 PG 15를 유지합니다.</p><p>이 떄, 만약 장애가 생겨 복구를 시도하는 경우 Operator 버전이 1.21 버전이므로 PG16이 프로비저닝 될 것이고, 이 경우 기존 S3에 저장된 데이터가 PG15 데이터이므로 복구가 안 될 수 있습니다.</p><p>이런 경우는 Operator를 설치 당시로 다운그레이드하여 동일 버전의 PG를 올린 후 복구 -> 업데이트를 진행하거나, Image를 설정하여 동일 메이저 버전을 사용하는 법이 있습니다.</p><p><strong>가능하다면, 신규 클러스터를 하나 만들어 정상 복구가 되는지 꼭 확인하고, 이후 다음 내용을 진행하는걸 꼭! 추천드립니다!!</strong></p><h3 id=4-클러스터-업데이트>4. 클러스터 업데이트</h3><p>마이너 업데이트의 경우는 자동으로 진행되나, 메이저 버전 업데이트시에는 다음과 같이 진행하면 보?통 별문제 없을겁니다. (15 -> 16 진행해 봄)</p><p>온라인 업데이트의 경우는 <a class=link href=https://www.enterprisedb.com/blog/current-state-major-postgresql-upgrades-cloudnativepg-kubernetes target=_blank rel=noopener>The Current State of Major PostgreSQL Upgrades with CloudNativePG</a> 를 참고하시고,</p><p>오프라인 업데이트 (다운타임이 발생해도 문제X) 라면</p><ol><li>기존 클러스터에서 pg_dumpall로 데이터 덤프</li><li>신규 클러스터 생성</li><li>1에서 덤프뜬 데이터를 2에 부음</li><li>기존 클러스터를 바라보던 어플리케이션을 신규 클러스터를 바라보도록 변경</li><li>테스트 후 기존 클러스터 삭제</li></ol><h3 id=5-미치며>5. 미치며</h3><p>저는 현재 CNPG를 이용해 약 7~8개월간 서버를 정상적으로 운영하고 있습니다.</p><p>제가 청소하다 선을 자주 빼먹는걸 감안하면(&mldr;) 일반적인 상황에서 충분히 견고한 Postgres DB로 사용될 수 있고, 제가 실수로 클러스터 전원을 전부 날렸을 때도 기존 S3에서 간단히 데이터를 복구할 수 있어 신뢰성이 꽤 높은 시스템이라는 생각을 하였습니다.</p><p>물론, 돈의 여유가 있으면 관리형 RDB를 쓰는게 가장 좋은 선택이겠습니다만, 기술증명 겸 이러한 시스템이 있다는 것도 알아주셨으면 감사하겠습니다!</p><p>이 시점에서, 서버 등에 필요한 시스템이 모두 갖춰져 개발을 시작할 수 있게 되셨을 겁니다. 간단한 것부터 하나씩 만들어 봐요.</p><p>그리고 쿠버네티스 내에서 해당 DB는 cnpg-lb-rw.cnpg-cluster 라는 이름으로 접근할 수 있습니다. 예를 들면 <code>jdbc:postgresql://cnpg-lb-rw.cnpg-cluster:5432/my_app</code> 처럼요.</p><p>긴 글 읽느라 수고 많으셨습니다! 다음엔 nvidia-device-plugin을 이용하여 K3S에서 GPU 사용 법을 알아보겠습니다!</p></section><footer class=article-footer><section class=article-tags><a href=/tags/k8s/>K8S</a>
+<a href=/tags/k3s/>K3S</a>
+<a href=/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC-%ED%8C%8C%EC%9D%B4/>라즈베리 파이</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>관련 글</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/p/a63eb8199e2089b6/><div class=article-image><img src=/p/a63eb8199e2089b6/cover.6e17d7b869387999abe51e432a407f90_hu_d541978c67bc38a3.png width=250 height=150 loading=lazy alt="Featured image of post 집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 10-2. Forward Auth와 OAuth2를 이용한 SSO 구현" data-key=a63eb8199e2089b6 data-hash="md5-bhfXuGk4eZmr5R5DKkB/kA=="></div><div class=article-details><h2 class=article-title>집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 10-2. Forward Auth와 OAuth2를 이용한 SSO 구현</h2></div></a></article><article class=has-image><a href=/p/771435ba12d3f38c/><div class=article-image><img src=/p/771435ba12d3f38c/cover.c3ceb5778eca84c1cc8135a61f3185e6_hu_97e63247f67be0dd.png width=250 height=150 loading=lazy alt="Featured image of post 집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 10-1. Basic Auth로 내부용 서비스 보호하기" data-key=771435ba12d3f38c data-hash="md5-w861d47KhMHMgTWmHzGF5g=="></div><div class=article-details><h2 class=article-title>집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 10-1. Basic Auth로 내부용 서비스 보호하기</h2></div></a></article><article class=has-image><a href=/p/a68cc3e1f5e8a95b/><div class=article-image><img src=/p/a68cc3e1f5e8a95b/cover.11f8d302af37944940bc140a8c4e3beb_hu_e7d7763323bd8039.png width=250 height=150 loading=lazy alt="Featured image of post 집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 8-1. Docker Registry UI 설정 및 Registry GC 사용법" data-key=a68cc3e1f5e8a95b data-hash="md5-EfjTAq83lElAvBQKjE476w=="></div><div class=article-details><h2 class=article-title>집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 8-1. Docker Registry UI 설정 및 Registry GC 사용법</h2></div></a></article><article class=has-image><a href=/p/be354d4b5f50a3ee/><div class=article-image><img src=/p/be354d4b5f50a3ee/cover.de948c7dfa7f535bd5760fe0c1280ffb_hu_a156967c2a81ca7d.png width=250 height=150 loading=lazy alt="Featured image of post 집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 8. Private Docker Registry 및 접속 ID/PW 설정하기" data-key=be354d4b5f50a3ee data-hash="md5-3pSMffp/U1vVdg/gwSgP+w=="></div><div class=article-details><h2 class=article-title>집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 8. Private Docker Registry 및 접속 ID/PW 설정하기</h2></div></a></article><article class=has-image><a href=/p/567b4c177bdb8401/><div class=article-image><img src=/p/567b4c177bdb8401/cover.4c40d5c76eae56e7f9e307557c37f03b_hu_6aa1a483823f788b.png width=250 height=150 loading=lazy alt="Featured image of post 집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 7-1. Web UI를 통해 간편하게 Sealed Secrets 만들기" data-key=567b4c177bdb8401 data-hash="md5-TEDVx26uVuf54wdVfDfwOw=="></div><div class=article-details><h2 class=article-title>집에서 라즈베리 파이 클러스터로 데이터센터 차리기 - 7-1. Web UI를 통해 간편하게 Sealed Secrets 만들기</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=LemonDouble/LemonDouble.github.io-comments data-repo-id=R_kgDOI0UkDA data-category=Comments data-category-id=DIC_kwDOI0UkDM4CcIeY data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark_dimmed")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2022 -
+2025 Lemon Blog</section><section class=powerby>LemonDouble<br><a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>로 만듦<br><a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>의 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> 테마 사용 중</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

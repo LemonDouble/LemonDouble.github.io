@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HomeAssistant on Lemon Blog</title><link>https://blog.lemondouble.com/tags/homeassistant/</link><description>Recent content in HomeAssistant on Lemon Blog</description><generator>Hugo -- gohugo.io</generator><language>ko</language><lastBuildDate>Fri, 26 Jul 2024 22:07:33 +0900</lastBuildDate><atom:link href="https://blog.lemondouble.com/tags/homeassistant/index.xml" rel="self" type="application/rss+xml"/><item><title>음성으로 컨트롤되는 인공지능 스마트홈 자랑하는 글</title><link>https://blog.lemondouble.com/p/30f1bf25ad8b594a/</link><pubDate>Fri, 26 Jul 2024 22:07:33 +0900</pubDate><guid>https://blog.lemondouble.com/p/30f1bf25ad8b594a/</guid><description>&lt;img src="https://blog.lemondouble.com/p/30f1bf25ad8b594a/cover.png" alt="Featured image of post 음성으로 컨트롤되는 인공지능 스마트홈 자랑하는 글" />&lt;h2 id="만든-스마트홈-미리보기-일본어-주의">만든 스마트홈 미리보기 (일본어 주의)
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="smart-home.mp4" >Link&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-homeassistant">1. HomeAssistant?
+&lt;/h3>&lt;p>이전에 한번 &lt;a class="link" href="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/" target="_blank" rel="noopener"
+>글을 쓴 적이 있는&lt;/a> HomeAssistant라는 플랫폼에서 출발합니다.&lt;/p>
+&lt;p>2023년은 HomeAssistant에겐 &lt;a class="link" href="https://www.home-assistant.io/blog/2022/12/20/year-of-voice/" target="_blank" rel="noopener"
+>음성의 해&lt;/a> 였습니다.&lt;/p>
+&lt;p>LLM을 필두로 한 인공지능이 점점 고도화되며, 이제는 정말 자비스를 만들 수 있겠다! 는 생각을 하던 해였죠.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image.png"
+width="700"
+height="320"
+srcset="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image_hu_3f9ebddf3cef3789.png 480w, https://blog.lemondouble.com/p/30f1bf25ad8b594a/image_hu_6029f1b6fcc82491.png 1024w"
+loading="lazy"
+alt="자비스"
+class="gallery-image"
+data-flex-grow="218"
+data-flex-basis="525px"
+>&lt;/p>
+&lt;h3 id="2-그래서-말하고-싶은게-뭔데">2. 그래서 말하고 싶은게 뭔데?
+&lt;/h3>&lt;p>그냥 자랑 한번 해 보고 싶었습니다(&amp;hellip;)&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image-1.png"
+width="2128"
+height="1240"
+srcset="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image-1_hu_5912330b70dcf280.png 480w, https://blog.lemondouble.com/p/30f1bf25ad8b594a/image-1_hu_b067dd72c32b7848.png 1024w"
+loading="lazy"
+alt="전체 파이프라인"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
+>&lt;/p>
+&lt;h3 id="3-사용참고한-정보">3. 사용/참고한 정보
+&lt;/h3>&lt;p>&lt;a class="link" href="https://play.google.com/store/apps/details?id=nl.jolanrensen.hotwordPluginFree&amp;amp;hl=ko" target="_blank" rel="noopener"
+>HotWordPlugin&lt;/a> - 안드로이드에서 Wake word 감지&lt;/p>
+&lt;p>&lt;a class="link" href="https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&amp;amp;hl=ko" target="_blank" rel="noopener"
+>Tasker&lt;/a> - 안드로이드에서 HotwordPlugin 이벤트를 감지해서 특정 앱 실행&lt;/p>
+&lt;p>&lt;a class="link" href="https://openai.com/index/introducing-chatgpt-and-whisper-apis/" target="_blank" rel="noopener"
+>Whisper&lt;/a> - Speech To Text 엔진&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/jekalmin/extended_openai_conversation" target="_blank" rel="noopener"
+>extended_openai_conversation&lt;/a> - 집에 있는 디바이스 정보를 이용, function calling 기능을 이용해 실제 디바이스 상태 조절 함수를 호출해 줌.&lt;/p>
+&lt;p>&lt;a class="link" href="https://lemondouble.github.io/p/bert-vits2%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-tts-%EB%A7%8C%EB%93%A4%EA%B8%B0/" target="_blank" rel="noopener"
+>Bert-VITS2 (TTS)&lt;/a> - 캐릭터 목소리 귀엽죠?&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.zigbee2mqtt.io/" target="_blank" rel="noopener"
+>Zigbee2Mqtt&lt;/a> Zigbee 신호를 MQTT Queue와 연결해 주는 오픈소스 프로젝트에요.&lt;/p>
+&lt;p>&lt;a class="link" href="https://ko.aliexpress.com/item/1005003758328408.html" target="_blank" rel="noopener"
+>SONOFF ZBDongle-P&lt;/a> - 라즈베리 파이에서 Zigbee 신호를 쏘게 해 주는 동글이에요&lt;/p>
+&lt;p>&lt;a class="link" href="https://ko.aliexpress.com/item/1005006007728129.html" target="_blank" rel="noopener"
+>Tuya IR 리모컨&lt;/a> - Zigbee를 받아서 IR 신호를 쏴 줘요&lt;/p></description></item><item><title>HomeAssistant로 IoT 한번 해 보지 않을래요?</title><link>https://blog.lemondouble.com/p/107dcfce6eca0dd7/</link><pubDate>Sun, 21 May 2023 09:40:47 +0900</pubDate><guid>https://blog.lemondouble.com/p/107dcfce6eca0dd7/</guid><description>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/cover.png" alt="Featured image of post HomeAssistant로 IoT 한번 해 보지 않을래요?" />&lt;p>IoT는 꽤 재밌는 주제인데도,&lt;/p>
+&lt;p>입문 난이도가 높음 + 잘 알려지지 않은 주제라 이걸로 뭘 할 수 있는지도 잘 알려지지 않은 것 같습니다.&lt;/p>
+&lt;p>저는 여러 플랫폼 중 HomeAssistant(이하 HASS)라는 플랫폼을 직접 설치해서 사용 중인데요, 왜 이런 플랫폼이 필요하고, 우리의 삶에서 뭘 개선시킬 수 있는지 이야기를 하려고 합니다!&lt;/p>
+&lt;h3 id="1-homeassitant가-뭔가요-이하-ha-hass">1. HomeAssitant가 뭔가요? (이하 HA, Hass)
+&lt;/h3>&lt;p>여러 회사의 IoT 디바이스를 한 곳에서 통합 관리하게 해 주는 통합 플랫폼입니다.&lt;/p>
+&lt;p>&lt;a class="link" href="https://demo.home-assistant.io/#/lovelace/0" target="_blank" rel="noopener"
+>Demo&lt;/a> 를 확인해 보세요!&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-10-34.png"
+width="1817"
+height="899"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-10-34_hu_1bedc0351753786c.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-10-34_hu_4dd47dc7b7e2f018.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="202"
+data-flex-basis="485px"
+>&lt;/p>
+&lt;h3 id="2-이걸로-뭘-할-수-있나요">2. 이걸로 뭘 할 수 있나요?
+&lt;/h3>&lt;ul>
+&lt;li>프로그래밍을 할 수 있다면, 문자 그대로 모든 걸 할 수 있습니다!&lt;/li>
+&lt;/ul>
+&lt;p>여러분의 관심에 따라? 할 수 있는 예시를 몇 개 들어볼겠습니다.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>자동화에 관심이 있다면?&lt;/strong>
+&lt;ul>
+&lt;li>&lt;strong>예시 시나리오 : 화장실 불 끄기가 너무 귀찮아요&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-11-46.png"
+width="1741"
+height="2365"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-11-46_hu_90dc67a450390365.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-11-46_hu_eef8d5bc32c5d9fb.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="73"
+data-flex-basis="176px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-11-56.png"
+width="491"
+height="307"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-11-56_hu_eb7599887cc446ca.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-11-56_hu_fbed318523672bc.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+>&lt;/p>
+&lt;p>위와 같이, 스마트 전등과 모션 감지 센서를 설치해서&lt;/p>
+&lt;p>아래와 같이 자동화 할 수 있습니다!&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 실제 코드는 아니고, 의사 코드입니다.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 자동화 1. 화장실 등 자동 키기
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">화장실_모션_센서&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Occupancy&lt;/span> &lt;span class="n">transfer&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">True&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">turn_on&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">화장실_등&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 자동화 2. 화장실 등 자동 끄기
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">화장실_모션_센서&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Occupancy&lt;/span> &lt;span class="n">transfer&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">False&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">바뀐지_10분_지남&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">turn_off&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">화장실_등&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>실제로 hass 화면에선 다음과 같이 자동화를 하게 됩니다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-18.png"
+width="955"
+height="765"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-18_hu_6b60fc87acced607.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-18_hu_cb945c86ecb2c33a.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="124"
+data-flex-basis="299px"
+>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>AI에 관심이 있다면?&lt;/strong>
+&lt;ul>
+&lt;li>예시 시나리오: 음성 비서 만들기&lt;/li>
+&lt;li>그런데 정말 뭐든 할 수 있는..&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-16-59.png"
+width="3890"
+height="2322"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-16-59_hu_f00ffce856c0a573.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-16-59_hu_9db5634ec15caa2b.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="167"
+data-flex-basis="402px"
+>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>회로 DIY에 관심이 있다면?&lt;/strong>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://esphome.io/" target="_blank" rel="noopener"
+>ESPHome&lt;/a> 같은 프로젝트를 이용해 보세요!&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-28.png"
+width="921"
+height="512"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-28_hu_d740dca0acb2c47.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-28_hu_a768b7904da9f859.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="179"
+data-flex-basis="431px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>ESPxx 과 같은, 와이파이와 CPU가 달린 개발 보드를 몇 천원이면 구매할 수 있습니다!&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>아래와 같은 환기 등 만들기 시나리오는 어떠세요?&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-59.png"
+width="3069"
+height="2785"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-59_hu_3a25fb553cc9ea89.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-12-59_hu_f02454c565c71b1f.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="110"
+data-flex-basis="264px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>매번 버스 시간 확인하기 귀찮다면?&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>공공 API를 이용해서 버스 알림이를 만들어보는건 어떨까요?&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-17-32.png"
+width="3549"
+height="2629"
+srcset="https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-17-32_hu_570e4afec636c823.png 480w, https://blog.lemondouble.com/p/107dcfce6eca0dd7/2023-05-21-11-17-32_hu_66dad9bcf44cf8fa.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="134"
+data-flex-basis="323px"
+>&lt;/p>
+&lt;p>이외에도, HomeAssistant라는 플랫폼을 거쳐 더 많은 일들을 할 수 있습니다!&lt;/p>
+&lt;p>완전히 오픈 소스라, 필요하다면 고칠 수 있단것도 덤이구요!&lt;/p>
+&lt;p>한번 즐거운 IoT, 같이 해 보시지 않을래요?&lt;/p></description></item></channel></rss>

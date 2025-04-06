@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SaaS on Lemon Blog</title><link>https://blog.lemondouble.com/tags/saas/</link><description>Recent content in SaaS on Lemon Blog</description><generator>Hugo -- gohugo.io</generator><language>ko</language><lastBuildDate>Sun, 22 Jan 2023 20:41:31 +0900</lastBuildDate><atom:link href="https://blog.lemondouble.com/tags/saas/index.xml" rel="self" type="application/rss+xml"/><item><title>Fly.io에 올리기 좋은 서비스 (Uptime Kuma)</title><link>https://blog.lemondouble.com/p/7da6be543113ac58/</link><pubDate>Sun, 22 Jan 2023 20:41:31 +0900</pubDate><guid>https://blog.lemondouble.com/p/7da6be543113ac58/</guid><description>&lt;img src="https://blog.lemondouble.com/p/7da6be543113ac58/cover.png" alt="Featured image of post Fly.io에 올리기 좋은 서비스 (Uptime Kuma)" />&lt;p>이번에 소개할 프로젝트는 서버의 Uptime을 기록해 주는 Uptime Kuma라는 서비스입니다.&lt;/p>
+&lt;p>내 클러스터/서버 등을 모니터링하고, 문제가 생긴 경우 Telegram, Slack, Discord, E-mail&amp;hellip; 등의 여러 방법을 통해 서버가 죽었음을 알려줄 수 있습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-20-50-49.png"
+width="1024"
+height="641"
+srcset="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-20-50-49_hu_205cd8a8f9196fb4.png 480w, https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-20-50-49_hu_f1215ea4ba5b9b1a.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+>&lt;/p>
+&lt;p>이렇게 생겼어요!&lt;/p>
+&lt;p>Github 주소 ( &lt;a class="link" href="https://github.com/louislam/uptime-kuma" target="_blank" rel="noopener"
+>Link&lt;/a> ) 에 가시면 Demo 서비스도 체험해 볼 수 있습니다.&lt;/p>
+&lt;p>Fly.io에 대한 소개는 이전 글 (&lt;a class="link" href="https://lemondouble.github.io/p/fly.io-%EC%86%8C%EA%B0%9C-%EB%B0%8F-fly.io%EC%97%90-%EC%98%AC%EB%A6%AC%EA%B8%B0-%EC%A2%8B%EC%9D%80-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%B6%94%EC%B2%9C-vaultwarden/" target="_blank" rel="noopener"
+>Fly.io 소개 및 Fly.io에 올리기 좋은 서비스 추천 (VaultWarden)&lt;/a>) 에서 많이 했으니 글을 참고해 주시고, 이번 글에서는 설치법에만 집중하겠습니다.&lt;/p>
+&lt;h3 id="1-flytoml-파일-생성">1. fly.toml 파일 생성
+&lt;/h3>&lt;ul>
+&lt;li>적절한 위치에 가서, &lt;code>flyctl launch&lt;/code> 를 입력하여 fly.toml 파일을 생성합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-volume-생성">2. volume 생성
+&lt;/h3>&lt;ul>
+&lt;li>모니터링 기록 저장, ID/Password 저장 등을 위해 Volume이 필요합니다.&lt;/li>
+&lt;li>그렇게 많은 볼륨이 필요하진 않아서, 저의 경우는 1GB로 생성했습니다.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl volume create uptime_kuma_data --region nrt --size &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="3-flytoml-파일-변경">3. fly.toml 파일 변경
+&lt;/h3>&lt;ul>
+&lt;li>다음 toml 파일을 참고해 배포 파일을 작성해 주세요.&lt;/li>
+&lt;li>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># 앱 이름은 flyctl launch 할 때 설정한 값입니다.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">app&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;lemon-uptime-kuma&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">kill_signal&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;SIGINT&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">kill_timeout&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">processes&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># 추가 :1 은 Debian Stable Build입니다.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># https://hub.docker.com/r/louislam/uptime-kuma&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">build&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">image&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;louislam/uptime-kuma:1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">env&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># 추가, 아까 생성한 Volume을 Mount합니다.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">mounts&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">source&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="s2">&amp;#34;uptime_kuma_data&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">destination&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="s2">&amp;#34;/app/data&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">experimental&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">auto_rollback&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[[&lt;/span>&lt;span class="nx">services&lt;/span>&lt;span class="p">]]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http_checks&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">internal_port&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">3001&lt;/span> &lt;span class="c"># 변경, 기본 설정시 Kuma는 내부에서 3001 포트를 사용합니다.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">processes&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;app&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">protocol&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;tcp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">script_checks&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>&lt;span class="nx">services&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">concurrency&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">hard_limit&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">25&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">soft_limit&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">type&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;connections&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[[&lt;/span>&lt;span class="nx">services&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ports&lt;/span>&lt;span class="p">]]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">force_https&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">handlers&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;http&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">port&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">80&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[[&lt;/span>&lt;span class="nx">services&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ports&lt;/span>&lt;span class="p">]]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">handlers&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;tls&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;http&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">port&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">443&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[[&lt;/span>&lt;span class="nx">services&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">tcp_checks&lt;/span>&lt;span class="p">]]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">grace_period&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;1s&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">interval&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;15s&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">restart_limit&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">timeout&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;2s&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="4-배포하기">4. 배포하기!
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">flyctl deploy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>커맨드를 입력하여 배포합니다.&lt;/p>
+&lt;h3 id="5-접속하여-idpassword-설정하기">5. 접속하여 ID/Password 설정하기
+&lt;/h3>&lt;p>&lt;code>&amp;lt;앱 이름&amp;gt;.fly.dev&lt;/code> 로 접속하거나,
+주소를 잘 모르겠으면 &lt;code>https://fly.io/apps&lt;/code> 로 접속하여 앱을 선택하고 주소를 가져옵니다.&lt;/p>
+&lt;p>이후 ID/Password를 설정합니다.&lt;/p>
+&lt;h3 id="6-모니터링-추가하기">6. 모니터링 추가하기
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-01-00.png"
+width="1234"
+height="821"
+srcset="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-01-00_hu_56886352d6777def.png 480w, https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-01-00_hu_40ef497c51cf6e87.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+>&lt;/p>
+&lt;p>Add New Monitor를 입력한 뒤, 다음과 같이 설정합니다.&lt;/p>
+&lt;p>이후 Save 버튼을 누르면..&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-01-56.png"
+width="1259"
+height="880"
+srcset="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-01-56_hu_45c093912a99b2e9.png 480w, https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-01-56_hu_fa88eeca971d59ee.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="143"
+data-flex-basis="343px"
+>&lt;/p>
+&lt;p>모니터링이 정상 작동합니다!&lt;/p>
+&lt;h3 id="appendix-1-tmi">Appendix 1. TMI
+&lt;/h3>&lt;ul>
+&lt;li>한국어를 지원합니다! Settings -&amp;gt; Appearance 에서 언어 설정을 할 수 있습니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="appendix-2-custom-domain-사용하기">Appendix 2. Custom Domain 사용하기
+&lt;/h3>&lt;ul>
+&lt;li>
+&lt;p>저의 경우, 제 도메인이 있어 Integration 하려고 합니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>앱 페이지에 가서, IPv6을 가져옵니다. (IPv$는 Shared IPv4라 IPv6을 사용했습니다.)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>자신의 DNS 페이지에 가서 &lt;code>CNAME&lt;/code> 유형을 선택하고, 값으론 &lt;code>&amp;lt;앱이름&amp;gt;.fly.dev&lt;/code> 를 입력합니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>이후 &lt;a class="link" href="https://fly.io/apps" target="_blank" rel="noopener"
+>https://fly.io/apps&lt;/a> 대시보드에 들어가, kuma 앱 -&amp;gt; Certificates -&amp;gt; Add Certificate를 누른 후, 내가 입력한 커스텀 도메인을 입력합니다.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-32-09.png"
+width="1576"
+height="463"
+srcset="https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-32-09_hu_501963807ece8978.png 480w, https://blog.lemondouble.com/p/7da6be543113ac58/2023-01-22-21-32-09_hu_1c4981ac15595ef6.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="340"
+data-flex-basis="816px"
+>&lt;/p>
+&lt;ul>
+&lt;li>잠시 후 내가 생성한 커스텀 도메인으로 접속이 가능한걸 확인할 수 있습니다!&lt;/li>
+&lt;/ul></description></item><item><title>Fly.io 소개 및 Fly.io에 올리기 좋은 서비스 추천 (VaultWarden)</title><link>https://blog.lemondouble.com/p/740c42a214d8ce6b/</link><pubDate>Tue, 17 Jan 2023 14:03:50 +0000</pubDate><guid>https://blog.lemondouble.com/p/740c42a214d8ce6b/</guid><description>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/cover.png" alt="Featured image of post Fly.io 소개 및 Fly.io에 올리기 좋은 서비스 추천 (VaultWarden)" />&lt;p>Fly.io 라는 회사에선 도커 이미지만 준비하면 간단히 도커 이미지를 특정 국가 등에 배포할 수 있는 기능을 제공합니다.&lt;/p>
+&lt;p>(가입 완료 후) fly.toml 이란 파일을 적절히 작성 후&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl deploy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>만 입력하면, 잘 지지고 볶아서 이미지를 서버에 올려 주고, DNS, https 설정, IP 발급, 모니터링 (Grafana) 설정 등을 해 줍니다.&lt;/p>
+&lt;p>그리고 클릭 몇 번으로 Scale-up도 해 줍니다. 직접 세팅해도 되긴 하지만, 꽤 귀찮은 작업을 많이 해 줘서 편합니다.&lt;/p>
+&lt;p>또한, 프리 티어에서도 아래와 같은 스펙을 제공합니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-9.png"
+width="602"
+height="271"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-9_hu_6944aeac039b32fa.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-9_hu_4a3bde99aa1c97d0.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="222"
+data-flex-basis="533px"
+>&lt;/p>
+&lt;p>하지만 프리 티어인 만큼 스펙이 그리 널널하진 않습니다.
+그래서 &amp;ldquo;데이터 관리가 중요해서 클라우드 서비스를 사용하고 싶지만, 그리 많은 컴퓨팅 자원을 사용하지 않는&amp;rdquo; 어플리케이션 사용이 필요합니다.&lt;/p>
+&lt;p>그런 용도로 적절한 Password Manager인 Vaultwarden을 설치하는 방법을 포스팅하려고 합니다.&lt;/p>
+&lt;hr>
+&lt;h3 id="vaultwarden-bitwarden-호환-서버">VaultWarden (Bitwarden 호환 서버)
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-10.png"
+width="1280"
+height="720"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-10_hu_c6d5c710b9050a59.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-10_hu_14c4bb76787028bb.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>Bitwarden 은 패스워드 매니저로써, 웹 브라우저, 윈도우, ios, android 앱 등을 통해 여러 디바이스에서 비밀번호 공유가 가능하게 해 줍니다.&lt;/p>
+&lt;p>크롬을 사용하신 분이라면, &amp;ldquo;크롬 자동완성&amp;rdquo; 기능을 생각하시면 이해가 빠릅니다.&lt;/p>
+&lt;p>Bitwarden은 거기에 더해 OTP 기능을 지원하며,&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-12.png"
+width="380"
+height="152"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-12_hu_3ab556f6a685bec2.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-12_hu_39a63c01f23180c8.png 1024w"
+loading="lazy"
+alt="빨간 버튼을 누르면, Google OTP 앱을 킬 필요 없이 인증이 가능합니다!"
+class="gallery-image"
+data-flex-grow="250"
+data-flex-basis="600px"
+>&lt;/p>
+&lt;p>비밀번호 생성기와&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-13.png"
+width="359"
+height="539"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-13_hu_fab40945c8b81c06.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-13_hu_e8c6a933ba07852c.png 1024w"
+loading="lazy"
+alt="각 사이트 설정에 맞춰 적당한 비밀번호를 설정할 수 있습니다."
+class="gallery-image"
+data-flex-grow="66"
+data-flex-basis="159px"
+>&lt;/p>
+&lt;p>Organization (조직) 설정 등으로 패스워드 등을 공유하는 기능도 제공합니다.&lt;/p>
+&lt;p>만약 같이 개발을 하는데, Slack Webhook URL이나, 환경변수, 개발 DB ID 및 패스워드 등을 공유해야 할 때 유용합니다.&lt;/p>
+&lt;p>그 이외에도 해킹된 DB 중 내 비밀번호가 일치하는게 있는지, 재사용된 비밀번호가 있는지 등의 보안 감사 기능과, 종단간 암호화를 이용한 민감한 데이터 전송 기능인 SEND 기능 등을 제공합니다.&lt;/p>
+&lt;p>하지만, Bitwarden은 오픈소스라 패스워드 서버를 Self-hosting 가능하지만, 프로덕션 레벨에서 고가용성을 확보하기 위해 높은 사양과 많은 설정을 요구합니다. ( &lt;a class="link" href="https://bitwarden.com/help/install-on-premise-linux/" target="_blank" rel="noopener"
+>Bitwarden Install Docs&lt;/a> )&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-14.png"
+width="714"
+height="308"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-14_hu_3d5d0af8676ce44f.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-14_hu_e4f502348ae6d8b2.png 1024w"
+loading="lazy"
+alt="256MB RAM으로 돌리기엔 사양이.."
+class="gallery-image"
+data-flex-grow="231"
+data-flex-basis="556px"
+>&lt;/p>
+&lt;p>이런 문제를 해결하기 위해, Bitwarden Client와 호환되지만 사양을 낮추고, Database도 SQLite를 사용하여 하나의 Docker Image만으로도 서버를 실행시킬 수 있는 &lt;a class="link" href="https://github.com/dani-garcia/vaultwarden" target="_blank" rel="noopener"
+>Vaultwarden&lt;/a>이란 프로젝트가 있습니다.&lt;/p>
+&lt;p>공식 서버가 2GB RAM을 요구하는 것에 반해, 해당 서버는 Idle 상태일 때 약 100MB의 Memory를 사용하므로, Fly.io를 이용하여 배포하면 간단히 사용할 수 있습니다!&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-14.png"
+width="714"
+height="308"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-14_hu_3d5d0af8676ce44f.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-14_hu_e4f502348ae6d8b2.png 1024w"
+loading="lazy"
+alt="Vaultwarden 배포 이후 Grafana로 확인한 RAM 사용량"
+class="gallery-image"
+data-flex-grow="231"
+data-flex-basis="556px"
+>&lt;/p>
+&lt;p>다음 스탭을 따라하여, 한번 Vaultwarden 서버를 배포해 봅시다.&lt;/p>
+&lt;ol>
+&lt;li>Fly.io Docs ( &lt;a class="link" href="https://fly.io/docs/hands-on/install-flyctl/" target="_blank" rel="noopener"
+>Link&lt;/a> ) 를 따라가 본인 OS와 맞는 flyctl을 설치하고, 로그인까지 진행합니다.&lt;/li>
+&lt;li>Shell에서 아무 폴더나 하나 만들고, (저의 경우 ~/flyio/vaultwarden 이란 폴더에서 작업했습니다.) 해당 폴더로 이동합니다.
+3 . 아래 커맨드를 입력하여 fly.toml 이란 설정 파일을 만듭니다. 이 때, app-name은 원하는 대로 수정합니다. 입력시, Region을 선택하라는 창이 나오는데 저는 가장 가까운 Tokyo(nrt) 리전을 선택했습니다.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl launch --name app-name --image vaultwarden/server:latest --no-deploy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="4">
+&lt;li>아래 커맨드를 입력하여 저희 데이터를 영구적으로 저장할 Volume을 만듭니다. Volume은 컨테이너가 죽어도 파일이 날아가지 않도록 저장할 수 있는 SSD와 비슷하다고 생각하시면 됩니다. 앱 이름은 3에서 설정한 app 이름과 맞춰 주시고, Region은마찬가지로 가장 가까운 Tokyo(nrt) 리전을 선택해 줍니다.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl volumes create vaultwarden_data --size &lt;span class="m">1&lt;/span> --app app-name
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="5">
+&lt;li>아래 명령어를 이용해 어플리케이션 시작시 주입될 Admin Token Secrets를 만들어 줍니다. ADMIN_TOKEN은 관리자 페이지를 들어갈 수 있는 비밀번호라고 생각하시면 됩니다.
+유출되지 않도록 별도의 비밀번호를 만들어 주시고, 저희는 초기 세팅을 위해 admin page로 진입하기 위해 해당 Secrets 값을 추가해 줍니다.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl secrets &lt;span class="nb">set&lt;/span> &lt;span class="nv">ADMIN_TOKEN&lt;/span>&lt;span class="o">=&lt;/span>abc123456
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="6">
+&lt;li>폴더에 있는 fly.toml 파일을 다음 파일을 참고하여 수정해 줍니다.
+기존 파일에서 [env] 부분, [mounts] 부분, [[services]] -&amp;gt; internal_port 부분을 수정해주면 됩니다.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yml" data-lang="yml">&lt;span class="line">&lt;span class="cl">&lt;span class="l">app = &amp;#34;app-name&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="l">kill_signal = &amp;#34;SIGINT&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="l">kill_timeout = 5&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="l">processes = []&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">env]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">ROCKET_PORT = 8080&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">experimental]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">allowed_public_ports = []&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">auto_rollback = true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">mounts]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">destination = &amp;#34;/data&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">source = &amp;#34;vaultwarden_data&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">[[&lt;/span>&lt;span class="l">services]]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">http_checks = []&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">internal_port = 8080&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">processes = [&amp;#34;app&amp;#34;]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">protocol = &amp;#34;tcp&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">script_checks = []&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">services.concurrency]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">hard_limit = 25&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">soft_limit = 20&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">type = &amp;#34;connections&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">[[&lt;/span>&lt;span class="l">services.ports]]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">force_https = true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">handlers = [&amp;#34;http&amp;#34;]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">port = 80&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">[[&lt;/span>&lt;span class="l">services.ports]]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">handlers = [&amp;#34;tls&amp;#34;, &amp;#34;http&amp;#34;]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">port = 443&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">[[&lt;/span>&lt;span class="l">services.tcp_checks]]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">grace_period = &amp;#34;1s&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">interval = &amp;#34;15s&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">restart_limit = 0&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="l">timeout = &amp;#34;2s&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="7">
+&lt;li>해당 폴더에서 아래 명령어를 쳐서 앱을 배포합니다.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl deploy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="8">
+&lt;li>배포 후, 아래 커맨드를 입력해 웹 페이지에 접속합니다. 이후, 계정 만들기를 눌러 계정 생성과 마스터 패스워드 생성을 진행합니다.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl open
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="9">
+&lt;li>(Optional) 이후 아래 커맨드를 이용해 어드민 화면으로 진입하고, 위에서 생성했던 ADMIN_TOKEN으로 로그인합니다. 이후 필요한 세팅이 있다면 설정합니다. 저의 경우는 신규 가입을 불허하고, 초대 기능을 껐습니다.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flyctl open /admin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="10">
+&lt;li>이후 Bitwarden 클라이언트를 다운받아 좌상단의 화살표를 클릭하고, 배포한 어플리케이션 주소를 입력해 줍니다. app-name.fly.dev, 혹은 방금 여러분이 들어간 웹 페이지를 입력해 주시면 됩니다.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-16.png"
+width="482"
+height="678"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-16_hu_a28de6ae197d55f9.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-16_hu_9871d291d25ca43d.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="71"
+data-flex-basis="170px"
+>&lt;/p>
+&lt;p>축하드립니다! 여기까지 오셨으면, 세팅을 완료하셨습니다!&lt;/p>
+&lt;p>이후, 꽤 편한 패스워드 매니저를 써 보시면 됩니다.&lt;/p>
+&lt;p>Appendix 1. OTP 추가는 어떻게 하나요?
+ID/Password 추가 시, 아래와 같은 TOTP 란에&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-17.png"
+width="363"
+height="63"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-17_hu_eb48abf78f55e1.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-17_hu_f8de0f3cc3a0bd9f.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="576"
+data-flex-basis="1382px"
+>
+&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-18.png"
+width="438"
+height="498"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-18_hu_b21baa0f7921fec.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-18_hu_3f8041633d7fda0e.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="87"
+data-flex-basis="211px"
+>&lt;/p>
+&lt;p>위와 같은 Secret Key를 넣어주면 됩니다.&lt;/p>
+&lt;p>Appendix 2. 이미 사용하고 있는 구글 패스워드를 쓸 순 없을까요?&lt;/p>
+&lt;p>A. 가능합니다!&lt;/p>
+&lt;p>구글 패스워드 매니저에서 비밀번호를 내보내기 한 후,&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-19.png"
+width="942"
+height="655"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-19_hu_5d792427689ad9a7.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-19_hu_5f2e243cf97b63.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="143"
+data-flex-basis="345px"
+>&lt;/p>
+&lt;p>Vaultwarden 웹 콘솔 -&amp;gt; 로그인 -&amp;gt; 도구 -&amp;gt; 데이터 가져오기 하면 크롬에서 쓰던 패스워드를 그대로 사용할 수 있습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-20.png"
+width="668"
+height="598"
+srcset="https://blog.lemondouble.com/p/740c42a214d8ce6b/image-20_hu_c9fd5d9ffeecb82d.png 480w, https://blog.lemondouble.com/p/740c42a214d8ce6b/image-20_hu_c053b6a20115cac9.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="111"
+data-flex-basis="268px"
+>&lt;/p></description></item></channel></rss>

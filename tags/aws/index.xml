@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWS on Lemon Blog</title><link>https://blog.lemondouble.com/tags/aws/</link><description>Recent content in AWS on Lemon Blog</description><generator>Hugo -- gohugo.io</generator><language>ko</language><lastBuildDate>Sun, 04 Aug 2024 20:11:48 +0900</lastBuildDate><atom:link href="https://blog.lemondouble.com/tags/aws/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS SAA 당일 시험 합격 후기글</title><link>https://blog.lemondouble.com/p/d3c7a9de0a536286/</link><pubDate>Sun, 04 Aug 2024 20:11:48 +0900</pubDate><guid>https://blog.lemondouble.com/p/d3c7a9de0a536286/</guid><description>&lt;img src="https://blog.lemondouble.com/p/d3c7a9de0a536286/cover.png" alt="Featured image of post AWS SAA 당일 시험 합격 후기글" />&lt;p>AWS에는 활용 자격증이 있습니다. (&lt;a class="link" href="https://aws.amazon.com/ko/certification/exams/" target="_blank" rel="noopener"
+>Link&lt;/a>)&lt;/p>
+&lt;p>언젠간 따야지.. 따야지.. 하고 벼르고만 있다, 이러다간 평생 못 딸 것 같아서, 오늘 약속도 없겠다 당일에 시험 신청하고 온라인 시험으로 한번 봤습니다.&lt;/p>
+&lt;p>이게 어떤 자격증이고, 따면 뭐가 좋고.. 공부 방법은 어떻고.. 하는 글은 엄청 많으니, 다른 블로그에 맡기도록 하고 2024 기준으로 신청/유의사항/후기 정도만 정리해보려 합니다.&lt;/p>
+&lt;h4 id="1-신청">1. 신청
+&lt;/h4>&lt;p>&lt;a class="link" href="https://aws.amazon.com/ko/certification/" target="_blank" rel="noopener"
+>AWS 자격증&lt;/a> 링크에 들어가서 시험 일정 예약을 누르고 예약을 할 수 있습니다.&lt;/p>
+&lt;p>저는 Online with OnVUE 를 선택해 온라인으로 시험을 봤습니다.
+시험 준비시에 &lt;strong>웹캠&lt;/strong> 이 필요하니 만약 필요하다면 미리 준비해 주세요!&lt;/p>
+&lt;p>시험은 한국어로 신청하면 되고, 한국어로 신청해도 시험 도중에 번역이 이상한 것 같으면 영어 지문을 볼 수 있습니다.&lt;/p>
+&lt;p>추가로 팁을 드리면, AWS 할인 바우처는 찾아보면 하나쯤 있을 가능성이 높으니, 한번 찾아보시길 추천드립니다.&lt;/p>
+&lt;p>저는 &lt;a class="link" href="https://www.reddit.com/r/AWSCertifications/comments/18woit6/2024_aws_vouchers_exam_discounts_other" target="_blank" rel="noopener"
+>Reddit&lt;/a>의 할인 바우처 링크를 사용했는데, 시간이 괜찮으시다면 &lt;a class="link" href="https://awskrug.github.io/" target="_blank" rel="noopener"
+>AWS한국사용자모임&lt;/a> Slack 등에서 한번 할인 정보를 물어보시는것도 좋을 것 같습니다.&lt;/p>
+&lt;h4 id="2-준비">2. 준비
+&lt;/h4>&lt;p>프로그램 다운받고 지시에 따르면 시험 과정 세팅하는데는 큰 문제가 없습니다.&lt;/p>
+&lt;p>단, 백그라운드 프로세스중 일부가 문제를 일으키는 경우가 있었습니다. 저의 경우에는 하라는 대로 포그라운드 프로세스를 다 껐는데도, 백그라운드 프로세스 중 크롬 원격 데스크탑 서비스가 문제가 되어 시험 진행을 못 한 뻔한 경험이 있습니다.&lt;/p>
+&lt;p>만약 &lt;code>chrome ¿ø°Ý µ¥½ºũÅé ¼­ºñ&lt;/code>가 뜬다면, 크롬 원격 데스크탑 관련 프로그램이니 작업 관리자 &amp;gt; 서비스 &amp;gt; chromoting 검색 &amp;gt; 중지 를 하면 시험 준비를 올바르게 마칠 수 있습니다.&lt;/p>
+&lt;h4 id="3-시험">3. 시험
+&lt;/h4>&lt;p>시험은&lt;/p>
+&lt;ol>
+&lt;li>시험 시간 30분 전에 Check in 하러 먼저 들어가서&lt;/li>
+&lt;li>얼굴 사진 찍고, 신분증 사진 찍고, 시험 칠 공간 (주변 사진) 찍고&lt;/li>
+&lt;li>감독관이랑 웹캠으로 연결 후 워치 차고 있는지 손 보여주기, 전신 보여주기, 웹캠으로 데스크에 아무것도 없는지, 주변에 아무것도 없는지 확인하기&lt;/li>
+&lt;li>이후 시험 진행&lt;/li>
+&lt;/ol>
+&lt;p>순으로 진행됩니다.&lt;/p>
+&lt;p>문제는 일반적으로 평이했는데, 잘 모르는게 있다면&lt;/p>
+&lt;ol>
+&lt;li>비슷한 서비스가 여러 개 있다면 최근에 나온거 찍기 (EG &amp;gt; CLB랑 ALB가 있다면 ALB가 정답일 가능성이 높겠죠?)&lt;/li>
+&lt;li>Serverless 등 AWS가 밀어주는 키워드 찍기&lt;/li>
+&lt;/ol>
+&lt;p>가 찍기 팁 정도가 되겠습니다(&amp;hellip;)&lt;/p>
+&lt;h4 id="4-결과-발송">4. 결과 발송
+&lt;/h4>&lt;p>예전에는 시험 끝나자마자 결과가 나왔다고 하는데, 저는 그렇진 않았습니다.&lt;/p>
+&lt;p>저는 11시쯤 당일 13시 15분 시험을 신청했고, 12시 45분부터 체크인을 시작해 시험을 2시쯤 끝내고 나왔습니다.&lt;/p>
+&lt;p>시험 결과는 19시 15분쯤 왔으니, 대충 처리하는데 5~6시간정도 걸리는 것 같습니다.&lt;/p>
+&lt;p>합격하면 다음과 같은 메일이 날아옵니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/d3c7a9de0a536286/image-1.png"
+width="583"
+height="407"
+srcset="https://blog.lemondouble.com/p/d3c7a9de0a536286/image-1_hu_1f513fb405ca52b7.png 480w, https://blog.lemondouble.com/p/d3c7a9de0a536286/image-1_hu_4b3cf00a5b6f423a.png 1024w"
+loading="lazy"
+alt="합격 통보 메일. 축하드립니다! 하고 마크를 보여줌"
+class="gallery-image"
+data-flex-grow="143"
+data-flex-basis="343px"
+>&lt;/p>
+&lt;p>AWS를 쓴지 오래 돼서, 그냥 기억을 더듬더듬 더듬으며 풀었던 문제가 많았습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/d3c7a9de0a536286/image.png"
+width="739"
+height="337"
+srcset="https://blog.lemondouble.com/p/d3c7a9de0a536286/image_hu_8ee9f10e690eb677.png 480w, https://blog.lemondouble.com/p/d3c7a9de0a536286/image_hu_4a8d4eaca7a7b1c5.png 1024w"
+loading="lazy"
+alt="점수 메일, 1000점 만점에 801점"
+class="gallery-image"
+data-flex-grow="219"
+data-flex-basis="526px"
+>&lt;/p>
+&lt;p>가격이 비싸서 엄두도 못 내고 있었는데, 이러면 평생 못 볼 것 같으니 한번 떨어진다고 생각하고 쳐 보자 하니 좋은 결과가 있었씁니다~&lt;/p>
+&lt;p>다음엔 Developer 자격증을 따 볼까 생각중인데, 언제 딸지는 고민해볼 생각입니다. 그럼 안녕~&lt;/p></description></item><item><title>Private DNS와 ALB를 이용해 VPC 외부에선 접속이 불가능한 API 만들기</title><link>https://blog.lemondouble.com/p/acf607c351652785/</link><pubDate>Sun, 22 Jan 2023 17:12:43 +0900</pubDate><guid>https://blog.lemondouble.com/p/acf607c351652785/</guid><description>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/cover.png" alt="Featured image of post Private DNS와 ALB를 이용해 VPC 외부에선 접속이 불가능한 API 만들기" />&lt;p>MSA 서비스를 만들면 서버 간 굉장히 잦은 통신이 일어납니다.&lt;/p>
+&lt;p>예를 들어 (아주 간략화한) 송금 서비스가 있다고 가정해 봅시다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-22-23.png"
+width="1234"
+height="600"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-22-23_hu_57a46343854a2004.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-22-23_hu_2462efeadf3f6773.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="205"
+data-flex-basis="493px"
+>&lt;/p>
+&lt;p>지갑 서버와 유저정보 서버가 있다면, 송금 API를 호출하면 위와 같은 일이 일어날 겁니다.&lt;/p>
+&lt;hr>
+&lt;p>그런데 만약, &lt;strong>정상 유저 확인 API&lt;/strong>를 외부에서 접근할 수 있다면 어떨까요?&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-27-08.png"
+width="1038"
+height="600"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-27-08_hu_2e800033fa3d122e.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-27-08_hu_b60a91820b1bc9c7.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="173"
+data-flex-basis="415px"
+>&lt;/p>
+&lt;p>악의적인 유저가 작정하고 접근하면, 우리 서비스의 정상 유저 비율을 도표로 나타낼 수도 있을 것입니다(..)&lt;/p>
+&lt;p>따라서, MSA 구조에서 &lt;code>서버간 요청에선 API를 사용할 수 있지만&lt;/code>, 이를 &lt;code>외부 유저가 접근해선 안 되는&lt;/code> 요구사항이 생겼습니다.&lt;/p>
+&lt;p>어떻게 하면 이 요구사항을 달성할 수 있을까요?&lt;/p>
+&lt;hr>
+&lt;h3 id="1-가장-간단한-방법은-서버끼리-비밀-key를-공유하는-방식입니다">1. 가장 간단한 방법은, 서버끼리 비밀 Key를 공유하는 방식입니다.
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-57-32.png"
+width="1038"
+height="600"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-57-32_hu_a8acc6d0137883d.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-17-57-32_hu_afa647ed5e93b72f.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="173"
+data-flex-basis="415px"
+>&lt;/p>
+&lt;ul>
+&lt;li>환경 변수 등을 이용해서, 서버끼리 서로 같은 비밀 Key를 공유합니다.&lt;/li>
+&lt;li>이를 HTTP Custom Header등에 실어서, 서버가 요청할 때 Key를 같이 보냅니다.&lt;/li>
+&lt;li>서버는 내부 API 요청을 받으면 비밀 Key를 확인하고, 만약 일치하지 않는다면 Reject 합니다.&lt;/li>
+&lt;/ul>
+&lt;p>하지만 이 방법에는 문제가 있습니다.&lt;/p>
+&lt;ul>
+&lt;li>만약에 누가 비밀 Key를 들고 날랐다면? 혹은, Git 등의 외부 저장소에 Key가 노출됐다면?&lt;/li>
+&lt;li>외부에서 당연히 API 요청이 가능할 것입니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-그러면-whitelist-등을-관리하는건-어떨까요">2. 그러면 Whitelist 등을 관리하는건 어떨까요?
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-18-03-55.png"
+width="1038"
+height="600"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-18-03-55_hu_9db5f961b20d9ad7.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-18-03-55_hu_76a828500b022014.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="173"
+data-flex-basis="415px"
+>&lt;/p>
+&lt;ul>
+&lt;li>서버의 IP를 모두 알 수 있다면, &lt;code>X-Forwarded-For&lt;/code> 헤더 등을 통하여 IP를 확인한 후, 우리가 알고 있는 서버의 IP가 아니라면 차단할 수 있습니다.&lt;/li>
+&lt;/ul>
+&lt;p>그런데 이 방법에도 문제가 좀 있습니다!&lt;/p>
+&lt;ul>
+&lt;li>만약 요청이 너무 많이 들어와서, 서버를 증설한다면 어떨까요?&lt;/li>
+&lt;li>당연히 새 서버의 IP는 알지 못하므로, 차단될 것입니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-네트워크-설정을-통해-외부-진입을-막아-봅시다">3. 네트워크 설정을 통해 외부 진입을 막아 봅시다!
+&lt;/h3>&lt;ul>
+&lt;li>
+&lt;p>1, 2의 방법도 좋은 방법이지만, 아예 외부에서 진입하는 경우 응답이 서버까지 도달하지 않으면 좀 더 안전할 것입니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>이걸 Private DNS / Public DNS를 이용하여 구현해 봅시다!&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>Split Horizon DNS&lt;/code>, 또는 &lt;code>Multiview DNS&lt;/code> 라고도 불리는 방법입니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>관련 문서 : ( &lt;a class="link" href="https://aws.amazon.com/ko/premiumsupport/knowledge-center/internal-version-website/" target="_blank" rel="noopener"
+>Link&lt;/a> )&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>그러면 하나하나 차근차근 알아봅시다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>1. 먼저 Public DNS / Private DNS에 대해 알아 봅시다.&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-02-46.png"
+width="1754"
+height="638"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-02-46_hu_29d7e709113d826c.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-02-46_hu_a10bc801e9ba2db7.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="274"
+data-flex-basis="659px"
+>&lt;/p>
+&lt;ul>
+&lt;li>아주 간단하게 보면, VPC 외부에서 접근할 때 / VPC 내부에서 접근할 때 다른 응답 주소를 줄 수 있습니다.&lt;/li>
+&lt;li>VPC 내부에서 접근할 땐 내부 DNS 서버를, 외부에서 접근할땐 외부 DNS 서버를 사용한다고 생각하면 됩니다!&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-07-27.png"
+width="1906"
+height="638"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-07-27_hu_2e32c70d04d42cd0.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-07-27_hu_aca1ef58961ba174.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="298"
+data-flex-basis="716px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>그러면, 내부 DNS에 없는 레코드를 요청하면 어떻게 될까요?&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>위 그림과 같이 Private DNS에 먼저 질의한 후, 없는 경우 Public DNS에 질의합니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>( Note : 실제 네트워크 흐름과 정확히 일치하지 않을 수 있습니다. 하지만 중요한 건, Private DNS에 우선권이 있다는 겁니다.)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>2. 그러면 이제 ALB에 대해 알아 봅시다.&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-15-44.png"
+width="1414"
+height="528"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-15-44_hu_56b2ba875bb55c83.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-15-44_hu_a4f23cd4d54d6417.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="267"
+data-flex-basis="642px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>ALB (Application Load Balancer)는 들어오는 요청을 평가해서, 적절하게 분배할 수 있습니다.&lt;/p>
+&lt;ul>
+&lt;li>HostName을 기준으로 적절하게 응답할 수 있습니다. 예를 들어..
+&lt;ul>
+&lt;li>&lt;code>wallet.lemondouble.com&lt;/code> 으로 들어오면 &lt;code>wallet server&lt;/code>로 연결할 수 있습니다.&lt;/li>
+&lt;li>&lt;code>user.lemondouble.com&lt;/code>으로 들어오면 &lt;code>user server&lt;/code>로 연결해 줄 수 있습니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Path를 사용해도 같은 작업을 할 수 있습니다.
+&lt;ul>
+&lt;li>&lt;code>api.lemondouble.com/wallet&lt;/code> 으로 들어오면 &lt;code>wallet server&lt;/code>로 연결할 수 있습니다.&lt;/li>
+&lt;li>&lt;code>api.lemondouble.com/user&lt;/code> 로 들어오면 &lt;code>user server&lt;/code>로 연결해 줄 수 있습니다.&lt;/li>
+&lt;li>물론, &lt;code>특정 Path를 포함하고 있다면 Deny&lt;/code>하는 것도 가능합니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>3. 그러면 이 두개를 합치면?&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-26-25.png"
+width="1502"
+height="1222"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-26-25_hu_4cef11993e747e0e.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-26-25_hu_987d096054e34e12.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="122"
+data-flex-basis="294px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>먼저, Public DNS와 인터넷에 연결된 Public ALB를 만들어 줍니다.&lt;/p>
+&lt;ul>
+&lt;li>이 때, Public ALB의 규칙은 다음과 같습니다.&lt;/li>
+&lt;li>우선순위 1. &lt;code>Hostname이 wallet.lemondouble.com과 일치하고, Path가 /internal* 이면 고정 404 응답&lt;/code>&lt;/li>
+&lt;li>우선순위 2. &lt;code>Hostname이 wallet.lemondouble.com과 일치하면 Wallet Server의 80 포트로 연결&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>이 경우 ALB 규칙은 우선순위대로 적용되므로&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>wallet.lemondouble.com/api/hello&lt;/code> 의 경우 &lt;code>우선순위 1&lt;/code> 에 Match되지 않고, &lt;code>우선순위 2&lt;/code> 에 매치되므로 wallet Server로 연결됩니다.&lt;/li>
+&lt;li>&lt;code>wallet.lemondouble.com/internal/hello&lt;/code> 의 경우 &lt;code>우선순위 1&lt;/code> 에 Match되므로, 404 응답을 받습니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-34-23.png"
+width="1648"
+height="722"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-34-23_hu_3205bcd60974681.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-34-23_hu_b0cf9d978aa91765.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="228"
+data-flex-basis="547px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>다음으로, Public DNS와 동일하게 Private DNS와, 인터넷에 연결되지 않은 Private ALB를 만들어 줍니다.&lt;/p>
+&lt;ul>
+&lt;li>이 때, Private ALB의 규칙은 다음과 같습니다.&lt;/li>
+&lt;li>우선순위 1. &lt;code>Hostname이 wallet.lemondouble.com과 일치하면 Wallet Server의 80 포트로 연결&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>이 경우, &lt;code>/internal*&lt;/code> 에 대해 404를 응답하는 로직이 없으므로, 모든 요청은 Wallet Server로 전달됩니다.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-36-14.png"
+width="1866"
+height="1222"
+srcset="https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-36-14_hu_535a083bf940af83.png 480w, https://blog.lemondouble.com/p/acf607c351652785/2023-01-22-19-36-14_hu_1df805b7c8d8967d.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="152"
+data-flex-basis="366px"
+>&lt;/p>
+&lt;ul>
+&lt;li>둘을 합치면 다음과 같은 모양이 됩니다.&lt;/li>
+&lt;li>&lt;code>wallet.lemondouble.com/internal/hello&lt;/code> API를 호출하였을 때, VPC 외부에서는 404 응답을 받지만, VPC 내부에서는 정상 응답을 받습니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-그러면-네트워크-설정만-하면-충분할까요">4. 그러면 네트워크 설정만 하면 충분할까요?
+&lt;/h3>&lt;ul>
+&lt;li>얼마나 정보 유출에 민감한 어플리케이션을 만드냐에 따라 다르겠지만, 1 과 3의 방법을 합치면 더 좋을 것입니다. 그러면..
+&lt;ul>
+&lt;li>만약 서버끼리의 비밀 Key가 유출되더라도, 네트워크 설정이 막고 있으니 외부 접근이 차단됩니다.&lt;/li>
+&lt;li>만약 네트워크 설정을 잘못 건드렸더라도, 외부에서는 비밀 Key를 모르므로 외부 접근이 차단됩니다.&lt;/li>
+&lt;li>실수는 언제나 일어날 수 있으므로, 실수가 일어나더라도 시스템으로 막을 수 있는 방법이 훨씬 좋습니다!!&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>이상으로 Private (또는 Internal) API를 만드는 법을 알아봤습니다.&lt;/p>
+&lt;p>Private API를 만드는 방법은 다양합니다. 이외에도 AWS의 API Gateway를 이용할 수도, (잘 모르지만) K8S나 Spring Cloud Gateway 등을 사용할 수도 있을..? 겁니다.&lt;/p>
+&lt;p>여러 방법 중에 이런 방법도 있구나~ 하고 봐 주시면 감사하겠습니다. 혹시 틀린 게 있다면 댓글 남겨 주세요!&lt;/p>
+&lt;p>감사합니다.&lt;/p></description></item><item><title>Github OIDC를 이용해 Github Actions에 AWS Key 넣지 않고 AWS 리소스 사용하기 (무료)</title><link>https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/</link><pubDate>Sun, 22 Jan 2023 11:18:50 +0900</pubDate><guid>https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/</guid><description>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/cover.png" alt="Featured image of post Github OIDC를 이용해 Github Actions에 AWS Key 넣지 않고 AWS 리소스 사용하기 (무료)" />&lt;p>Github Actions에서 AWS를 사용하려면 보통 다음과 같은 과정을 거칩니다.&lt;/p>
+&lt;ul>
+&lt;li>IAM 창에 들어가서 새로운 유저를 발급합니다.&lt;/li>
+&lt;li>Github Actions에서 IAM Role을 추가하고, Programmatic access 방식을 추가해 &lt;code>AWS_ACCESS_KEY_ID&lt;/code>, &lt;code>AWS_SECRET_ACCESS_KEY&lt;/code> 를 발급받습니다.&lt;/li>
+&lt;li>레포지토리에 설정에서, Github Secrets에 방금 발급받은 &lt;code>AWS_ACCESS_KEY_ID&lt;/code>, &lt;code>AWS_SECRET_ACCESS_KEY&lt;/code>를 추가합니다.&lt;/li>
+&lt;li>이후 github actions에서 다음과 같은 워크플로우를 추가한 뒤 AWS 리소스에 접근합니다.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Configure AWS Credentials&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">aws-actions/configure-aws-credentials@v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">aws-access-key-id&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ secrets.AWS_ACCESS_KEY_ID }}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">aws-secret-access-key&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ secrets.AWS_SECRET_ACCESS_KEY }}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">aws-region&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">us-east-2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>프로젝트가 하나라면, 이런 식으로 관리해도 큰 문제가 없습니다.&lt;/p>
+&lt;p>하지만 AWS를 사용하는 프로젝트가 늘어나기 시작하면 몇 가지 고민에 빠지게 됩니다.&lt;/p>
+&lt;p>예를 들어 한 레포지토리마다 하나의 IAM User를 발급을 할 것인지? 아니면 슈퍼 유저를 하나 발급해서 &lt;code>ACCESS_KEY&lt;/code>, &lt;code>ACCESS_SECRET&lt;/code>을 돌려 쓸지?&lt;/p>
+&lt;p>슈퍼 유저를 발급하면 혹시라도 관련 키가 유출되었을 경우 큼지막한 AWS 영수증을 받아 볼 수 있어 좋은 Practice라고 보긴 어렵고,&lt;/p>
+&lt;p>여러 유저를 발급하자니 유저 수가 많아짐에 따라 어떤 Key가 어디서 사용하는지 관리하기 어려워지는 문제점이 있습니다.&lt;/p>
+&lt;p>그나마 최근에 Access Key마다 Description을 붙일 수 있는 기능이 추가되어 관리가 조금 나아졌지만, 그 전엔 어떤 Key를 어디서 쓰는지 몰라서 건드리지 못 하는 일이 비일비재했습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-50-12.png"
+width="1518"
+height="243"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-50-12_hu_8e285b44c1b7aab0.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-50-12_hu_34013e7702989a13.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="624"
+data-flex-basis="1499px"
+>&lt;/p>
+&lt;p>여기서 한발자국 더 나아가서! Access Key 관리 모범 사례를 준수하려 하면 머리가 더 아파오기 시작합니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-45-30.png"
+width="510"
+height="235"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-45-30_hu_f0cc5550e92a1cd8.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-45-30_hu_493bb4297bd9838a.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="217"
+data-flex-basis="520px"
+>&lt;/p>
+&lt;p>모범 사례에 따르면 주기적으로 장기 자격 증명을 교체해줘야 하는데, 주기적으로 새 Key 발급받고 레포지토리에서 Secrets 갈아끼울 생각을 하니 머리가 아픕니다.&lt;/p>
+&lt;p>(여러분이 받은 만료되지 않는 &lt;code>ACCESS_KEY&lt;/code>, &lt;code>ACCESS_SECRET&lt;/code> 를 장기 자격 증명이라고 합니다.)&lt;/p>
+&lt;p>&lt;strong>내가 매번 Secrets에 Key를 끼워주지 않아도, 알아서 내 리포지토리에만 내 키를 알아서 끼워주면 얼마나 편할까요?&lt;/strong>&lt;/p>
+&lt;p>또한,&lt;/p>
+&lt;p>&lt;strong>매번 Actions이 돌 때마다 잠깐만 쓸 수 있는 임시 Token을 발급받아서, 혹시 Token이 털리더라도 시간이 지나면 만료되어서 못 쓰게 된다면 얼마나 좋을까요?&lt;/strong>&lt;/p>
+&lt;p>OIDC 연결을 통해 가능합니다! 또한, AWS가 권장하는 보안 모범 사례 (&lt;a class="link" href="https://github.com/aws-actions/configure-aws-credentials#assuming-a-role" target="_blank" rel="noopener"
+>Link&lt;/a>) 이기도 합니다!&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-56-23.png"
+width="844"
+height="308"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-56-23_hu_7d87f71a5badc8f0.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-11-56-23_hu_62dfc999d7ad7c73.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="274"
+data-flex-basis="657px"
+>&lt;/p>
+&lt;p>한번만 세팅해 두면 Actions 돌리기가 꽤 편해지는 방법을 소개합니다!&lt;/p>
+&lt;hr>
+&lt;ul>
+&lt;li>설정 방식은 공식 문서가 있습니다. 혹시 막히는 부분이 있다면 공식 문서를 참고하세요 ( &lt;a class="link" href="https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services" target="_blank" rel="noopener"
+>Link&lt;/a> )&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-oidc-자격-증명-공급자-생성하기">1. OIDC 자격 증명 공급자 생성하기
+&lt;/h3>&lt;ul>
+&lt;li>IAM Console로 접속합니다. &lt;a class="link" href="https://console.aws.amazon.com/iam/" target="_blank" rel="noopener"
+>https://console.aws.amazon.com/iam/&lt;/a>&lt;/li>
+&lt;li>왼쪽 메뉴에서 &lt;strong>작업 증명 공급자&lt;/strong> 메뉴를 선택한 뒤, &lt;strong>공급자 추가&lt;/strong> 를 선택합니다.&lt;/li>
+&lt;li>다음과 같이 설정합니다.
+&lt;ul>
+&lt;li>공급자 URL : &lt;code>https://token.actions.githubusercontent.com&lt;/code>&lt;/li>
+&lt;li>대상 : &lt;code>sts.amazonaws.com&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-03-09.png"
+width="750"
+height="724"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-03-09_hu_c30e10bbaccfd0f1.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-03-09_hu_15df1c7344879464.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="103"
+data-flex-basis="248px"
+>&lt;/p>
+&lt;ul>
+&lt;li>이후 지문 가져오기를 누른 후, 공급자를 추가합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-oidc-연동-role-생성">2. OIDC 연동 Role 생성
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>역할&lt;/strong> 메뉴를 선택하여 새로운 역할을 만듭니다.&lt;/li>
+&lt;li>&lt;strong>웹 자격 증명&lt;/strong> 을 선택하고, 다음과 같이 1에서 생성한 Github Provider를 선택해 줍니다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-08-13.png"
+width="1800"
+height="587"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-08-13_hu_9878f30742263284.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-08-13_hu_fbcd068b405d7533.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="306"
+data-flex-basis="735px"
+>&lt;/p>
+&lt;ul>
+&lt;li>권한의 경우, 지금은 간단한 예시이므로 Managed Policy에서 &lt;code>S3FullAccess&lt;/code> 를 사용했습니다.
+&lt;ul>
+&lt;li>실제로 사용하실 땐 직접 Policy를 만들어서 사용하실 수도 있습니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-12-47.png"
+width="954"
+height="357"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-12-47_hu_312bbb362a6763c1.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-12-47_hu_63e21c5d27be299c.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="267"
+data-flex-basis="641px"
+>&lt;/p>
+&lt;ul>
+&lt;li>적당한 이름과 설명을 넣고, Role을 생성합니다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-36-18.png"
+width="1540"
+height="723"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-36-18_hu_e3e8d30cae9b875c.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-36-18_hu_f56216d429206ed7.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="213"
+data-flex-basis="511px"
+>&lt;/p>
+&lt;ul>
+&lt;li>생성이 끝났습니다! 이후 해당 Role의 ARN을 어디 기록해 둡시다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-38-36.png"
+width="1184"
+height="303"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-38-36_hu_9bb26dd3417daaea.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-38-36_hu_c0febd98e7c37969.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="390"
+data-flex-basis="937px"
+>&lt;/p>
+&lt;h3 id="3-github-actions에서-해당-role-사용하기">3. Github Actions에서 해당 Role 사용하기
+&lt;/h3>&lt;ul>
+&lt;li>
+&lt;p>다음과 같은 식으로 방금 생성한 Role을 사용할 수 있습니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>새로운 Repository를 판 후 &lt;code>.github/workflows/oidc-connect-test.yaml&lt;/code> 을 생성합니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Access key나 Secret 등은 전혀 설정하지 않아도 됩니다!&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>아래는 현재 레포지토리를 그대로 S3에 업로드하는 Github Actions입니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>다음과 같은 부분을 자신에 맞게 바꿉니다.&lt;/p>
+&lt;ul>
+&lt;li>role-to-assume 부분을 2. 에서 기록한 Role의 ARN으로 변경합니다.&lt;/li>
+&lt;li>테스트를 위해 버킷을 아무 이름으로 하나 파고, &amp;lt;버킷 이름&amp;gt; 부분을 생성한 버킷 이름으로 교체합니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">OIDC Connect Test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">push&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">main ]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">deploy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">OIDC Connect Test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ubuntu-latest&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="c"># These permissions are needed to interact with GitHub&amp;#39;s OIDC Token endpoint.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">permissions&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">id-token&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">write&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">contents&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">read&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Checkout&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/checkout@v3&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Configure Github Actions AWS credentials&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">aws-actions/configure-aws-credentials@v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">role-to-assume&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">arn:aws:iam::123456461:role/github-actions-role&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 아까 생성한 Role을 사용&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">aws-region&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ap-northeast-1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Copy file to S3 &lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">|&lt;/span>&lt;span class="sd">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="sd"> aws s3 sync . s3://&amp;lt;버킷 이름&amp;gt;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>이후, Actions가 정상적으로 작동하고&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-42-54.png"
+width="785"
+height="510"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-42-54_hu_b88dd5f07357f852.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-42-54_hu_618f2e2b2f0ced80.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="153"
+data-flex-basis="369px"
+>&lt;/p>
+&lt;ul>
+&lt;li>실제로 S3에 리포지토리 파일이 올라갔다면 세팅에 성공하신 겁니다!&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-43-30.png"
+width="806"
+height="342"
+srcset="https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-43-30_hu_3cce09ca144ef46d.png 480w, https://blog.lemondouble.com/p/github-oidc%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-github-actions%EC%97%90-aws-key-%EB%84%A3%EC%A7%80-%EC%95%8A%EA%B3%A0-aws-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%AC%B4%EB%A3%8C/2023-01-22-12-43-30_hu_7ce448ff6a2ac152.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="235"
+data-flex-basis="565px"
+>&lt;/p>
+&lt;hr>
+&lt;h3 id="appendix-1-보안-강화하기">Appendix 1. 보안 강화하기
+&lt;/h3>&lt;ul>
+&lt;li>개인 사용 용이라 현재는 모든 레포지토리가 Credentials를 받아올 수 있지만, 특정 리포지토리만 한정할 수도 있습니다.&lt;/li>
+&lt;li>Role 생성시 아래와 같이 repo를 추가하면, octo-org/octo-repo의 모든 브랜치/PR에서만 AWS를 사용하도록 할 수 있습니다.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;Version&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;2012-10-17&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;Statement&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;Effect&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Allow&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;Principal&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;Federated&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;arn:aws:iam::123456123456:oidc-provider/token.actions.githubusercontent.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;Action&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;sts:AssumeRoleWithWebIdentity&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;Condition&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;StringLike&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;token.actions.githubusercontent.com:sub&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;repo:octo-org/octo-repo:*&amp;#34;&lt;/span> &lt;span class="err">#&lt;/span> &lt;span class="err">이&lt;/span> &lt;span class="err">부분을&lt;/span> &lt;span class="err">추가&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;StringEquals&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;token.actions.githubusercontent.com:aud&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;sts.amazonaws.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="appendix-2-role은-어떻게-관리하나요">Appendix 2. Role은 어떻게 관리하나요?
+&lt;/h3>&lt;ul>
+&lt;li>한번 세팅을 해 두었으니, 앞으로 새로운 Role이 필요하면 2 (OIDC 연동 Role 생성) 부분을 진행해 새로운 Role을 생성하고, role-to-assume 부분만 갈아 껴 주면 됩니다.&lt;/li>
+&lt;/ul>
+&lt;p>끝!&lt;/p></description></item><item><title>AWS SSO로 회사에서 보던 그 화면 집에서도 쓰기 (무료)</title><link>https://blog.lemondouble.com/p/1c9eaebbdee2ac98/</link><pubDate>Sat, 21 Jan 2023 16:17:06 +0900</pubDate><guid>https://blog.lemondouble.com/p/1c9eaebbdee2ac98/</guid><description>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/cover.png" alt="Featured image of post AWS SSO로 회사에서 보던 그 화면 집에서도 쓰기 (무료)" />&lt;p>회사나 조직에서 AWS를 사용하다 보면, 다음과 같은 SSO (Single Sign On) 페이지를 통해 로그인 하는 아래와 같은 페이지를 본 적이 있으실 겁니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-21-23-57-37.png"
+width="909"
+height="254"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-21-23-57-37_hu_8cf1bc622c6af1bf.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-21-23-57-37_hu_d8cfcde8d0c16f22.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="357"
+data-flex-basis="858px"
+>&lt;/p>
+&lt;p>한번 설정해 보면 세션이 유지되는 동안 매번 id/password를 입력해 주지 않아도 되어서 사용하기도 편하고,&lt;/p>
+&lt;p>또한 aws-cli나 aws-sdk를 사용할 때도 &lt;code>AWS_ACCESS_KEY&lt;/code>, &lt;code>AWS_ACCESS_SECRET&lt;/code> 같은 유출되면 안 되는 정보들을 로컬 컴퓨터에 평문으로 저장하지 않아도 되어서, 보안 상으로도 이점이 있습니다.&lt;/p>
+&lt;p>또한 무료 서비스라 (&lt;a class="link" href="https://aws.amazon.com/ko/iam/identity-center/faqs/" target="_blank" rel="noopener"
+>Link&lt;/a>) 추가 비용도 &lt;strong>전혀&lt;/strong> 들지 않습니다!&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-05-31.png"
+width="325"
+height="69"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-05-31_hu_bf4f1d95844df33c.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-05-31_hu_290c77514809061d.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="471"
+data-flex-basis="1130px"
+>&lt;/p>
+&lt;p>그러면 한번 설정해 봅시다!&lt;/p>
+&lt;hr>
+&lt;h2 id="1-iam-identity-center-설정하기">1. IAM Identity Center 설정하기
+&lt;/h2>&lt;h3 id="1-aws에서-sso를-검색해서-iam-identity-center-를-찾습니다">1. AWS에서 SSO를 검색해서 IAM Identity Center 를 찾습니다.
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-07-58.png"
+width="1041"
+height="236"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-07-58_hu_228b3872d5a732e9.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-07-58_hu_ee3ccc45eddf202a.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="441"
+data-flex-basis="1058px"
+>&lt;/p>
+&lt;h3 id="2-활성화를-눌러줍니다">2. 활성화를 눌러줍니다!
+&lt;/h3>&lt;ul>
+&lt;li>이 때, Identity Center는 한 리전에서만 활성화 가능하니 주로 쓰는 리전에 활성화 해 주면 추후 관리하기 좀 더 편합니다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-12-59.png"
+width="312"
+height="277"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-12-59_hu_94f45d575aa0a615.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-12-59_hu_366b10fb2ae4b87a.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="112"
+data-flex-basis="270px"
+>&lt;/p>
+&lt;h3 id="3-aws-organization을-먼저-설정해-줍니다">3. AWS Organization을 먼저 설정해 줍니다.
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-00-14.png"
+width="598"
+height="494"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-00-14_hu_d28ed02fa9844b22.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-00-14_hu_9b8903f9dcb53580.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="121"
+data-flex-basis="290px"
+>&lt;/p>
+&lt;ul>
+&lt;li>다음과 같은 에러창을 만날건데, AWS Organization을 먼저 생성해 줍니다.&lt;/li>
+&lt;li>AWS Organization도 마찬가지로 &lt;em>무료&lt;/em> 서비스입니다. (&lt;a class="link" href="https://docs.aws.amazon.com/ko_kr/organizations/latest/userguide/orgs_introduction.html#pricing" target="_blank" rel="noopener"
+>Link&lt;/a>)&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-그러면-dashboard가-생성되는데-추가-설정을-위해-설정으로-이동-버튼을-눌러줍니다">4. 그러면 Dashboard가 생성되는데, 추가 설정을 위해 설정으로 이동 버튼을 눌러줍니다.
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-16-22.png"
+width="1884"
+height="773"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-16-22_hu_8d578c6ad3fa90cd.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-16-22_hu_f199e836a727d347.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="243"
+data-flex-basis="584px"
+>&lt;/p>
+&lt;h3 id="5-일단-sso-로그인-페이지에-별칭을-부여해-봅시다">5. 일단 SSO 로그인 페이지에 별칭을 부여해 봅시다.
+&lt;/h3>&lt;ul>
+&lt;li>기본으로 제공해 주는 로그인 페이지는 &lt;code>aadfbasdf-d.awsapps.com/start&lt;/code> 과 같이 자동 생성된 페이지라 기억하기 어렵습니다.&lt;/li>
+&lt;li>이걸 &lt;code>lemonlogin.awsapps.com/start&lt;/code> 처럼 별명을 지정해 봅시다.&lt;/li>
+&lt;li>딱 한 번만 설정할 수 있으므로, 신중하게 설정합시다!&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-18-34.png"
+width="1581"
+height="405"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-18-34_hu_b4f13fdd7a39ce3b.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-18-34_hu_358f3d11380f2ed0.png 1024w"
+loading="lazy"
+alt="AWS 액세스 포털 URL 사용자 지정을 눌러줍니다."
+class="gallery-image"
+data-flex-grow="390"
+data-flex-basis="936px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-20-02.png"
+width="588"
+height="379"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-20-02_hu_f62c9f38f2ad4616.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-20-02_hu_8cf445e0d73f06d3.png 1024w"
+loading="lazy"
+alt="여기에 원하는 별명을 추가해 줍니다."
+class="gallery-image"
+data-flex-grow="155"
+data-flex-basis="372px"
+>&lt;/p>
+&lt;h3 id="6-그룹을-추가합시다">6. 그룹을 추가합시다!
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-10-53.png"
+width="1421"
+height="800"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-10-53_hu_a937a0108196d22a.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-10-53_hu_770d4b9ab37d88d4.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>그룹을&lt;/p>
+&lt;h3 id="7사용자를-추가합시다">7.사용자를 추가합시다!
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-22-44.png"
+width="1898"
+height="485"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-22-44_hu_eefff092018a9965.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-22-44_hu_f5adb5af1176673b.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="391"
+data-flex-basis="939px"
+>&lt;/p>
+&lt;ul>
+&lt;li>사용자 추가 버튼을 누른 뒤에..&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-24-25.png"
+width="1107"
+height="807"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-24-25_hu_e8e34b5fbcb406eb.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-24-25_hu_21544c04957f4293.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="137"
+data-flex-basis="329px"
+>&lt;/p>
+&lt;ul>
+&lt;li>사용자 정보를 입력해 줍니다. 암호는 이메일로 설정 메일을 받을 수도, 일회용 패스워드를 받을 수도 있습니다.&lt;/li>
+&lt;li>기본값으로 이메일로 받도록 합시다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-12-26.png"
+width="1114"
+height="399"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-12-26_hu_1abd32dea4986172.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-12-26_hu_947ea16713406271.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="279"
+data-flex-basis="670px"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>이후 Group을 선택할 수 있는데, 5.에서 설정했던 그룹을 추가해 줍니다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>이후 이메일을 확인하여 초대를 수락하고, 해당 계정에 Password를 설정한 후 어딘가에 기록해 둡니다!&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="8-권한을-추가합시다">8. 권한을 추가합시다!
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-51-29.png"
+width="1096"
+height="782"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-51-29_hu_80b1f0412a7d3635.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-51-29_hu_446ec52d5cbb65b6.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="140"
+data-flex-basis="336px"
+>&lt;/p>
+&lt;ul>
+&lt;li>권한 세트를 선택합니다. 저는 &lt;code>AdministratorAccess&lt;/code>를 선택했지만, 다른 값을 선택할수도 있습니다.&lt;/li>
+&lt;li>사전 정의된 권한 세트에 원하는 Role이 없다면 사용자 지정으로 직접 선택할 수도 있습니다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-53-34.png"
+width="1009"
+height="861"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-53-34_hu_afe24699cd20f3a3.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-00-53-34_hu_9ef9cef116eb08e4.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="117"
+data-flex-basis="281px"
+>&lt;/p>
+&lt;ul>
+&lt;li>이후 나머지 설정을 적어 줍니다.&lt;/li>
+&lt;li>세션 기간의 경우, 해당 시간이 지나면 자동으로 AWS가 로그아웃 시키는 시간입니다.&lt;/li>
+&lt;li>기본은 1시간인데, 너무 자주 로그아웃 되면 귀찮아서 저는 4시간 정도로 늘렸습니다.&lt;/li>
+&lt;li>&lt;code>릴레이 상태&lt;/code> 는 로그인 성공 시 Redirect할 URL을 정할 수 있습니다. 예를 들어 Billing 권한이라면 로그인 성공시 Billing 페이지로 리다이렉션되는 식입니다.&lt;/li>
+&lt;li>필요하다면 문서(&lt;a class="link" href="https://docs.aws.amazon.com/ko_kr/singlesignon/latest/userguide/howtopermrelaystate.html" target="_blank" rel="noopener"
+>Link&lt;/a>) 를 참고해서 설정해 주세요. 저는 빈 칸으로 남겨뒀습니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="9-sso-로그인-설정하기">9. SSO 로그인 설정하기
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-30-57.png"
+width="1881"
+height="444"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-30-57_hu_e130ca1e0e151e8.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-30-57_hu_e03325d54b2c94f.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="423"
+data-flex-basis="1016px"
+>&lt;/p>
+&lt;ul>
+&lt;li>이후 AWS 계정 탭에서 내 계정을 선택하고, &lt;code>사용자 또는 그룹 할당&lt;/code> 을 눌러주세요.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-21-14.png"
+width="1030"
+height="640"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-21-14_hu_f0f10aab360e8dc2.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-21-14_hu_94980b3c67940101.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="386px"
+>&lt;/p>
+&lt;ul>
+&lt;li>위에서 설정한 그룹을 추가하고&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-21-43.png"
+width="1004"
+height="509"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-21-43_hu_6e27c686822fb562.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-21-43_hu_5fce57a7d40fa5d3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="197"
+data-flex-basis="473px"
+>&lt;/p>
+&lt;ul>
+&lt;li>위에서 설정한 권한을 추가해 주세요.&lt;/li>
+&lt;/ul>
+&lt;h3 id="10-sso-로그인">10. SSO 로그인
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-33-05.png"
+width="952"
+height="393"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-33-05_hu_3e9d894bca486e8f.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-33-05_hu_c5d3b215ad4448bc.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="242"
+data-flex-basis="581px"
+>&lt;/p>
+&lt;ul>
+&lt;li>이제 5에서 추가했던 aws 로그인 주소로 가서 로그인 해 봅시다. &lt;code>별칭.awsapps.com/start&lt;/code> 로 들어가서 로그인합니다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-34-14.png"
+width="952"
+height="393"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-34-14_hu_3e9d894bca486e8f.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-34-14_hu_c5d3b215ad4448bc.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="242"
+data-flex-basis="581px"
+>&lt;/p>
+&lt;ul>
+&lt;li>SSO 설정에 성공하셨습니다!&lt;/li>
+&lt;/ul>
+&lt;h3 id="appendix-1-보안-강화하기">Appendix 1. 보안 강화하기
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-37-55.png"
+width="1585"
+height="681"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-37-55_hu_6360ea3abff45f13.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-37-55_hu_648c2cd7e218eba4.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="232"
+data-flex-basis="558px"
+>&lt;/p>
+&lt;ul>
+&lt;li>IAM Identity Center - 설정에 들어가 SSO 계정에 대한 MFA 설정, 세션 길이 설정 등을 할 수 있습니다.&lt;/li>
+&lt;li>다른 내용은 그대로 쓰더라도, &lt;code>이 사용자에게 등록된 MFA 디바이스가 없는 경우 - 로그인 시 MFA 디바이스를 등록하도록 요구&lt;/code> 옵션은 키는 것을 추천드립니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="appendix-2-aws-sso로-aws_cli-사용하기">Appendix 2. AWS SSO로 AWS_CLI 사용하기
+&lt;/h3>&lt;p>&lt;img src="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-47-10.png"
+width="834"
+height="320"
+srcset="https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-47-10_hu_ef254db36bdcafd.png 480w, https://blog.lemondouble.com/p/1c9eaebbdee2ac98/2023-01-22-01-47-10_hu_c4b7fdd41f8784e9.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="260"
+data-flex-basis="625px"
+>&lt;/p>
+&lt;ul>
+&lt;li>SSO 설정 이후 위와 같이 aws configure sso를 이용하여 로그인 설정을 해 줍니다. (빨간색으로 밑줄친 줄은 직접 입력합니다.)&lt;/li>
+&lt;li>설정 이후 &lt;code>aws s3 ls&lt;/code> 커맨드 등을 이용하여 정상 세팅되었는지 확인합니다.&lt;/li>
+&lt;/ul></description></item></channel></rss>

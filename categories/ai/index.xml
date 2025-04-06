@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on Lemon Blog</title><link>https://blog.lemondouble.com/categories/ai/</link><description>Recent content in AI on Lemon Blog</description><generator>Hugo -- gohugo.io</generator><language>ko</language><lastBuildDate>Fri, 26 Jul 2024 22:07:33 +0900</lastBuildDate><atom:link href="https://blog.lemondouble.com/categories/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>음성으로 컨트롤되는 인공지능 스마트홈 자랑하는 글</title><link>https://blog.lemondouble.com/p/30f1bf25ad8b594a/</link><pubDate>Fri, 26 Jul 2024 22:07:33 +0900</pubDate><guid>https://blog.lemondouble.com/p/30f1bf25ad8b594a/</guid><description>&lt;img src="https://blog.lemondouble.com/p/30f1bf25ad8b594a/cover.png" alt="Featured image of post 음성으로 컨트롤되는 인공지능 스마트홈 자랑하는 글" />&lt;h2 id="만든-스마트홈-미리보기-일본어-주의">만든 스마트홈 미리보기 (일본어 주의)
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="smart-home.mp4" >Link&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-homeassistant">1. HomeAssistant?
+&lt;/h3>&lt;p>이전에 한번 &lt;a class="link" href="https://lemondouble.github.io/p/homeassistant%EB%A1%9C-iot-%ED%95%9C%EB%B2%88-%ED%95%B4-%EB%B3%B4%EC%A7%80-%EC%95%8A%EC%9D%84%EB%9E%98%EC%9A%94/" target="_blank" rel="noopener"
+>글을 쓴 적이 있는&lt;/a> HomeAssistant라는 플랫폼에서 출발합니다.&lt;/p>
+&lt;p>2023년은 HomeAssistant에겐 &lt;a class="link" href="https://www.home-assistant.io/blog/2022/12/20/year-of-voice/" target="_blank" rel="noopener"
+>음성의 해&lt;/a> 였습니다.&lt;/p>
+&lt;p>LLM을 필두로 한 인공지능이 점점 고도화되며, 이제는 정말 자비스를 만들 수 있겠다! 는 생각을 하던 해였죠.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image.png"
+width="700"
+height="320"
+srcset="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image_hu_3f9ebddf3cef3789.png 480w, https://blog.lemondouble.com/p/30f1bf25ad8b594a/image_hu_6029f1b6fcc82491.png 1024w"
+loading="lazy"
+alt="자비스"
+class="gallery-image"
+data-flex-grow="218"
+data-flex-basis="525px"
+>&lt;/p>
+&lt;h3 id="2-그래서-말하고-싶은게-뭔데">2. 그래서 말하고 싶은게 뭔데?
+&lt;/h3>&lt;p>그냥 자랑 한번 해 보고 싶었습니다(&amp;hellip;)&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image-1.png"
+width="2128"
+height="1240"
+srcset="https://blog.lemondouble.com/p/30f1bf25ad8b594a/image-1_hu_5912330b70dcf280.png 480w, https://blog.lemondouble.com/p/30f1bf25ad8b594a/image-1_hu_b067dd72c32b7848.png 1024w"
+loading="lazy"
+alt="전체 파이프라인"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
+>&lt;/p>
+&lt;h3 id="3-사용참고한-정보">3. 사용/참고한 정보
+&lt;/h3>&lt;p>&lt;a class="link" href="https://play.google.com/store/apps/details?id=nl.jolanrensen.hotwordPluginFree&amp;amp;hl=ko" target="_blank" rel="noopener"
+>HotWordPlugin&lt;/a> - 안드로이드에서 Wake word 감지&lt;/p>
+&lt;p>&lt;a class="link" href="https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&amp;amp;hl=ko" target="_blank" rel="noopener"
+>Tasker&lt;/a> - 안드로이드에서 HotwordPlugin 이벤트를 감지해서 특정 앱 실행&lt;/p>
+&lt;p>&lt;a class="link" href="https://openai.com/index/introducing-chatgpt-and-whisper-apis/" target="_blank" rel="noopener"
+>Whisper&lt;/a> - Speech To Text 엔진&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/jekalmin/extended_openai_conversation" target="_blank" rel="noopener"
+>extended_openai_conversation&lt;/a> - 집에 있는 디바이스 정보를 이용, function calling 기능을 이용해 실제 디바이스 상태 조절 함수를 호출해 줌.&lt;/p>
+&lt;p>&lt;a class="link" href="https://lemondouble.github.io/p/bert-vits2%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-tts-%EB%A7%8C%EB%93%A4%EA%B8%B0/" target="_blank" rel="noopener"
+>Bert-VITS2 (TTS)&lt;/a> - 캐릭터 목소리 귀엽죠?&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.zigbee2mqtt.io/" target="_blank" rel="noopener"
+>Zigbee2Mqtt&lt;/a> Zigbee 신호를 MQTT Queue와 연결해 주는 오픈소스 프로젝트에요.&lt;/p>
+&lt;p>&lt;a class="link" href="https://ko.aliexpress.com/item/1005003758328408.html" target="_blank" rel="noopener"
+>SONOFF ZBDongle-P&lt;/a> - 라즈베리 파이에서 Zigbee 신호를 쏘게 해 주는 동글이에요&lt;/p>
+&lt;p>&lt;a class="link" href="https://ko.aliexpress.com/item/1005006007728129.html" target="_blank" rel="noopener"
+>Tuya IR 리모컨&lt;/a> - Zigbee를 받아서 IR 신호를 쏴 줘요&lt;/p></description></item><item><title>Bert-VITS2로 나만의 TTS 만들기</title><link>https://blog.lemondouble.com/p/9c06f7dc324b5986/</link><pubDate>Fri, 26 Jul 2024 20:24:29 +0900</pubDate><guid>https://blog.lemondouble.com/p/9c06f7dc324b5986/</guid><description>&lt;img src="https://blog.lemondouble.com/p/9c06f7dc324b5986/cover.png" alt="Featured image of post Bert-VITS2로 나만의 TTS 만들기" />&lt;h2 id="우리가-만들-오디오-한번-들어보기-일본어">우리가 만들 오디오 한번 들어보기 (일본어)
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="audio.wav" >Link&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-tts">1. TTS?
+&lt;/h3>&lt;p>Text-To-Speech는 문자 그대로, 텍스트를 음성 데이터로 변경해 주는 소프트웨어를 말합니다.&lt;/p>
+&lt;p>한번 만들어 놓으면, 호출량 걱정 없이 많은 Automation에서 사용할 수 있기에, 직접 한번 만들어 보는 것이 목표입니다.&lt;/p>
+&lt;p>이왕 만든다면, 내가 아는 캐릭터가 이야기 하면 더 재밌을 것 같지 않나요? 그러므로, 한번 커스텀 데이터를 이용해 직접 모델을 튜닝하고, TTS를 만들어 보는걸 해 볼 예정입니다.&lt;/p>
+&lt;p>그 중, 저희는 &lt;a class="link" href="https://github.com/fishaudio/Bert-VITS2" target="_blank" rel="noopener"
+>Bert-Vits2&lt;/a> 라는 모델을 이용하여 학습을 해 볼 예정입니다. 참고로 중국어, 영어, 일본어를 지원합니다.&lt;/p>
+&lt;p>만약, 나는 캐릭터 목소리같은건 관심 없고 정갈한 한글 목소리가 필요하다! 라는 분은 &lt;a class="link" href="https://github.com/myshell-ai/MeloTTS" target="_blank" rel="noopener"
+>Melotts&lt;/a>와 Pretrian된 모델을 찾아보시는걸 권해 드립니다.&lt;/p>
+&lt;p>마지막으로 덧붙여, 모델을 만들고 난 후에는 모델 배포 등을 하지 마시고, 개인 연구용/취미용으로만 사용하는 것을 강력히 권해 드립니다.&lt;/p>
+&lt;p>준비물은 GPU 달린 우분투 서버와 근성입니다(..)&lt;/p>
+&lt;h3 id="2-작업-프로세스">2. 작업 프로세스
+&lt;/h3>&lt;p>학습을 위해서는 적어도 20분~1시간 가량의 깨끗한 음성 데이터가 필요합니다.&lt;/p>
+&lt;p>직접 녹음할 수 있다면 가장 좋겠지만, 중국어/일본어/영어 데이터를 20분~1시간 발화하는 것은 쉬운 일이 아닙니다.&lt;/p>
+&lt;p>따라서, 저희는 애니메이션을 이용해서 학습 자료를 만들어 볼 예정입니다.&lt;/p>
+&lt;p>아이디어는 다음과 같습니다.&lt;/p>
+&lt;ol>
+&lt;li>자막은 자막 시작 시간과 끝 시간, 텍스트 데이터가 있다.&lt;/li>
+&lt;li>애니메이션에서 자막 시간만큼을 끊어 음성 데이터를 추출하고, 그 음성 데이터의 Label을 자막 값으로 한다.&lt;/li>
+&lt;/ol>
+&lt;p>그리고, 전체 프로세스는 다음과 같습니다.&lt;/p>
+&lt;ol>
+&lt;li>좋아하는 애니메이션과, 원어 자막을 구합니다.&lt;/li>
+&lt;li>자막 데이터와 애니메이션 데이터를 불러와, 대사 부분을 추출합니다.&lt;/li>
+&lt;li>대사 부분을 추출한 후, 배경 음악 등을 머신러닝으로 제거합니다.&lt;/li>
+&lt;li>직접 대사를 하나하나 들으면서, 내가 원하는 캐릭터가 아닌 데이터를 삭제합니다.&lt;/li>
+&lt;li>그러면 &amp;ldquo;내가 원하는 캐릭터&amp;rdquo; 의 &amp;ldquo;음성 데이터와 라벨 데이터&amp;quot;가 모이게 됩니다. 이 데이터로 Bert-VITS2를 학습시킵니다.&lt;/li>
+&lt;li>완성된 TTS를 가지고 놀아 봅니다!&lt;/li>
+&lt;/ol>
+&lt;p>이 프로세스대로 간결하게 설명해보려고 합니다.&lt;/p>
+&lt;h3 id="3-1-자막-파일로-대사-부분을-추출하기">3-1. 자막 파일로 대사 부분을 추출하기
+&lt;/h3>&lt;p>애니메이션, 원어 자막은 알아서 구할 거라고 생각하고 패스합니다.&lt;/p>
+&lt;p>제가 사용했던 자료를 모아놓은 &lt;a class="link" href="https://github.com/LemonDouble/tts-preprocess" target="_blank" rel="noopener"
+>Github&lt;/a> 에 들어갑니다.&lt;/p>
+&lt;p>git clone 이후, 의존성을 설치하고 &lt;code>extract_wav_1.py&lt;/code> 에서 동영상명, 자막 파일 명을 집어넣고 실행시킵니다.&lt;/p>
+&lt;p>그러면 data 폴더에 1~xxx.wav 파일이 자동으로 생성됩니다.&lt;/p>
+&lt;h3 id="3-2-uvr-ultimate-vocal-remover을-이용하여-배경-음악-제거하기">3-2. UVR (ULTIMATE VOCAL REMOVER)을 이용하여 배경 음악 제거하기
+&lt;/h3>&lt;p>&lt;a class="link" href="https://ultimatevocalremover.com/" target="_blank" rel="noopener"
+>UVR 홈페이지&lt;/a> 에 가서 다운 후 실행합니다.&lt;/p>
+&lt;p>이후 다음과 같이 설정을 맞춰 주세요.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/9c06f7dc324b5986/image.png"
+width="675"
+height="721"
+srcset="https://blog.lemondouble.com/p/9c06f7dc324b5986/image_hu_19bd99e5b8b6c2e0.png 480w, https://blog.lemondouble.com/p/9c06f7dc324b5986/image_hu_60f2f1f3095ef811.png 1024w"
+loading="lazy"
+alt="UVR 설정 파일"
+class="gallery-image"
+data-flex-grow="93"
+data-flex-basis="224px"
+>&lt;/p>
+&lt;ol>
+&lt;li>input은 방금 생성한 wav 파일을 전체 넣어줍니다.&lt;/li>
+&lt;li>output은 cleaned 란 폴더를 만들어 넣어 주세요.&lt;/li>
+&lt;li>Choose MDX-NET Models는 Download New Model -&amp;gt; MDX-Net에서 MDX23C-InstVoc HQ 모델을 다운받은 후 선택해 줍니다.&lt;/li>
+&lt;li>GPU Conversion, Vocals Only 옵션을 켜 주고 실행시킵니다.&lt;/li>
+&lt;/ol>
+&lt;h3 id="3-3-수작업으로-저품질-오디오-다른-캐릭터-대사-제거하기">3-3. 수작업으로 저품질 오디오, 다른 캐릭터 대사 제거하기
+&lt;/h3>&lt;p>cleaned 폴더에 들어가서 저품질 오디오 (발소리나 효과음이 섞인 경우, 말이 섞인 경우)와, 다른 캐릭터의 대사를 제거합니다. (파일 삭제)&lt;/p>
+&lt;h3 id="3-4-라벨-데이터-만들기">3-4. 라벨 데이터 만들기
+&lt;/h3>&lt;p>&lt;code>change_name_2.py&lt;/code>를 실행해 clenaed 폴더의 파일 이름을 바꿔주고,
+&lt;code>make_list_3.py&lt;/code>를 실행해 esd.list라는 파일을 만들어 줍니다.&lt;/p>
+&lt;h3 id="3-5-수집한-데이터-길이-확인하기">3-5. 수집한 데이터 길이 확인하기
+&lt;/h3>&lt;p>&lt;code>calculate_length.py&lt;/code> 를 실행하여, 몇분 몇초만큼의 데이터를 모았는지 확인합니다.&lt;/p>
+&lt;h3 id="3-6-반복하기">3-6. 반복하기
+&lt;/h3>&lt;p>만약 충분한 데이터가 안 보였다면, 데이터가 모일때까지 앞의 작업을 반복해 주세요.&lt;/p>
+&lt;p>별도의 디렉토리에 캐릭터 이름으로 폴더를 하나 만들고, 다음과 같이 배치합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">캐릭터명/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴesd.list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴraw/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴf6df34d9-01c4-4db9-97e9-a35795a5f64b.wav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴ18bcc2c6-3e23-427c-a04a-9414b6f0b85e.wav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>esd.list는 텍스트 편집기로 열어 계속 붙여넣어주면 되고,
+raw 폴더 내에는 cleaned 내의 wav 파일들을 붙여넣어주면 됩니다.&lt;/p>
+&lt;p>계속 반복하여 파일 총 길이가 20분~1시간이 되도록 합시다.&lt;/p>
+&lt;h3 id="3-7-데이터-학습하기">3-7. 데이터 학습하기
+&lt;/h3>&lt;p>우분투 서버로 옮깁니다.&lt;/p>
+&lt;p>우분투에 CUDA가 설치되어 있지 않다면 우분투 CUDA 설치로 검색하여 CUDA를 설치합니다.&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/fishaudio/Bert-VITS2" target="_blank" rel="noopener"
+>Bert-Vits2&lt;/a> 리포지토리를 Clone하고, &lt;a class="link" href="https://heytech.tistory.com/295" target="_blank" rel="noopener"
+>가상환경&lt;/a>을 만든 후 &lt;code>pip install -r requirements.txt&lt;/code> 입력하여 의존성 설치해 줍니다.&lt;/p>
+&lt;p>이후 &lt;code>python webui_preprocess.py&lt;/code> 실행합니다.&lt;/p>
+&lt;p>이후, 해당 Gradio 환경에 접속한 후 파일을 각각 받아 위치에 집어넣습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/9c06f7dc324b5986/image-1.png"
+width="728"
+height="451"
+srcset="https://blog.lemondouble.com/p/9c06f7dc324b5986/image-1_hu_d00a7bd8b4ffd8f1.png 480w, https://blog.lemondouble.com/p/9c06f7dc324b5986/image-1_hu_b015f5e66dfa8f0d.png 1024w"
+loading="lazy"
+alt="파일 다운로드"
+class="gallery-image"
+data-flex-grow="161"
+data-flex-basis="387px"
+>&lt;/p>
+&lt;p>&lt;a class="link" href="https://huggingface.co/hfl/chinese-roberta-wwm-ext-large/tree/main" target="_blank" rel="noopener"
+>中文 RoBERTa&lt;/a> -&amp;gt; BERT_VITS2/bert/chinese-roberta-wwm-ext-large 폴더에 flax_model.msgpack, pytorch_model.bin,tf_model.h5 다운로드 후 넣기&lt;/p>
+&lt;p>나머지도 똑같이 용량 큰 파일 다운받아서 넣어 줍니다.&lt;/p>
+&lt;p>&lt;a class="link" href="https://huggingface.co/ku-nlp/deberta-v2-large-japanese-char-wwm/tree/main" target="_blank" rel="noopener"
+>日文 DeBERTa&lt;/a> -&amp;gt; Bert-VITS2/bert/deberta-v2-large-japanese-char-wwm 폴더&lt;/p>
+&lt;p>&lt;a class="link" href="https://huggingface.co/microsoft/deberta-v3-large/tree/main" target="_blank" rel="noopener"
+>英文 DeBERTa&lt;/a> -&amp;gt; Bert-VITS2/bert/deberta-v3-large 폴더,&lt;/p>
+&lt;p>&lt;a class="link" href="https://huggingface.co/microsoft/wavlm-base-plus/tree/main" target="_blank" rel="noopener"
+>WaveLM&lt;/a> -&amp;gt; Bert-VITS2/slm/wavlm-base-plus 폴더&lt;/p>
+&lt;p>이후, Bert-VITS2/data/{캐릭터 이름}폴더를 만들고 학습 데이터를 옮겨줍니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Bert-VITS2/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ㄴdata/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴElaina/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴesd.list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴtrain.list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴval.list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴraw/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴf6df34d9-01c4-4db9-97e9-a35795a5f64b.wav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ㄴ18bcc2c6-3e23-427c-a04a-9414b6f0b85e.wav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>이 때, esd.list는 만든 파일 그대로,
+val.list는 esd.list의 마지막 5%정도를 떼서 복사 붙여넣기,
+train.list는 val.list에 넣은거 빼고 복사 붙여넣기 해서 파일을 만들어주면 됩니다.&lt;/p>
+&lt;p>예시 :&lt;/p>
+&lt;p>esd.list&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">f6df34d9-01c4-4db9-97e9-a35795a5f64b.wav|Elaina|JP|ありがとう
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">b234c567-d890-1234-e567-890f123g4567.wav|Elaina|JP|おはよう
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">c345d678-e901-2345-f678-901g234h5678.wav|Elaina|JP|すみません
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">d456e789-f012-3456-g789-012h345i6789.wav|Elaina|JP|さようなら
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">e567f890-0123-4567-h890-123i456j7890.wav|Elaina|JP|元気ですか？
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>train.list&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">f6df34d9-01c4-4db9-97e9-a35795a5f64b.wav|Elaina|JP|ありがとう
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">b234c567-d890-1234-e567-890f123g4567.wav|Elaina|JP|おはよう
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">c345d678-e901-2345-f678-901g234h5678.wav|Elaina|JP|すみません
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">d456e789-f012-3456-g789-012h345i6789.wav|Elaina|JP|さようなら
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>val.list&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">e567f890-0123-4567-h890-123i456j7890.wav|Elaina|JP|元気ですか？
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>여기까지 했다면, 아까 Gradio에 가서 다음과 같이 설정합니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/9c06f7dc324b5986/image-2.png"
+width="1535"
+height="487"
+srcset="https://blog.lemondouble.com/p/9c06f7dc324b5986/image-2_hu_6d4d7a29a5959053.png 480w, https://blog.lemondouble.com/p/9c06f7dc324b5986/image-2_hu_e0eff5395529d610.png 1024w"
+loading="lazy"
+alt="Gradio 설정"
+class="gallery-image"
+data-flex-grow="315"
+data-flex-basis="756px"
+>&lt;/p>
+&lt;ol>
+&lt;li>캐릭터 이름(제 경우 Elaina) 를 입력합니다.&lt;/li>
+&lt;li>배치 사이즈를 선택합니다. 배치 사이즈가 클수록 학습은 빠르나, 배치 사이즈가 너무 크면 GPU 메모리에 다 안 올라갑니다. 저의 경우는 3090이라 12로 설정했는데, 일단 큰거 써 보고 이후에 줄이면 됩니다.&lt;/li>
+&lt;li>다 설정했다면 버튼을 누릅니다.&lt;/li>
+&lt;/ol>
+&lt;p>버튼을 누르면, Bert-VITS2/config.yml 파일이 생깁니다.
+해당 파일을 수정합니다.&lt;/p>
+&lt;ol>
+&lt;li>7번 라인의 &amp;ldquo;Data/&amp;rdquo; 부분을 &amp;ldquo;data/{캐릭터명}&amp;ldquo;으로 수정합니다. (제 경우 data/Elaina)&lt;/li>
+&lt;li>20번 라인의 in_dir을 &amp;ldquo;audios/raw&amp;rdquo; -&amp;gt; &amp;ldquo;raw&amp;rdquo; 로 변경합니다.&lt;/li>
+&lt;li>22번 라인의 out_dir을 &amp;ldquo;audios/wavs&amp;rdquo; -&amp;gt; &amp;ldquo;wavs&amp;quot;로 변경합니다.&lt;/li>
+&lt;li>29번 라인의 transcription_path를 &amp;ldquo;filelists/esd.list&amp;rdquo; 로 변경합니다.&lt;/li>
+&lt;/ol>
+&lt;p>이후 Gradio로 다시 돌아가, 第二步：预处理音频文件(2단계: 오디오 파일 전처리), 第三步：预处理标签文件(3단계: 라벨 파일 전처리), 第四步：生成 BERT 特征文件(4단계: BERT 기능 파일 생성) 을 순서대로 눌러줍니다.&lt;/p>
+&lt;p>이후 Pretrain된 모델을 다운로드 받습니다.&lt;/p>
+&lt;p>다음 &lt;a class="link" href="https://huggingface.co/OedoSoldier/Bert-VITS2-2.3/tree/main" target="_blank" rel="noopener"
+>링크&lt;/a> 로 이동하여 DUR_0.pth, D_0.pth, G_0.pth, WD_0.pth을 다운받아 data/{캐릭터명}/models 폴더에 붙여넣기 합니다.&lt;/p>
+&lt;p>이후 config.yml의 90번 라인의 config_path를 “configs/config.json” 로 변경합니다. (train_ms 부분)&lt;/p>
+&lt;p>이후 Bert-VITS2 폴더에서 &lt;code>torchrun --nproc_per_node=1 train_ms.py&lt;/code> 실행시 학습이 진행됩니다!&lt;/p>
+&lt;h3 id="3-8-음성-출력하기">3-8. 음성 출력하기
+&lt;/h3>&lt;p>학습이 진행되면, 음성이 정상적으로 나오는지 확인해야 합니다.&lt;/p>
+&lt;p>data/{캐릭터명}/models 폴더에 보면, 학습이 진행될수록 여러 파일들이 생깁니다. G_1000.pth 같은 식으로요.&lt;/p>
+&lt;p>G_xxxx.pth 파일이 목소리를 생성하기 위한 파일입니다.
+해당 폴더를 확인 후, config.yml의 105번쨰 줄 (webui 부분)의 model을 &amp;ldquo;model/G_xxxx.pth&amp;rdquo; 로 변경합니다. (이떄 xxxx는 현재 디렉토리에 있는 모델)&lt;/p>
+&lt;p>이후, Bert-VITS2 폴더에서 &lt;code>python webui.py&lt;/code> 를 입력하면 Gradio가 생기게 되고,해당 Gradio에서 TTS를 테스트 해 볼 수 있습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/9c06f7dc324b5986/image-3.png"
+width="1530"
+height="924"
+srcset="https://blog.lemondouble.com/p/9c06f7dc324b5986/image-3_hu_475160a9fd99ad18.png 480w, https://blog.lemondouble.com/p/9c06f7dc324b5986/image-3_hu_9c9334cbb5c50551.png 1024w"
+loading="lazy"
+alt="Gradio"
+class="gallery-image"
+data-flex-grow="165"
+data-flex-basis="397px"
+>&lt;/p>
+&lt;p>참고로 이 데이터를 이용해 별도로 서버를 만들고 싶다면, hiyoriUI.py를 참고해 보세요! fastAPI 기반의 서버를 제공합니다.&lt;/p>
+&lt;h3 id="마무리하며">마무리하며
+&lt;/h3>&lt;p>이것으로 간?단히 TTS를 만드는 법에 대한 이야기를 해 봤습니다.&lt;/p>
+&lt;p>중간중간 구멍이 많이 뚫려 있는데, 비슷한 글이 있어 해당 글에서 헷갈렸던 부분만 집중적으로 다뤄서 그렇습니다.&lt;/p>
+&lt;p>&lt;a class="link" href="https://info-nemo.com/coding-story/chapter-4-bert-vits2-%ed%95%99%ec%8a%b5-%ec%a0%84-%ec%82%ac%ec%a0%84-%ec%a4%80%eb%b9%84/" target="_blank" rel="noopener"
+>Chapter 4. Bert-VITS2 사전 준비 및 훈련 시작&lt;/a>&lt;/p>
+&lt;p>본 글에서 구멍이 나 있는 부분은, 이 글을 같이 보시면 이해가 빠를 거에요.&lt;/p>
+&lt;p>저의 경우, 별도로 돌리고 있는 머신러닝 서버에 TTS를 이식해 잘 쓰고 있답니다.&lt;/p>
+&lt;p>혹시 잘 안 되는 부분 있으시면 편하게 댓글 주시고, 여러분도 즐거운 TTS 만드시길 바랍니다!&lt;/p></description></item><item><title>ChatGPT는 상식 문제를 잘 풀 수 있을까? (논문)</title><link>https://blog.lemondouble.com/p/dedda5393e239315/</link><pubDate>Thu, 30 Mar 2023 19:15:11 +0900</pubDate><guid>https://blog.lemondouble.com/p/dedda5393e239315/</guid><description>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/cover.png" alt="Featured image of post ChatGPT는 상식 문제를 잘 풀 수 있을까? (논문)" />&lt;p>요즘 심심할 때 논문을 하나씩 읽는 취미가 생겼습니다.
+그 중, arxiv에서 재밌는 논문을 하나 읽게 되어서, 정리하고 공유해 보려고 합니다.&lt;/p>
+&lt;p>논문 제목은 &lt;code>ChatGPT is a Knowledgeable but Inexperienced Solver: An Investigation of Commonsense Problem in Large Language Models&lt;/code> (&lt;a class="link" href="https://arxiv.org/abs/2303.16421" target="_blank" rel="noopener"
+>Arxiv Link&lt;/a>) 입니다.&lt;/p>
+&lt;p>주제는, &lt;strong>대규모 언어 모델(ChatGPT) 는 상식적인 문제를 잘 풀 수 있는가?&lt;/strong> 입니다. 꽤 재밌는 주제라서, 제가 공부하는 겸 공유하는 겸, 겸사겸사 읽은 내용을 정리해 보려고 합니다.&lt;/p>
+&lt;p>제가 논문을 읽어 본 적도 없고, 학부 기억도 가물가물 해서 틀릴 수 있음을 미리 알려드립니다! (틀린거 있음 알려주세요 헤헤)&lt;/p>
+&lt;h2 id="1-요약">1. 요약
+&lt;/h2>&lt;p>논문은 다음과 같은 질문을 던집니다.&lt;/p>
+&lt;ol>
+&lt;li>GPT는 상식에 관한 질문에 효과적으로 답할 수 있는가?&lt;/li>
+&lt;li>GPT는 상식에 대해 잘 알고 있는가?&lt;/li>
+&lt;li>GPT는 특정 질문에 답하기 위해 필요한 상식과 아닌 상식을 잘 구분할 수 있는가?&lt;/li>
+&lt;li>GPT는 주어진 상식을 효과적으로 활용하여 질문에 답할 수 있는가?&lt;/li>
+&lt;/ol>
+&lt;p>그리고 이에 대한 간략한 답은 다음과 같습니다.&lt;/p>
+&lt;ol>
+&lt;li>효과적으로 답할 수 있으나, 사회규범, 인과관계, 시간과 관계된 특정 분야에 대해선 잘 답하지 못한다.&lt;/li>
+&lt;li>대부분의 상식을 잘 알고 있다.&lt;/li>
+&lt;li>질문에 대답하는데 밀접한(필요한) 상식과 아닌 상식을 잘 구분하지 못 한다.&lt;/li>
+&lt;li>문맥상에서 추가적인 상식을 입력해 주더라도, 잘 사용하지 못 한다.&lt;/li>
+&lt;/ol>
+&lt;h2 id="2-상식의-분류">2. 상식의 분류
+&lt;/h2>&lt;p>연구진은 상식을 8가지 카테고리로 분류했습니다.
+각각 다음과 같습니다.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>1. 일반(General) 상식 (널리 공유되는 상식)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>해는 동쪽에서 뜬다&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>2. 물리적(Physical) 상식 (물리적 세계에 대한 지식)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>유리컵은 떨어지면 깨진다. 물은 아래로 흐른다&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>3. 사회적(Social) 상식 (사회규범에 대한 지식)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>도움을 받았으면 감사합니다~ 라고 해야 한다.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>4. 과학(Science) 상식 (과학 개념의 원리/지식)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>중력은 모든 물체를 지구 중심으로 끌어당긴다&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>5. 인과 관계(Event) 상식 (인과 관계 및 순서에 대한 지식)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>물컵을 넘어트리면 -&amp;gt; 물이 쏟아진다&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>6. 숫자와 관련된(Numerical) 상식 (숫자와 관련된 상식)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>사람 손가락은 2개고 손가락은 10개&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>7. 전형적인(Prototypical) 상식 ( 개념에 대한 지식)&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>제비는 새의 일종이며, 날개가 있다&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>8. 시간과 관련된(Temporal) 상식&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>해외여행은 산책보다 시간이 오래 걸린다.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>그리고, 연구진은 각 카테고리별로 상식에 관련된 데이터 셋 11개를 준비했습니다.&lt;/p>
+&lt;p>왼쪽부터 데이터셋 이름 / 카테고리 / 예시 질문 입니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-19-51-27.png"
+width="639"
+height="413"
+srcset="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-19-51-27_hu_946a58ef92da0da3.png 480w, https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-19-51-27_hu_892ff76f2ea00c3a.png 1024w"
+loading="lazy"
+alt="데이터셋 카테고리 및 예시 질문"
+class="gallery-image"
+data-flex-grow="154"
+data-flex-basis="371px"
+>&lt;/p>
+&lt;h2 id="3-chatgpt는-상식-질문에-효과적으로-답할-수-있을까">3. ChatGPT는 상식 질문에 효과적으로 답할 수 있을까?
+&lt;/h2>&lt;p>연구진은 위 데이터셋마다 100개씩 문제를 뽑아 GPT3, GPT3.5, ChatGPT 모델에 물어봤습니다.&lt;/p>
+&lt;p>아래는 GPT3, GPT3.5, ChatGPT의 각 질문에 대한 정답 비율입니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-19-54-34.png"
+width="535"
+height="208"
+srcset="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-19-54-34_hu_7d8ccc9578b70063.png 480w, https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-19-54-34_hu_15cbe30c15803ccb.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="257"
+data-flex-basis="617px"
+>&lt;/p>
+&lt;p>주목할 점은 다음과 같습니다.&lt;/p>
+&lt;ul>
+&lt;li>전체적으로 잘 답변함
+&lt;ul>
+&lt;li>과학 (Science) 분야는 약 94%로 가장 높은 정답률을 보임.&lt;/li>
+&lt;li>사회규범(Social), 인과관계(Event), 시간 (Temporal) 에 대한 정답률은 저조 (70% 미만)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>전체적으로 GPT 3.5 모델에 비해, 튜닝 모델인 ChatGPT의 정확도가 높음
+&lt;ul>
+&lt;li>일부 질문에 대해 GPT 3.5가 정답률이 높은 것으로 나와있으나, 이는 ChatGPT가 &amp;ldquo;주어진 데이터만으로는 정답을 알 수 없습니다&amp;rdquo; 라는 답변이 나와 생긴 착시에 가까움.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="4-chatgpt는-질문에-답변하기-위해-필요한-상식과-아닌-상식을-잘-구분할-수-있을까">4. ChatGPT는 질문에 답변하기 위해 필요한 상식과 아닌 상식을 잘 구분할 수 있을까?
+&lt;/h2>&lt;p>연구진은 위 질문 데이터셋에서, 각 데이터셋마다 20개를 다시 뽑았습니다.&lt;/p>
+&lt;p>이후, GPT에게 &amp;ldquo;이 질문에 답변하기 위해 어떤 지식이 필요한지&amp;rdquo; 물어본 뒤, 인간의 답변을 바탕으로 Precision(정확도), Recall(재현율), F1 Score를 구했습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-20-04-51.png"
+width="309"
+height="309"
+srcset="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-20-04-51_hu_2774cd353a503d77.png 480w, https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-20-04-51_hu_9d67c8eda677ab40.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="100"
+data-flex-basis="240px"
+>&lt;/p>
+&lt;p>Precision? Recall? 어려운 말이 나오니까 한번 정리하고 들어갈게요.&lt;/p>
+&lt;hr>
+&lt;ul>
+&lt;li>
+&lt;p>Precision : GPT가 낸 정답의 정확도&lt;/p>
+&lt;ul>
+&lt;li>GPT의 답변 중 정답은 몇 %인가?&lt;/li>
+&lt;li>예를 들어 5개의 답변 중, 3개는 정답 2개는 오답이라면 Precision은 60%&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Recall : 전체 정답 중 GPT가 찾아낸 정답의 개수&lt;/p>
+&lt;ul>
+&lt;li>사람이 예측한 정답 중, GPT가 몇 개나 찾아냈는가?&lt;/li>
+&lt;li>예를 들어 예측 정답이 5개고, GPT가 답변 10개 중 4개는 정답, 6개는 오답이라면 Recall은 80% (4/5)&lt;/li>
+&lt;li>Recall을 계산할 때 오답은 중요하지 않음!&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>F1 Score : Precision과 Recall의 조화평균&lt;/p>
+&lt;ul>
+&lt;li>Precision만 지표로 삼으면? : 확률 제일 높은 답을 &lt;strong>딱 하나만&lt;/strong> 하면 됨&lt;/li>
+&lt;li>Recall만 지표로 삼으면? : 답변을 10000개씩 쓰면 그 중 &lt;strong>몇개는 얻어걸림&lt;/strong>&lt;/li>
+&lt;li>하지만 우리가 원하는 건 &amp;ldquo;정확한 답을&amp;rdquo; &amp;ldquo;충분히 많이&amp;rdquo; 해 주는 AI 모델&lt;/li>
+&lt;li>따라서 Precision과 Recall의 조화평균을 내면 &amp;ldquo;정확도&amp;rdquo; 비슷한 지표가 나옴!&lt;/li>
+&lt;li>즉, F1 Score가 높음 == 답변을 잘 했다!&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>어려운 이야기를 했는데! 결론적으로, 다음과 같은 결과를 얻었습니다.&lt;/p>
+&lt;ul>
+&lt;li>GPT는 Precision은 높지만 Recall은 높음
+&lt;ul>
+&lt;li>전체 데이터셋에서 Precesion은 **55.88%**지만, Recall은 &lt;strong>84.42%&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>즉, 질문을 해결하는데 필요한 지식을 거의 대부분 알려주지만, 정확도가 높진 않음&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>GPT는 과학 분야에선 비교적 성능이 좋지만, (F1 74~76%), 사회규범, 시간 분야에서 특히 성능이 낮음(F1 50% 이하)&lt;/li>
+&lt;/ul>
+&lt;h2 id="5-chatgpt는-상식에-박식할까">5. ChatGPT는 상식에 박식할까?
+&lt;/h2>&lt;p>연구진은 3. 에서 생성된, 필요한 지식을 기반으로 질문 프롬프트를 수동으로 만들었습니다. 이후, GPT가 생성한 답변이 정답인지 오답인지를 수동으로 평가했습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-20-59-33.png"
+width="314"
+height="357"
+srcset="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-20-59-33_hu_20f0b5c18e9fb4b0.png 480w, https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-20-59-33_hu_879552020225cd4c.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="87"
+data-flex-basis="211px"
+>&lt;/p>
+&lt;p>위 질문의 경우는 ChatGPT가 생성한 오답의 예시입니다.&lt;/p>
+&lt;p>GPT는 &lt;code>blowing into a trash bag and tying it with a rubber band may create a cushion-like surface, but it is unlikely to be durable or comfortable for prolonged use as an outdoor pillow&lt;/code> (번역 : 쓰레기 봉투에 바람을 불어 고무줄로 묶으면 쿠션같은 표면을 가지지만, 야외용 배개로 오래 쓰기엔 내구성이 떨어지거나 편하지 않을 것) 이라 했지만, &lt;strong>쓰레기 봉투로 배개를 만드는 건 흔한 관행이므로 오답으로 처리&lt;/strong>했다고 합니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-05-54.png"
+width="323"
+height="235"
+srcset="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-05-54_hu_651a451421b4a447.png 480w, https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-05-54_hu_90d6d03f894370bf.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="137"
+data-flex-basis="329px"
+>&lt;/p>
+&lt;p>위 결과 표에 따라, 연구진은 다음과 같은 결과를 얻었습니다.&lt;/p>
+&lt;ul>
+&lt;li>GPT는 박식하며, 질문에 답변하기 위한 대부분의 상식을 알고 있음.
+&lt;ul>
+&lt;li>전체 데이터셋에서 평균 82.66%의 정확도를 보임&lt;/li>
+&lt;li>대부분의 데이터셋에서 70% 이상의 정확도를 보임.&lt;/li>
+&lt;li>단, 사회규범 영역에서 54.92%로 성능이 낮음.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>하지만, GPT의 답변 중 오해의 소지가 있거나, 지나치게 일반화되어 필요없는 지식도 들어가 있음
+&lt;ul>
+&lt;li>전체 답변의 26.25%에 관련성이 낮고 오해의 소지가 있는 정보가 포함되어 있음.&lt;/li>
+&lt;li>15% 정도의 설명이 지나치게 일반화되어, 질문 답변에 필요한 구체적 정보가 아님&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="6-chatgpt는-응답시-대화-맥락에서-추가된-상식을-활용하여-답변에-활용할-수-있을까">6. ChatGPT는 응답시 대화 맥락에서 추가된 상식을 활용하여, 답변에 활용할 수 있을까?
+&lt;/h2>&lt;p>연구진은 GPT가 문맥에서 나온 상식을 이용하여 답변에 활용할 수 있는지 확인하기 위해, 4.에서처럼 GPT에게 질문에 답변할 때 필요한 상식을 추론하게 한 후, 같은 질문에 다시 답하게 하여 답변이 평가되는지 확인했습니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-17-10.png"
+width="303"
+height="384"
+srcset="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-17-10_hu_6ddff77f5f86b49b.png 480w, https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-17-10_hu_e6e89d4f12dfbc59.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="78"
+data-flex-basis="189px"
+>&lt;/p>
+&lt;p>위 예시는, 이전에 오답이었던 답변이 추가 설명을 생성한 뒤에도 변경되지 않는 예시를 보여줍니다.&lt;/p>
+&lt;p>&lt;img src="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-22-59.png"
+width="318"
+height="263"
+srcset="https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-22-59_hu_9d33f72ac9651a0f.png 480w, https://blog.lemondouble.com/p/dedda5393e239315/2023-03-30-21-22-59_hu_bdc32ca33c8be8d0.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="120"
+data-flex-basis="290px"
+>&lt;/p>
+&lt;p>위 결과 표에 따라, 연구진은 다음과 같은 결과를 얻었습니다.&lt;/p>
+&lt;ul>
+&lt;li>GPT는 GPT가 생성한 상식 설명을 대화 맥락 추가하는 것 만으로는, 효율적으로 답변에 활용할 수 없음.
+&lt;ul>
+&lt;li>맥락에 설명이 추가되는 경우, 오답이 정답으로 바뀌는 경우 (C-&amp;gt;W) 및 정답이 오답으로 바뀌는 경우 (W-&amp;gt;C)가 모두 존재&lt;/li>
+&lt;li>Social IQA 데이터셋의 경우, 맥락에 추가된 상식이 잘못되어 오히려 정답이 오답으로 바뀌는 것이(5개) 오답이 정답으로 바뀌는 것보다(1개) 많았음.&lt;/li>
+&lt;li>연구진은 이미 Model에 생성된 지식이 있어, 단순히 추가 정보를 생성하는 것이 큰 효과가 없는 것으로 추정함.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>심지어, 대화 맥락에 &amp;ldquo;GPT가 생성한 상식&amp;rdquo; 이 아닌, &amp;ldquo;유저가 직접 올바른 상식&amp;quot;을 추가해줘도 정답률이 100%가 되지 못 했음.&lt;/p>
+&lt;ul>
+&lt;li>사람이 주석을 단 CoS-E, ECQA 데이터셋을 바탕으로 대화 맥락에 정답 (Golden Knowledge) 를 추가함.
+&lt;ul>
+&lt;li>CoS-E는 오답-&amp;gt;정답이 4개 증가&lt;/li>
+&lt;li>ECQA는 오답-&amp;gt;정답이 8개, 정답-&amp;gt;오답이 1개 증가&lt;/li>
+&lt;li>연구진은 복잡한 추론 (예를 들어, 부정 추론) 등을 활용할 수 있는 능력이 부족하다고 추론
+&lt;ul>
+&lt;li>부정 추론의 예시
+&lt;ul>
+&lt;li>Q: 농구공에 구멍이 났지만, 모양이 그대로라면 틀린 것은?&lt;/li>
+&lt;li>A: 구멍이 뚫렸다, B:미국에서 인기가 있다, C: 공기가 가득 차 있다&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>CoS-E 데이터셋은 &amp;ldquo;구멍이 뚫린 물체에는 공기가 머무를 수 없다&amp;rdquo; 라고 설명했지만, GPT는 여전히 A를 예측&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>// TODO : 더 쓰기..&lt;/p></description></item></channel></rss>
